@@ -77,13 +77,13 @@ Building a service based on atomic swaps, which would enable swaps of on-chain B
 
 ### Centralized swaps
 It would be possible to build a centralized system that just receives tBTC on an address and sends on/off-chain bitcoin to some other address, essentially a copy of all these swapping services such as changelly or changenow. That would be completely centralized, but it would provide some extra benefits:
-- It would be directly usable for users that have wallets that are not web3-enabled (wallets that only let you send eth/erc20)^[1]
+- It would be directly usable for users that have wallets that are not web3-enabled (wallets that only let you send eth/erc20, also see the 'Protocol for send-only wallets' section in Appendix)
 - It's easier to use than all the other alternatives (only requires sending money to an address)
 - It would be a little bit more private as all the parameters of the swaps wouldn't need to be logged on a public smart contract
 
 On the other side, it would be completely centralized, trust-full and wouldn't allow diverse parties to compete for the lowest fees.
 
-With that said, users would only need to trust it during the short period of time when a transaction is being processed, and I'd make the server provide a signed message specifying all the parameters of the request, which would serve as a fraud proof if the service ever behaved incorrectly^[2]. With this, it would only be possible for the service to cheat at a single point in time.
+With that said, users would only need to trust it during the short period of time when a transaction is being processed, and I'd make the server provide a signed message specifying all the parameters of the request, which would serve as a fraud proof if the service ever behaved incorrectly (see the 'Fraud proof protocol' section in Appendix). With this, it would only be possible for the service to cheat at a single point in time.
 
 In any case, due to the large usage that these kind of services have experienced along with the extremely low probability of one of them integrating tBTC I wuld be down to build one an integrate it into this product if the community likes the idea.
 
@@ -95,7 +95,9 @@ All I did was put them together, analyse the result and implement it.
 
 ----
 
-^[1] It may be possible to support these wallets by making them send ETH to an empty address, in which a contract will be directly deployed with those same funds. This protocol would follow the following steps:
+## Appendix
+### Protocol for send-only wallets
+It may be possible to support these wallets by making them send ETH to an empty address, in which a contract will be directly deployed with those same funds. This protocol would follow the following steps:
 1. Generate the code of a smart contract that implements submarine swaps
 2. Hash that code to obtain an address, which would be provided to the user
 3. User would send funds to that address
@@ -105,7 +107,8 @@ All I did was put them together, analyse the result and implement it.
 
 The problem of this protocol is that it has a high complexity (-> high chance of bugs) so, at the moment, I don't plan to implement anything like this.
 
-^[2] This fraud proof system would work in the following way:
+### Fraud proof protocol
+This fraud proof system would work in the following way:
 1. User requests a swap, providing the address/receipt where they want their funds to be sent
 2. Server sends a signed response that includes:
 	- Time
