@@ -2,7 +2,7 @@
 > Low-cost trustless LN <-> tBTC swaps
 
 ## Features
-- User-friendly: Works with all lightning and we3-enabled wallets
+- User-friendly: Works with all lightning and web3-enabled wallets
 - Trustless: Based on submarine swaps, all transactions are atomic (if a party misbehaves the transaction is reverted)
 - Low-cost: All contracts work under optimistic assumptions which reduce the cost if every party is honest
 - Decentralized: Anyone can provide liquidity and the client will automatically pick the cheapest provider
@@ -39,9 +39,17 @@ Let's say that we have a scenario very similar to the one before, Alice wants to
 At the moment, submarine swaps are mostly used to refill lightning channels that have unbalanced capacity, but we can take that idea and spin it into it's own protocol for cross-chain trading.
 
 ### Rebuilding the submarine
-Adapting submarine swaps to make the on-chain transaction be in the ETH network instead of in the BTC one should come quite naturally in the case of swapping tBTC for BTC, as nothing needs to be changed apart from the network due to the fact that the whole process remains conceptually unchanged.
+Adapting submarine swaps to make the on-chain transaction be in the ETH network instead of in the BTC one should come quite naturally in the case of swapping tBTC for BTC, as, on the conceptual level, nothing needs to be changed.
 
-When it comes to the reverse process, swapping a lightning payment for on-chain tBTC, things get a little bit more complicated tho. An easy solution here would be to simply 
+But when it comes to the reverse process, swapping a lightning payment for on-chain tBTC, things get a little bit more complicated. Here's the protocol for these swaps:
+1. Client generates a secret `K` and sends `hash(K)` it to the chosen node
+2. The node generates a lightning invoice that has `hash(K)` as it's HLTC
+3. Client checks that the invoice effectively uses `hash(K)` and pays it
+4. Node sends a tBTC payment to the user conditioned on the revealing of `K` within a timeframe
+5. Client reveals `K` to claim the tBTC locked in the last step
+6. Node reveals `K` and finalises lightning payment
+
+If implemented just like this, this protocol would have a big downside: it would be possible for clients to grief nodes by starting payments and then never revealing `K`, as in those cases nodes would have to pay for several on-chain ETH transactions while the user would only need to do LN payments, which should be free due to the fact that none of these would be finalised.
 
 ### Adding optimism: making our protocol half-full
 
