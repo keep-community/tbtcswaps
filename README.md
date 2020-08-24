@@ -1,10 +1,9 @@
-# LN <-> tBTC swaps
-> Low-cost trustless LN <-> tBTC swaps
+# ln2tBTC
+> Trustless Lightning Network <-> tBTC swaps
 
 ## Features
 - User-friendly: Works with all lightning and web3-enabled wallets
 - Trustless: Based on submarine swaps, all transactions are atomic (if a party misbehaves the transaction is reverted)
-- Low-cost: All contracts work under optimistic assumptions which reduce the cost if every party is honest
 - Decentralized: Anyone can provide liquidity and the client will automatically pick the cheapest provider
 
 ## How it works
@@ -59,9 +58,6 @@ If implemented just like this, this protocol would have a big downside: it would
 	<img alt="LN -> tBTC sequence diagram" src="images/ln2tbtc.svg">
 </p>
 
-### Adding optimism: making our protocol half-full
-TODO
-
 ### A note on user griefing
 While the current protocol protects nodes from any kind of griefing (transactions that end up being wasted) from users, that property doesn't hold in the other direction, as it's possible for nodes to act maliciously and make users send transactions that will need to be reverted later, causing them to lose some money on fees and lock their funds temporarily. This behaviour is completely irrational, nodes wouldn't be earning any money from doing this, instead they'd actually be losing some by running a node, but it's entirely possible that someone still does it so it's important to consider it.
 
@@ -115,9 +111,6 @@ In any case, due to the large usage that these kind of services have experienced
 
 ## Acknowledgments
 None of the ideas exposed here are novel, submarine swaps have existed since 2018 and the possibility of using them to do cross-chain swaps has been discussed multiple times, the only thing slightly innovative about this protocol is the LN -> on-chain swap, which still relies heavily on the ideas behind submarine swaps.  
-Furthermore, using optimistic assumptions in smart contracts to reduce gas cost is also something really common in the ethereum community, so all the merit for these belongs to their inventors, not me.
-
-All I did was put them together, analyse the result and implement it.
 
 ## Similar work
 To the best of my knowledge there has been two other projects that have implemented one-way submarine swaps between LN and the Ethereum network: [leon-do/submarine-swaps](https://github.com/leon-do/submarine-swaps) and [Jasonhcwong/lnswaps](https://github.com/Jasonhcwong/lnswaps). However, both of these projects are protoypes and they have huge security holes (one of them has a griefing problem that makes it possible to make the node spend all its ETH by simply sending requests to it and the other has a reentrancy bug that makes it possible to steal all the funds in the contract), so I believe they are not mature enough.
