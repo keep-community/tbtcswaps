@@ -1,4 +1,4 @@
-This is the frontend used in ln2tbtc.com, it's a simple react app that uses web3 to perform any client actions needed for the swap.
+This is the frontend used in ln2tbtc.com, it's a simple typescript react app that uses web3 to perform any client actions needed for the swap.
 
 ## Development
 This was created with `create-react-app` so all the common basic commands are available:

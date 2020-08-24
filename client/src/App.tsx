@@ -12,7 +12,6 @@ function App() {
           className="App-link"
           href="https://github.com/corollari/ln2tBTC"
           target="_blank"
-          rel="noopener noreferrer"
         >
           Check it out on Github
         </a>
