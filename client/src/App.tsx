@@ -11,6 +11,7 @@ function App() {
         <a
           className="App-link"
           href="https://github.com/corollari/ln2tBTC"
+          rel="noopener noreferrer"
           target="_blank"
         >
           Check it out on Github
