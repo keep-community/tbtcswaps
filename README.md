@@ -41,6 +41,10 @@ At the moment, submarine swaps are mostly used to refill lightning channels that
 ### Rebuilding the submarine
 Adapting submarine swaps to make the on-chain transaction be in the ETH network instead of in the BTC one should come quite naturally in the case of swapping tBTC for BTC, as, on the conceptual level, nothing needs to be changed.
 
+<p align="center">
+	<img alt="tBTC -> LN sequence diagram" src="images/tbtc2ln.svg">
+</p>
+
 But when it comes to the reverse process, swapping a lightning payment for on-chain tBTC, things get a little bit more complicated. Here's the protocol for these swaps:
 1. Client generates a secret `K` and sends `hash(K)` it to the chosen node
 2. The node generates a lightning invoice that has `hash(K)` as it's HLTC
@@ -49,9 +53,11 @@ But when it comes to the reverse process, swapping a lightning payment for on-ch
 5. Client reveals `K` to claim the tBTC locked in the last step
 6. Node reveals `K` and finalises lightning payment
 
-If implemented just like this, this protocol would have a big downside: it would be possible for clients to grief nodes by starting payments and then never revealing `K`, as in those cases nodes would have to pay for several on-chain ETH transactions while the user would only need to do LN payments, which should be free due to the fact that none of these would be finalised. This problem can be solved by making the user provide a security deposit in ETH when a new request is created. This deposit will be returned if the user provides `K` on time but, if that's not the case, it will just be given to the node operator as compensation.
+If implemented just like this, this protocol would have a big downside: it would be possible for clients to grief nodes by starting payments and then never revealing `K`, as in those cases nodes would have to pay for several on-chain ETH transactions while the user would only need to do LN payments, which should be free due to the fact that none of these would be finalised. This problem can be solved by making the user provide a security deposit in ETH when a new request is created. This deposit will be returned if the user provides `K` on time but, if that's not the case, the deposit will just be given to the node operator as compensation.
 
-TODO: ADD IMAGES
+<p align="center">
+	<img alt="LN -> tBTC sequence diagram" src="images/ln2tbtc.svg">
+</p>
 
 ### Adding optimism: making our protocol half-full
 TODO
