@@ -72,10 +72,11 @@ Generally I don't like any of these solutions, so, for the time being, I won't i
 TODO
 
 ## Development
-```bash
-npm install # Install dependencies
-npm start # Run development server
-```
+This repository contains two projects:
+- Node software
+- Frontend
+
+Instructions on how to develop these are available in their respective directories
 
 ## Alternatives
 ### Full-L2 swaps
