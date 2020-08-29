@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered without dialogs 1`] = `
+<body>
+  <div>
+    <footer>
+      <a
+        href="https://github.com/corollari/ln2tBTC"
+      >
+        Code
+      </a>
+       · 
+      <a
+        href="https://github.com/corollari/ln2tBTC/blob/master/README.md"
+      >
+        Docs
+      </a>
+       · 
+      <a
+        href="#"
+      >
+        Contact
+      </a>
+       · 
+      <a
+        href="#"
+      >
+        About
+      </a>
+    </footer>
+  </div>
+  <div
+    aria-hidden="true"
+    class="MuiDialog-root"
+    role="presentation"
+    style="position: fixed; z-index: 1300; right: 0px; bottom: 0px; top: 0px; left: 0px; visibility: hidden;"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root"
+      style="opacity: 0; visibility: hidden;"
+    />
+    <div
+      data-test="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiDialog-container MuiDialog-scrollPaper"
+      role="none presentation"
+      style="visibility: hidden; webkit-transform: translateY(768px) translateY(0px); transform: translateY(768px) translateY(0px);"
+      tabindex="-1"
+    >
+      <div
+        aria-describedby="alert-dialog-description"
+        aria-labelledby="alert-dialog-title"
+        class="MuiPaper-root MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiPaper-elevation24 MuiPaper-rounded"
+        role="dialog"
+      >
+        <div
+          class="MuiDialogTitle-root"
+          id="alert-dialog-title"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h6"
+          >
+            Contact us
+          </h2>
+        </div>
+        <div
+          class="MuiDialogContent-root"
+        >
+          <p
+            class="MuiTypography-root MuiDialogContentText-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            id="alert-dialog-description"
+          >
+            Just drop a message on
+             
+            <a
+              href="https://discord.com/channels/590951101600235531/681226760209432608/748490345217654786"
+            >
+              Keep's discord
+            </a>
+             
+            tagging me (@corollari#2127) or send me an email at admin@ln2tbtc.com
+          </p>
+        </div>
+        <div
+          class="MuiDialogActions-root MuiDialogActions-spacing"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary Mui-focusVisible Mui-focusVisible"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Close
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            >
+              <span
+                class="MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+              >
+                <span
+                  class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
+                />
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      data-test="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;

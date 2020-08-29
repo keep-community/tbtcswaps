@@ -1,22 +1,13 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from "react";
+import Footer from "./views/Footer/";
+import Widget from "./views/Widget/";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Work in progress
-        </p>
-        <a
-          className="App-link"
-          href="https://github.com/corollari/ln2tBTC"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Check it out on Github
-        </a>
-      </header>
+      <Widget />
+      <Footer />
     </div>
   );
 }
