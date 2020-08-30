@@ -19,13 +19,13 @@ exports[`snapshot of component rendered without dialogs 1`] = `
       <a
         href="#"
       >
-        Contact
+        About
       </a>
        · 
       <a
         href="#"
       >
-        About
+        Contact us
       </a>
     </footer>
   </div>

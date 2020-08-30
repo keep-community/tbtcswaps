@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
-import Footer from "./index";
+import Footer from "./Footer";
 
 test("snapshot of component rendered without dialogs", () => {
   const component = render(<Footer />);

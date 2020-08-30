@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of initial state 1`] = `
+<body>
+  <div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9"
+      >
+        <form
+          autocomplete="off"
+          class="makeStyles-root-1"
+          novalidate=""
+        >
+          <div
+            class="MuiFormControl-root MuiTextField-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined"
+              data-shrink="true"
+            >
+              From
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                min="0"
+                step="0.001"
+                type="number"
+                value=""
+              />
+              <div
+                class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
+              >
+                <img
+                  height="20"
+                  src="lightning.png"
+                />
+              </div>
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legendLabelled-4 PrivateNotchedOutline-legendNotched-5"
+                >
+                  <span>
+                    From
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root MuiTextField-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined"
+              data-shrink="true"
+            >
+              To
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                min="0"
+                readonly=""
+                step="0.001"
+                type="number"
+                value=""
+              />
+              <div
+                class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
+              >
+                <img
+                  height="30"
+                  src="tBTC.png"
+                />
+              </div>
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legendLabelled-4 PrivateNotchedOutline-legendNotched-5"
+                >
+                  <span>
+                    To
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
+      >
+        <button
+          aria-label="delete"
+          class="MuiButtonBase-root MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"
+              />
+            </svg>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Swap
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</body>
+`;
