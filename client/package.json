@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@node-lightning/invoice": "^0.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^7.1.2",
@@ -18,7 +19,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "react-swipeable-views": "^0.13.9",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "web3": "^1.2.11"
   },
   "scripts": {
     "start": "react-scripts start",
