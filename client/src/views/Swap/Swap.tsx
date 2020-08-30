@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme: Theme) =>
         //width: '25ch',
       },
     },
+    switchIcon: {
+      height: "100%",
+    },
+    wideTextField: {
+      width: "100%",
+    },
   })
 );
 
@@ -47,6 +53,7 @@ export default function BasicTextFields(props: { web3: Web3Provider }) {
             <TextField
               label="From"
               {...sharedInputProps}
+              className={classes.wideTextField}
               onChange={(event) => setFromAmount(Number(event.target.value))}
               inputProps={{
                 step: 0.001,
@@ -67,6 +74,7 @@ export default function BasicTextFields(props: { web3: Web3Provider }) {
             <TextField
               label="To"
               {...sharedInputProps}
+              className={classes.wideTextField}
               value={fromAmount === null ? undefined : fromAmount * 10}
               InputProps={{
                 readOnly: true,
@@ -88,7 +96,11 @@ export default function BasicTextFields(props: { web3: Web3Provider }) {
           </form>
         </Grid>
         <Grid item xs={3}>
-          <IconButton aria-label="delete" onClick={() => setFromLN(!fromLN)}>
+          <IconButton
+            aria-label="switch"
+            onClick={() => setFromLN(!fromLN)}
+            className={classes.switchIcon}
+          >
             <SwapVertIcon fontSize="large" />
           </IconButton>
         </Grid>

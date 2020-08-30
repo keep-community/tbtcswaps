@@ -6,12 +6,3 @@ svg {
     box-sizing: content-box;
     border-radius: 4px;
 }
-.MuiTextField-root{
-    width:100%
-}
-.MuiIconButton-root{
-    height: 100%;
-}
-.makeStyles-root-1{
-    box-shadow: 0px 0px 16px 6px rgba(0, 0, 139, .4);
-}

@@ -15,7 +15,7 @@ exports[`snapshot of initial state 1`] = `
           novalidate=""
         >
           <div
-            class="MuiFormControl-root MuiTextField-root"
+            class="MuiFormControl-root MuiTextField-root makeStyles-wideTextField-3"
           >
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined"
@@ -45,10 +45,10 @@ exports[`snapshot of initial state 1`] = `
               </div>
               <fieldset
                 aria-hidden="true"
-                class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+                class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="PrivateNotchedOutline-legendLabelled-4 PrivateNotchedOutline-legendNotched-5"
+                  class="PrivateNotchedOutline-legendLabelled-6 PrivateNotchedOutline-legendNotched-7"
                 >
                   <span>
                     From
@@ -58,7 +58,7 @@ exports[`snapshot of initial state 1`] = `
             </div>
           </div>
           <div
-            class="MuiFormControl-root MuiTextField-root"
+            class="MuiFormControl-root MuiTextField-root makeStyles-wideTextField-3"
           >
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined"
@@ -89,10 +89,10 @@ exports[`snapshot of initial state 1`] = `
               </div>
               <fieldset
                 aria-hidden="true"
-                class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+                class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="PrivateNotchedOutline-legendLabelled-4 PrivateNotchedOutline-legendNotched-5"
+                  class="PrivateNotchedOutline-legendLabelled-6 PrivateNotchedOutline-legendNotched-7"
                 >
                   <span>
                     To
@@ -107,8 +107,8 @@ exports[`snapshot of initial state 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
       >
         <button
-          aria-label="delete"
-          class="MuiButtonBase-root MuiIconButton-root"
+          aria-label="switch"
+          class="MuiButtonBase-root MuiIconButton-root makeStyles-switchIcon-2"
           tabindex="0"
           type="button"
         >
@@ -132,20 +132,6 @@ exports[`snapshot of initial state 1`] = `
         </button>
       </div>
     </div>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        Swap
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
   </div>
 </body>
 `;
