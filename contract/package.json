@@ -1,0 +1,18 @@
+{
+  "name": "ln2tbtc-contract",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "truffle test",
+    "compile": "truffle compile",
+    "migrate":"truffle migrate"
+  },
+  "keywords": [],
+  "author": "corollari",
+  "license": "MIT",
+  "dependencies": {
+    "truffle": "^5.1.42"
+  }
+}
