@@ -38,6 +38,7 @@ exports[`snapshot of initial state 1`] = `
                 class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
               >
                 <img
+                  alt="coin logo"
                   height="20"
                   src="lightning.png"
                 />
@@ -81,6 +82,7 @@ exports[`snapshot of initial state 1`] = `
                 class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
               >
                 <img
+                  alt="coin logo"
                   height="30"
                   src="tBTC.png"
                 />

@@ -16,13 +16,21 @@ export default function Footer() {
         Docs
       </a>
       &nbsp;·&nbsp;
-      <a onClick={() => setDialog("about")} href="#">
+      <button
+        type="button"
+        className="link-button"
+        onClick={() => setDialog("about")}
+      >
         About
-      </a>
+      </button>
       &nbsp;·&nbsp;
-      <a onClick={() => setDialog("contact")} href="#">
+      <button
+        type="button"
+        className="link-button"
+        onClick={() => setDialog("contact")}
+      >
         Contact us
-      </a>
+      </button>
       <AlertDialog
         title={dialog === "about" ? "About" : "Contact us"}
         open={dialog !== null}

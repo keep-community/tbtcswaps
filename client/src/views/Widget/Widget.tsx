@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Swap from "../Swap/Swap";
 import Operate from "../Operate/Operate";
-import {Web3Provider} from '../../ethereum'
+import { Web3Provider } from "../../ethereum";
 import Button from "@material-ui/core/Button";
 
 interface TabPanelProps {
@@ -52,7 +52,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function Widget(props:{web3:Web3Provider, connectWallet:()=>void}) {
+export default function Widget(props: {
+  web3: Web3Provider;
+  connectWallet: () => void;
+}) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -64,10 +67,18 @@ export default function Widget(props:{web3:Web3Provider, connectWallet:()=>void}
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
-  
-  const connectWalletButton = props.web3!==null?undefined:<Button variant="contained" color="primary" size="large" onClick={props.connectWallet}>
-  Connect Wallet
-</Button>
+
+  const connectWalletButton =
+    props.web3 !== null ? undefined : (
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={props.connectWallet}
+      >
+        Connect Wallet
+      </Button>
+    );
 
   return (
     <div className={classes.root}>
@@ -89,16 +100,14 @@ export default function Widget(props:{web3:Web3Provider, connectWallet:()=>void}
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Swap web3={props.web3}/>
+          <Swap web3={props.web3} />
           {connectWalletButton}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Operate web3={props.web3} />
           {connectWalletButton}
         </TabPanel>
-        
       </SwipeableViews>
-      
     </div>
   );
 }

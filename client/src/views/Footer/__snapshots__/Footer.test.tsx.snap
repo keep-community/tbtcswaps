@@ -16,17 +16,19 @@ exports[`snapshot of component rendered without dialogs 1`] = `
         Docs
       </a>
        · 
-      <a
-        href="#"
+      <button
+        class="link-button"
+        type="button"
       >
         About
-      </a>
+      </button>
        · 
-      <a
-        href="#"
+      <button
+        class="link-button"
+        type="button"
       >
         Contact us
-      </a>
+      </button>
     </footer>
   </div>
   <div

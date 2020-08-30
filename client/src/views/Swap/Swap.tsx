@@ -8,7 +8,7 @@ import SwapVertIcon from "@material-ui/icons/SwapVert";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import {Web3Provider} from '../../ethereum'
+import { Web3Provider } from "../../ethereum";
 import "./Swap.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,7 +34,7 @@ const sharedInputProps = {
   },
 };
 
-export default function BasicTextFields(props:{web3:Web3Provider}) {
+export default function BasicTextFields(props: { web3: Web3Provider }) {
   const classes = useStyles();
   const [fromLN, setFromLN] = React.useState(true);
   const [fromAmount, setFromAmount] = React.useState<number | null>(null);
@@ -58,6 +58,7 @@ export default function BasicTextFields(props:{web3:Web3Provider}) {
                     <img
                       src={fromLN ? lnLogo : tbtcLogo}
                       height={getLogoSize(fromLN)}
+                      alt="coin logo"
                     />
                   </InputAdornment>
                 ),
@@ -74,6 +75,7 @@ export default function BasicTextFields(props:{web3:Web3Provider}) {
                     <img
                       src={fromLN ? tbtcLogo : lnLogo}
                       height={getLogoSize(!fromLN)}
+                      alt="coin logo"
                     />
                   </InputAdornment>
                 ),
@@ -91,9 +93,11 @@ export default function BasicTextFields(props:{web3:Web3Provider}) {
           </IconButton>
         </Grid>
       </Grid>
-      {props.web3===null?undefined:<Button variant="contained" color="primary" size="large">
-        Swap
-      </Button>}
+      {props.web3 === null ? undefined : (
+        <Button variant="contained" color="primary" size="large">
+          Swap
+        </Button>
+      )}
     </>
   );
 }
