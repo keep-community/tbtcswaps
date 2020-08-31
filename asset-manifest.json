@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.60c95262.chunk.css",
+    "main.css": "/static/css/main.046000a5.chunk.css",
     "main.js": "/static/js/main.380dbcf3.chunk.js",
     "main.js.map": "/static/js/main.380dbcf3.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.fba19f84.js",
@@ -8,9 +8,9 @@
     "static/js/2.ee11e2b2.chunk.js": "/static/js/2.ee11e2b2.chunk.js",
     "static/js/2.ee11e2b2.chunk.js.map": "/static/js/2.ee11e2b2.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.a7a7deef1efb7c49b9eb82198d6fb78c.js": "/precache-manifest.a7a7deef1efb7c49b9eb82198d6fb78c.js",
+    "precache-manifest.d79bc1f8ec637f35f65100c0b2ddad3a.js": "/precache-manifest.d79bc1f8ec637f35f65100c0b2ddad3a.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.60c95262.chunk.css.map": "/static/css/main.60c95262.chunk.css.map",
+    "static/css/main.046000a5.chunk.css.map": "/static/css/main.046000a5.chunk.css.map",
     "static/js/2.ee11e2b2.chunk.js.LICENSE.txt": "/static/js/2.ee11e2b2.chunk.js.LICENSE.txt",
     "static/media/lightning.png": "/static/media/lightning.e641e8b5.png",
     "static/media/tBTC.png": "/static/media/tBTC.bc04593f.png"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.fba19f84.js",
     "static/js/2.ee11e2b2.chunk.js",
-    "static/css/main.60c95262.chunk.css",
+    "static/css/main.046000a5.chunk.css",
     "static/js/main.380dbcf3.chunk.js"
   ]
 }
