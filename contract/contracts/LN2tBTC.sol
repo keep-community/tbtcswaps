@@ -16,7 +16,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
-// We are not using SafeMath because none of the operations on the contract can result in an overflow/underflow
+// We are not using SafeMath because there's no operation in the contract where an overflow/underflow can cause problems
+// More concretely, there are only two functions in the contract that can overflow/underflow, `addFees` and `removeFees`
+// and the results of these functions are not trusted through the contract
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract LN2tBTC {
@@ -24,6 +26,7 @@ contract LN2tBTC {
 	// ---------------------------------------------------------------
 	// OPERATORS
 	// ---------------------------------------------------------------
+	// All the functions that are meant to be called by operators have their names prefixed with `operator`
 
 	// All of this information could be stored off-chain, but then we would need a way for users to discover the operators available.
 	// To achieve that we would need to build a decentralized and uncensorable list of operators, which would be really hard,
@@ -32,6 +35,8 @@ contract LN2tBTC {
 	// the cost difference is negligible and doing that would probably harm user UX, I believe it's best to store this info on-chain.
 	// Moving this info off-chain may be re-evaluated in the future tho, as it would allow for things such as custom algorithms for setting the fees
 	struct Operator {
+		// URL of a public HTTP server that is used to exchange data off-chain between operator and user.
+		string publicUrl;
 		// Balance in tBTC (held in the contract to prevent operators from providing fake data).
 		// It may seem like holding all the balance in the contract increases the risks for the operators, as if the contract gets hacked
 		// they would lose all the funds they have parked there instead of only the funds currently being used in trades.
@@ -56,6 +61,11 @@ contract LN2tBTC {
 		// totalFee = (amount*linearFee)/10^8 + constantFee
 	}
 
+	// The denominator against which linear fees will be divided
+	// It's necessary for doing floating-point arithmetic using EVM's integer arithmetic
+	// Conversion: a fee of 0.1% would be 0.1*linearFeeDenominator/100
+	uint constant linearFeeDenominator = 10**8;
+
 	// Contains all operator info addressed by operator address
 	// Used by users in conjuction with `operatorList` to search for operators
 	mapping (address => Operator) public operators;
@@ -67,9 +77,9 @@ contract LN2tBTC {
 	// Register a new operator
 	// Must only be called once by the operator itself when it starts operating
 	// Requires a previous approve() call to the ERC20 tBTC contract to allow the token transfer
-	function operatorRegister(uint tBTCBalance, uint lnBalance, uint linearFee, uint constantFee) public {
+	function operatorRegister(uint tBTCBalance, uint lnBalance, uint linearFee, uint constantFee, string memory publicUrl) public {
 		require(operators[msg.sender].exists==false, "Operator has already been registered before");
-		operators[msg.sender] = Operator(tBTCBalance, lnBalance, true, linearFee, constantFee);
+		operators[msg.sender] = Operator(publicUrl, tBTCBalance, lnBalance, true, linearFee, constantFee);
 		tBTContract.transferFrom(msg.sender, address(this), tBTCBalance);
 		operatorList.push(msg.sender);
 	}
@@ -105,6 +115,11 @@ contract LN2tBTC {
 		operators[msg.sender].lnBalance = newLNBalance;
 	}
 
+	// Set the url of the operator node
+	function operatorSetPublicUrl(string memory newUrl) public {
+		operators[msg.sender].publicUrl = newUrl;
+	}
+
 	// ---------------------------------------------------------------
 	// tBTC -> LN SWAPS
 	// ---------------------------------------------------------------
@@ -121,18 +136,14 @@ contract LN2tBTC {
 	uint public timeoutPeriod = 1 hours;
 
 	struct TBTC2LNSwap {
-		// User that has created this swap
-		// This field is also used to check for struct existence by comparing it against address(0)
-		address user;
 		// Provider that is serving the swap
 		address provider;
 		// Amount of tBTC that is locked in the swap
+		// A value of 0 is used to represent that the swap has been finalized
 		uint tBTCAmount;
-		// Hash that will be used in the HTLC of the LN invoice
-		// It's preimage will be required to unlock the tBTC (unless the swap is reverted due to a timeout)
-		bytes32 paymentHash;
 		// Timestamp of the moment the swap was created.
 		// Always set to `now` on creation
+		// This field is also used to check for struct existence by comparing it against 0
 		uint startTimestamp;
 	}
 
@@ -148,9 +159,12 @@ contract LN2tBTC {
 	// TODO: Send LN invoice to operator through an off-chain medium to lower costs (not by much tho)
 	// Create a new swap from tBTC to LN, locking the tBTC tokens required from the swap in the contract
 	// Requires a previous approve() call to the ERC20 tBTC contract to allow the token transfer
+	// Note that this function doesn't reduce the `tBTCBalance` of the provider, as doing otherwise would open the provider to griefing attacks,
+	// so, if two users create swaps concurrently, a provider may not have enough liquidity to serve both of them
+	// This can be solved by having the users listen to the `TBTC2LNSwapCreated` events emitted by the contract
 	function createTBTC2LNSwap(bytes32 paymentHash, uint amount, address providerAddress, string memory invoice) public {
-		require(tbtcSwaps[msg.sender][paymentHash].user==address(0), "Swap already exists");
-		tbtcSwaps[msg.sender][paymentHash] = TBTC2LNSwap(msg.sender, providerAddress, amount, paymentHash, now);
+		require(tbtcSwaps[msg.sender][paymentHash].startTimestamp==0, "Swap already exists");
+		tbtcSwaps[msg.sender][paymentHash] = TBTC2LNSwap(providerAddress, amount, now);
 		tBTContract.transferFrom(msg.sender, address(this), amount);
 		emit TBTC2LNSwapCreated(paymentHash, amount, msg.sender, providerAddress, invoice);
 	}
@@ -161,9 +175,9 @@ contract LN2tBTC {
 	// (it could also happen if the operator malfunctions and doesn't claim it's payment after the swap, but this should never happen)
 	function revertTBTC2LNSwap(bytes32 paymentHash) public {
 		TBTC2LNSwap storage swap = tbtcSwaps[msg.sender][paymentHash];
-		require(swap.user!=address(0), "Swap doesn't exist");
+		require(swap.startTimestamp != 0, "Swap doesn't exist");
 		require(swap.tBTCAmount > 0, "Swap has already been finalized");
-		require((swap.startTimestamp + timeoutPeriod) > now, "Swap hasn't timed out yet");
+		require((swap.startTimestamp + timeoutPeriod) < now, "Swap hasn't timed out yet");
 		uint tBTCAmount = swap.tBTCAmount;
 		swap.tBTCAmount = 0;
 		tBTContract.transfer(msg.sender, tBTCAmount);
@@ -177,42 +191,135 @@ contract LN2tBTC {
 		require(swap.provider != msg.sender, "Swap doesn't use this provider or doesn't exist at all");
 		require(swap.tBTCAmount > 0, "Swap has already been finalized");
 		require(sha256(preimage) == paymentHash, "Preimage doesn't match the payment hash");
-		operators[msg.sender].tBTCBalance += swap.tBTCAmount;
+		Operator storage operator = operators[msg.sender];
+		operator.tBTCBalance += swap.tBTCAmount;
 		swap.tBTCAmount = 0;
-		operators[msg.sender].lnBalance -= swap.tBTCAmount;
+		// The call to removeFees can overflow/underflow
+		// But given that this can only happen if the operator assigns malicious fee parameters and
+		// the result only affects `lnBalance`, which is unverified and can be already set to any value by the operator
+		// then an overflow here won't cause any problems
+		operator.lnBalance -= removeFees(swap.tBTCAmount, operator.linearFee, operator.constantFee); 
+	}
+
+	// The calculations done in this function may overflow or underflow
+	// Extra care must be taken to ensure that the results from this function are only used in situations where this is fine
+	function removeFees(uint amount, uint linearFee, uint constantFee) pure public returns (uint amountWithoutFees){
+		return ((amount - constantFee)*linearFeeDenominator)/(linearFeeDenominator+linearFee);
 	}
 
 	// ---------------------------------------------------------------
 	// LN -> tBTC SWAPS
 	// ---------------------------------------------------------------
 
+	// A security deposit that is provided by the user on swap creation
+	// It is returned to the user if either the swap concludes successfully or the operator is unresponsive and times out
+	// If the user doesn't reveal the pre-image on time after the operator has locked tBTC, then it is awarded to the provider
+	// Currently it is a simple constant value in ETH, which is not perfect for the following reasons:
+	//   - This deposit should cover the operator's tx fees, but these are dynamic whereas the deposit is constant so it's possible
+	//     that at some point tx fees are greater than this deposit
+	//   - The deposit doesn't scale with the value of locked tBTC, so it's possible to make an operator lock a large amount of value
+	//     while only losing a much smaller fee
+	// However, doing something more complex would require an oracle, and, as it is, maintaining this kind of attack for a day
+	// would cost 24 ETH, which is unsutainable, so the current system should already do a good job at deterring malicious actors
+	// Furthemore, operators can defend against this attack by being selective on the swaps they allow (eg: they can reject big amounts)
 	uint public securityDepositAmount = 1 ether;
 
 	struct LN2TBTCSwap {
-		// User that has created this swap
-		// This field is also used to check for struct existence by comparing it against address(0)
-		address user;
 		// Provider that is serving the swap
 		address provider;
-		// Amount of tBTC that is locked in the swap
+		// Amount of tBTC that the user is requesting for their LN-bound BTC
+		// It will locked in the contract by the operator after the user has sent an invoice payment request
+		// A value of 0 is used to represent that the swap has been finalized
 		uint tBTCAmount;
-		// Hash that will be used in the HTLC of the LN invoice
-		// It's preimage will be required to unlock the tBTC (unless the swap is reverted due to a timeout)
-		bytes32 paymentHash;
 		// Timestamp of the moment the swap was created.
 		// Always set to `now` on creation
+		// This field is also used to check for struct existence by comparing it against 0
 		uint startTimestamp;
+		// Timestamp of the moment the operator locks it's tBTC tokens (after the user has sent the LN payment request)
+		// Will be used to keep track of the timeout that is triggered when the user hasn't revealed the pre-image on time
+		uint tBTCLockTimestamp;
 	}
 
-	event LN2TBTCSwapCreated();
-	event LN2TBTCInvoiceUploaded(string invoice);
+	// The reasons why this structure has been chosen are outlined in the definition of `tbtcSwaps`
+	mapping (address => mapping (bytes32 => LN2TBTCSwap)) public lnSwaps;
 
-	function createLN2TBTCSwap() payable public {
-		require(msg.value == securityDepositAmount, "ETH security deposit provided isn't the right amount (1 ETH)");
+	// Fired on swap creation, should be answered by the operator by providing the user with an LN invoice
+	event LN2TBTCSwapCreated(address userAddress, bytes32 paymentHash, address providerAddress, uint tBTCAmount);
+	// Fired when the operator locks tBTC in expectance of the pre-image reveal, should be answered by the user with a call to `claimTBTCPayment`
+	event LN2TBTCOperatorLockedTBTC(address userAddress, bytes32 paymentHash);
+	// Fired when the HTLC pre-image has been revealed, concludes the swap as the operator can now claim the LN payment and finalize everything
+	event LN2TBTCPreimageRevealed(address userAddress, bytes32 paymentHash, address providerAddress, bytes preimage);
+
+	// Creates a new LN -> tBTC swap
+	// Locks the ETH security deposit in the contract
+	// This function doesn't reduce the `lnBalance` of an operator, see the comment on the definition of `createTBTC2LNSwap` for more details on this
+	function createLN2TBTCSwap(bytes32 paymentHash, address providerAddress, uint tBTCAmount) payable public {
+		require(lnSwaps[msg.sender][paymentHash].startTimestamp == 0, "Swap already exists");
+		require(msg.value == securityDepositAmount, "ETH security deposit provided isn't the right amount (should be 1 ETH)");
+		require(tBTCAmount > 0, "The amount requested cannot be zero (why swap something for nothing?)");
+		lnSwaps[msg.sender][paymentHash] = LN2TBTCSwap(providerAddress, tBTCAmount, now, 0);
+		emit LN2TBTCSwapCreated(msg.sender, paymentHash, providerAddress, tBTCAmount);
 	}
 
-	// TODO: Move this off-chain
-	function operatorUploadInvoice(string memory invoice, address userAddress, bytes32 paymentHash) public {
-		emit LN2TBTCInvoiceUploaded(invoice);
+	// Abort swap if the operator has been unresponsive and hasn't locked the tBTC tokens before the timeout (or the user hasn't sent a payment request)
+	// Returns the security deposit to the user
+	function revertLN2TBTCSwap(bytes32 paymentHash) public {
+		LN2TBTCSwap storage swap = lnSwaps[msg.sender][paymentHash];
+		require(swap.tBTCAmount > 0, "Swap doesn't exist or has already been finalized");
+		require((swap.startTimestamp + timeoutPeriod) < now, "Swap hasn't timed out yet");
+		require(swap.tBTCLockTimestamp == 0, "Operator has locked the tBTC tokens before the timeout");
+		swap.tBTCAmount = 0;
+		msg.sender.transfer(securityDepositAmount); // Return security deposit
+	}
+
+	// Lock tBTC tokens and make them claimable by the user if they provide a valid pre-image before timeout
+	function operatorLockTBTCForLN2TBTCSwap(address userAddress, bytes32 paymentHash) public {
+		LN2TBTCSwap storage swap = lnSwaps[userAddress][paymentHash];
+		require(swap.provider == msg.sender, "Swap doesn't use this provider or doesn't exist at all");
+		require(swap.tBTCAmount > 0, "Swap has already been finalized");
+		require(swap.tBTCLockTimestamp == 0, "tBTC tokens have already been locked before for this swap");
+		Operator storage op = operators[msg.sender];
+		require(op.tBTCBalance >= swap.tBTCAmount, "Operator doesn't have enough funds to conduct the swap");
+		op.tBTCBalance -= swap.tBTCAmount;
+		swap.tBTCLockTimestamp = now;
+		emit LN2TBTCOperatorLockedTBTC(userAddress, paymentHash);
+	}
+
+	// Revert swap if, once the operator has locked the tBTC tokens, the user hasn't revealed the pre-image before timeout
+	// It will also transfer the security deposit provided by the user on swap creation to the operator, in order to:
+	//   - Make up for the fees that the operator spent sending the transaction that called `operatorLockTBTCForLN2TBTCSwap`
+	//   - Make up for the opportunity cost on the operator's side of having their tBTC locked for some time
+	function operatorRevertLN2TBTCSwap(address userAddress, bytes32 paymentHash) public {
+		LN2TBTCSwap storage swap = lnSwaps[userAddress][paymentHash];
+		require(swap.provider == msg.sender, "Swap doesn't use this provider or doesn't exist at all");
+		require(swap.tBTCAmount > 0, "Swap has already been finalized");
+		require(swap.tBTCLockTimestamp != 0, "tBTC tokens have not been locked for this swap");
+		require((swap.tBTCLockTimestamp + timeoutPeriod) < now, "Swap hasn't timed out yet");
+		operators[msg.sender].tBTCBalance += swap.tBTCAmount;
+		swap.tBTCAmount = 0;
+		msg.sender.transfer(securityDepositAmount); // Award security deposit to the operator as compensation
+	}
+
+	// Claim the tBTC tokens locked by the operator, revealing the HTLC preimage and thus allowing the operator to finalise the LN payment
+	function claimTBTCPayment(bytes32 paymentHash, bytes memory preimage) public {
+		LN2TBTCSwap storage swap = lnSwaps[msg.sender][paymentHash];
+		require(swap.tBTCAmount > 0, "Swap doesn't exist or has already been finalized");
+		require(swap.tBTCLockTimestamp != 0, "tBTC tokens have not been locked for this swap");
+		require(sha256(preimage) == paymentHash, "Preimage doesn't match the payment hash");
+		uint tBTCAmount = swap.tBTCAmount;
+		swap.tBTCAmount = 0;
+		tBTContract.transfer(msg.sender, tBTCAmount);
+		msg.sender.transfer(securityDepositAmount); // Return security deposit to user
+		Operator storage op = operators[swap.provider];
+		// The result of `addFees` must not be trusted as it can overflow/underflow. However, given that here we are
+		// using it to set the value of `Operator.lnBalance`, which is already under the control of the operator, it's fine.
+		op.lnBalance += addFees(tBTCAmount, op.linearFee, op.constantFee); // Update operator balance
+		emit LN2TBTCPreimageRevealed(msg.sender, paymentHash, swap.provider, preimage);
+	}
+
+	// The calculations done in this function may overflow or underflow
+	// Extra care must be taken to ensure that the results from this function are only used in situations where this is fine
+	function addFees(uint amount, uint linearFee, uint constantFee) pure public returns (uint amountWithFees){
+		return (amount * (linearFeeDenominator + linearFee))/linearFeeDenominator + constantFee;
 	}
 }
