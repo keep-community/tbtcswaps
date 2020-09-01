@@ -2,7 +2,7 @@ import React from "react";
 import { Web3Provider } from "../../ethereum";
 import "./UserAddress.css";
 
-export default function BasicTextFields(props: { web3: Web3Provider }) {
+export default function UserAddress(props: { web3: Web3Provider }) {
   return (
     <div className="top-right">
       {props.web3 === null
