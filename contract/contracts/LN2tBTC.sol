@@ -80,8 +80,16 @@ contract LN2tBTC {
 	function operatorRegister(uint tBTCBalance, uint lnBalance, uint linearFee, uint constantFee, string memory publicUrl) public {
 		require(operators[msg.sender].exists==false, "Operator has already been registered before");
 		operators[msg.sender] = Operator(publicUrl, tBTCBalance, lnBalance, true, linearFee, constantFee);
-		tBTContract.transferFrom(msg.sender, address(this), tBTCBalance);
+		if(tBTCBalance > 0){
+			tBTContract.transferFrom(msg.sender, address(this), tBTCBalance);
+		}
 		operatorList.push(msg.sender);
+	}
+
+	// Returns the length of the `operatorList` array
+	// Used by clients to iterate over the operators when searching for the lowest fees
+	function getOperatorListLength() view public returns(uint length){
+		return operatorList.length;
 	}
 
 	// Simple withdraw operation for the ERC20 tBTC tokens held in the contract in behalf of an operator
