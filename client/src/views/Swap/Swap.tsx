@@ -11,9 +11,8 @@ import Grid from "@material-ui/core/Grid";
 import { Web3Provider, Operator, Ln2tbtcContract } from "../../ethereum";
 import Web3 from "web3";
 import ln2tbtcABI from '../../contracts/LN2tBTC.json'
-import tbtcABI from '../../contracts/IERC20.json'
 import type { AbiItem } from 'web3-utils'
-import { tbtcAddress, ln2tbtcAddress } from '../../contracts/deployedAddresses'
+import { ln2tbtcAddress } from '../../contracts/deployedAddresses'
 import Invoice from './Invoice'
 import "./Swap.css";
 
@@ -87,7 +86,7 @@ function calculateLowestSwap(operators: Operator[], fromAmount: number, fromLN: 
 export default function Swap(props: { web3: Web3Provider }) {
   const classes = useStyles();
   const [fromLN, setFromLN] = React.useState(false);
-  const [stage, setStage] = React.useState<'initial' | 'invoice'>('invoice');
+  const [stage, setStage] = React.useState<'initial' | 'invoice'>('initial');
   const [fromAmount, setFromAmount] = React.useState<number | null>(null);
   const [operators, setOperators] = React.useState<Operator[] | null>(null);
   if (operators === null) {

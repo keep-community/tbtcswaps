@@ -53,7 +53,6 @@ export default function Operate(props: { web3: Web3Provider }) {
   if (tbtcContract === null) {
     tbtcContract = new props.web3.eth.Contract(tbtcABI.abi as AbiItem[], tbtcAddress);
   }
-  (window as any).contract = ln2tbtcContract
   const userAddress = (props.web3.currentProvider as any).selectedAddress;
   if (operatorInfo === null) {
     ln2tbtcContract.methods.operators(userAddress).call().then(setOperatorInfo);

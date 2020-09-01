@@ -39,8 +39,8 @@ exports[`snapshot of initial state 1`] = `
               >
                 <img
                   alt="coin logo"
-                  height="20"
-                  src="lightning.png"
+                  height="30"
+                  src="tBTC.png"
                 />
               </div>
               <fieldset
@@ -83,8 +83,8 @@ exports[`snapshot of initial state 1`] = `
               >
                 <img
                   alt="coin logo"
-                  height="30"
-                  src="tBTC.png"
+                  height="20"
+                  src="lightning.png"
                 />
               </div>
               <fieldset

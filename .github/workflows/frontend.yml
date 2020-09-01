@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - run: (cd ../contract && npm ci && npm run build)
     - run: npm ci
     - run: npm run build
   test:
@@ -27,6 +28,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - run: (cd ../contract && npm ci && npm run build)
     - run: npm ci
     - run: npm test
   deploy:
@@ -39,6 +41,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - run: (cd ../contract && npm ci && npm run build)
     - run: npm ci
     - run: npm run build
     - name: Deploy to Github Pages
