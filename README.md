@@ -1,4 +1,4 @@
-# ln2tBTC
+# LN 2 tBTC
 > Trustless Lightning Network <-> tBTC swaps
 
 ## Features
