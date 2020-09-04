@@ -111,7 +111,7 @@ With that said, users would only need to trust it during the short period of tim
 In any case, due to the large usage that these kind of services have experienced along with the extremely low probability of one of them integrating tBTC I wuld be down to build one an integrate it into this product if the community likes the idea.
 
 ## Acknowledgments
-None of the ideas exposed here are novel, submarine swaps have existed since 2018 and the possibility of using them to do cross-chain swaps has been discussed multiple times, the only thing slightly innovative about this protocol is the LN -> on-chain swap, which still relies heavily on the ideas behind submarine swaps.  
+None of the ideas exposed here are novel, submarine swaps have existed since 2018 and the possibility of using them to do cross-chain swaps has been discussed multiple times.  
 
 ## Similar work
 To the best of my knowledge there has been two other projects that have implemented one-way submarine swaps between LN and the Ethereum network: [leon-do/submarine-swaps](https://github.com/leon-do/submarine-swaps) and [Jasonhcwong/lnswaps](https://github.com/Jasonhcwong/lnswaps). However, both of these projects are protoypes and they have huge security holes (one of them has a griefing problem that makes it possible to make the node spend all its ETH by simply sending requests to it and the other has a reentrancy bug that makes it possible to steal all the funds in the contract), so I believe they are not mature enough.
