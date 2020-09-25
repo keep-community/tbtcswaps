@@ -7,7 +7,7 @@
 - Decentralized: Anyone can provide liquidity and the client will automatically pick the cheapest provider
 
 ## How it works
-On a basic level, this protocol repurposes a feature of the lightning network, which was originally meant to prevent middlemen from stealing transactions that went through them, to enable atomnic swaps between on-chain tBTC and off-chain BTC, making it possible to pay a lightning invoice by sending tBTC on the ethereum network and viceversa. If you'd like to swap just go to [ln2tbtc.com](https://ln2tbtc.com).
+On a basic level, this protocol repurposes a feature of the lightning network, which was originally meant to prevent middlemen from stealing transactions that went through them, to enable atomnic swaps between on-chain tBTC and off-chain BTC, making it possible to pay a lightning invoice by sending tBTC on the ethereum network and viceversa. If you'd like to swap just go to [tbtcswap.com](https://tbtcswap.com).
 
 To achieve this, the protocol relies on a marketplace of liquidity providers that run nodes that perform the swaps requested by users, charging fees for their services and freely competing between them to attract users with the lowest fees. If you'd like to become a liquidity provider and start earning fees check out the [How to become a liquidity provider section](#how-to-become-a-liquidity-provider).
 
