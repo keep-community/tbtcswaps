@@ -1,11 +1,21 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react'
 import ICONS from '../../../../img/icons.svg'
 
-const Hint = React.forwardRef<HTMLSpanElement, { onClick: () => void }>((props, ref) => (
-    <span ref={ref} onClick={props.onClick} className="tooltip-help" data-tooltip="" data-tooltip-trigger="click" data-tooltip-content='<b>Linear Fee</b> is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. <br><a href="#">Learn more</a>'>
-        <svg className="icon icon-question">
-            <use xlinkHref={`${ICONS}#icon-question`}></use>
-        </svg>
+interface HintProps {
+    onClick?: () => void
+    onMouseEnter?: () => void
+    onMouseLeave?: () => void
+    svgIcon?: React.ReactNode
+}
+
+const Hint = React.forwardRef<HTMLSpanElement, HintProps>((props, ref) => (
+    <span ref={ref} onClick={props.onClick} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave} className={props.svgIcon ? 'tooltip-general' : "tooltip-help"}>
+        {
+            props.svgIcon ||
+            <svg className="icon icon-question">
+                <use xlinkHref={`${ICONS}#icon-question`}></use>
+            </svg>
+        }
     </span>
 ));
 
@@ -29,7 +39,6 @@ const calculateTooltipPosition = (el: HTMLElement, tooltipWidth: number, tooltip
     }
 
     const elPosY = rect.top + rect.height / 2
-    console.log(screenHeight - elPosY)
     if (screenHeight - elPosY <= tooltipHeight) {
         position = "top"
         x = x - tooltipHeight - rect.height - 12
@@ -51,7 +60,7 @@ const Tooltip: React.FC<{ hintButton: React.RefObject<HTMLSpanElement>, onDismis
         arrowOffset: 0
     })
     const width = 340
-    const height = 200
+    const height = 400
     let myself = useRef<HTMLDivElement>(null);
 
     const myselfComplexCheck = myself.current ? myself.current.clientHeight : 0

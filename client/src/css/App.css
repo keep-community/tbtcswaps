@@ -2063,7 +2063,8 @@ input::-ms-clear {
 
 /* Подсказка Tooltip */
 
-.tooltip-help {
+.tooltip-help,
+.tooltip-general {
   position: relative;
   width: 16px;
   height: 16px;
@@ -2077,7 +2078,12 @@ input::-ms-clear {
   transition: 0.25s background;
 }
 
-.tooltip-help .icon {
+.tooltip-general {
+  background: unset;
+}
+
+.tooltip-help .icon,
+.tooltip-general .icon {
   position: absolute;
   left: 50%;
   top: 50%;

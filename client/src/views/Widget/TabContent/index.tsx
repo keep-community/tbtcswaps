@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SwapPane, OperatePane } from './Panes'
+import { SwapPane, OperatePane, InvoicePane } from './Panes'
 
 
 interface TabContentProps {
@@ -15,6 +15,7 @@ const TabContent: React.FC<TabContentProps> = ({ activeTabId }) => {
             {
                 (activeTabId === 'swap' && <SwapPane />)
                 || (activeTabId === 'operate' && <OperatePane />)
+                || (activeTabId === 'invoice' && <InvoicePane />)
                 || <div>Contact us.</div>
             }
         </div>

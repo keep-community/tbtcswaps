@@ -12,9 +12,10 @@ interface InputProps {
     display?: 'block' | 'inline'
     className?: string
     hint?: React.ReactNode
+    error?: string
 }
 
-const Input: React.FC<InputProps> = ({ label, actionText, svgIcon, placeholder, value, type, className, hint }) => {
+const Input: React.FC<InputProps> = ({ label, actionText, svgIcon, placeholder, value, type, className, hint, error }) => {
 
     let questionMarkElement = useRef<HTMLSpanElement>(null);
     const [displayTooltip, setDisplayTooltip] = useState(false)
@@ -22,7 +23,7 @@ const Input: React.FC<InputProps> = ({ label, actionText, svgIcon, placeholder, 
     return (
         <>
             <div className={`exchange__column ${className ?? ''}`}>
-                <div className="form-block form-block--icon">
+                <div className={`form-block ${error ? 'is_error' : ''}`}>
                     {label &&
                         <label className="form-block__label">
                             <span>
@@ -45,6 +46,9 @@ const Input: React.FC<InputProps> = ({ label, actionText, svgIcon, placeholder, 
                             </div>
                         }
                     </div>
+                    {error &&
+                        <div className="form-block__message">{error}</div>
+                    }
                 </div>
             </div>
             {

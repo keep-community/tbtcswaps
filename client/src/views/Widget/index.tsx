@@ -5,7 +5,7 @@ import TabContent from './TabContent'
 
 
 const Widget: React.FC<{ web3: Web3Provider }> = ({ web3 }) => {
-    const defaultTab = 'operate'
+    const defaultTab = 'invoice'
     const [activeTabId, setActiveTabId] = useState(defaultTab)
 
     return (
