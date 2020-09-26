@@ -1,68 +1,45 @@
 import React from "react";
-import AlertDialog from "../AlertDialog/AlertDialog";
-import "./Footer.css";
+import Modal from "../Modal";
+/* import "./Footer.css"; */
+import modalData from "./modal-data"
 
 export default function Footer() {
-  const [dialog, setDialog] = React.useState<"about" | "contact" | null>(null);
+  const [dialogId, setDialogId] = React.useState<string>('');
+
+  const handleNavClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.getAttribute('data-id') ?? ''
+    setDialogId(id)
+  }
 
   const handleClose = () => {
-    setDialog(null);
+    setDialogId('')
   };
-  const a = <>a</>;
+
   return (
-    <footer>
-      <a href="https://github.com/corollari/ln2tBTC">Code</a>&nbsp;·&nbsp;
-      <a href="https://github.com/corollari/ln2tBTC/blob/master/README.md">
-        Docs
-      </a>
-      &nbsp;·&nbsp;
-      <button
-        type="button"
-        className="link-button"
-        onClick={() => setDialog("about")}
-      >
-        About
-      </button>
-      &nbsp;·&nbsp;
-      <button
-        type="button"
-        className="link-button"
-        onClick={() => setDialog("contact")}
-      >
-        Contact us
-      </button>
-      <AlertDialog
-        title={dialog === "about" ? "About" : "Contact us"}
-        open={dialog !== null}
-        handleClose={handleClose}
-      >
-        {dialog === "about" ? (
-          <>
-            LN2tBTC is a decentralized service that enables trustless swaps
-            between tBTC and BTC on the lightning network.
-            <br />
-            <br />
-            It is based on a protocol derived from submarine swaps and it's
-            served by a network of liquidity providers that anyone can join.
-            <br />
-            <br />
-            If you'd like to learn more about how everything works check out our{" "}
-            <a href="https://github.com/corollari/ln2tBTC/blob/master/README.md">
-              our docs
-            </a>
-            .
-          </>
-        ) : (
-          <>
-            Just drop a message on{" "}
-            <a href="https://discord.com/channels/590951101600235531/681226760209432608/748490345217654786">
-              Keep's discord
-            </a>{" "}
-            tagging me (@corollari#2127) or send me an email at
-            admin@ln2tbtc.com
-          </>
-        )}
-      </AlertDialog>
-    </footer>
+    <>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer__row row align-end justify-between">
+            <div className="footer__left">
+              <div className="footer__site">
+                <span>tbtcswaps.com</span><br />Swap Engine
+              </div>
+            </div>
+            <nav className="footer__right">
+              <ul className="footer__menu menu">
+                <li className="menu__item"><button data-id="code" onClick={handleNavClick} className="menu__link">Code</button></li>
+                <li className="menu__item"><button data-id="docs" onClick={handleNavClick} className="menu__link">Docs</button></li>
+                <li className="menu__item"><button data-id="about" onClick={handleNavClick} className="menu__link">About</button></li>
+                <li className="menu__item"><button data-id="contact-us" onClick={handleNavClick} className="menu__link">Contact us</button></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </footer>
+      <Modal title={modalData[dialogId]?.title} isOpen={!!dialogId} buttonText={modalData[dialogId]?.buttonText}
+        onButtonClick={handleClose} >
+        {modalData[dialogId]?.content}
+      </Modal>
+    </>
   );
 }

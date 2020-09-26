@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Footer from "./views/Footer/Footer";
-import Widget from "./views/Widget/Widget";
-import UserAddress from "./views/UserAddress/UserAddress";
 import AlertDialog from "./views/AlertDialog/AlertDialog";
+import Header from "./views/Header";
+import Body from "./views/Body";
 import Web3 from "web3";
 import { Web3Provider } from "./ethereum";
-import "./App.css";
+import "./css/App.css";
 
 function App() {
   const [web3, setWeb3] = useState<Web3Provider>(null);
@@ -39,9 +39,9 @@ function App() {
       .then(() => setWeb3(new Web3(window.ethereum as any)));
   };
   return (
-    <div className="App">
-      <UserAddress web3={web3} />
-      <Widget {...{ web3, connectWallet }} />
+    <div className="wrapper" /* className={styles.wrapper} */>
+      <Header web3={web3} />
+      <Body {...{ web3, connectWallet }} />
       <Footer />
       <AlertDialog
         title="Error"
