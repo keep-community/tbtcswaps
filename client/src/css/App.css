@@ -1084,7 +1084,7 @@ img {
 }
 
 .wrapper-content {
-  position: relative;
+  /* position: relative; */
   z-index: 1;
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
@@ -1563,7 +1563,6 @@ input::-ms-clear {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   margin-right: 13px;
-  margin-left: 10px;
   width: 30px;
   height: 30px;
   display: -webkit-box;
@@ -1583,6 +1582,7 @@ input::-ms-clear {
 }
 
 .form-block__unit {
+  margin-right: 13px;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   font-size: 13px;

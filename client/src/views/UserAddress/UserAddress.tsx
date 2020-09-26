@@ -10,7 +10,7 @@ export default function UserAddress(props: { web3: Web3Provider }) {
       {selectedAddress && <div className="connect__label">Mainnet:</div>}
       <div className="connect__text">{
         selectedAddress ? `${selectedAddress.substring(0, 6)}...${selectedAddress.substring(selectedAddress.length - 4)}`
-          : 'No wallet'
+          : 'Connect Wallet'
       }</div>
       <div className="connect__status"><span></span></div>
     </div >

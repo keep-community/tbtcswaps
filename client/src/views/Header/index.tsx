@@ -3,7 +3,7 @@ import React from 'react'
 import UserAddress from "../UserAddress/UserAddress";
 import { Web3Provider } from "../../ethereum";
 import LOGO from '../../img/logo.svg'
-import ICON_GEAR from '../../img/icons.svg'
+import ICONS from '../../img/icons.svg'
 
 
 const Header: React.FC<{ web3: Web3Provider }> = ({ web3 }) => {
@@ -21,7 +21,7 @@ const Header: React.FC<{ web3: Web3Provider }> = ({ web3 }) => {
                         <div className="header__settings settings">
                             <button className="settings__button">
                                 <svg className="icon icon-gear">
-                                    <use xlinkHref={`${ICON_GEAR}#icon-gear`}></use>
+                                    <use xlinkHref={`${ICONS}#icon-gear`}></use>
                                 </svg>
                             </button>
                         </div>

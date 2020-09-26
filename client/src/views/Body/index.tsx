@@ -1,18 +1,20 @@
 import React from 'react'
-import styles from './styles.module.css'
-import Widget from "../Widget/Widget";
+import Widget from "../Widget";
 import { Web3Provider } from "../../ethereum";
 
-interface BodyType {
+interface BodyProps {
     web3: Web3Provider;
     connectWallet: () => void;
 }
 
-const Body: React.FC<BodyType> = ({ web3, connectWallet }) => {
+const Body: React.FC<BodyProps> = ({ web3, connectWallet }) => {
     return (
-        <div className={styles['wrapper-content']} >
-            adsdasasd
-           {/*  <Widget {...{ web3, connectWallet }} /> */}
+        <div className='wrapper-content' >
+            <div className="container">
+                <div className="content">
+                    <Widget {...{ web3, connectWallet }} />
+                </div>
+            </div>
         </div>
     )
 }
