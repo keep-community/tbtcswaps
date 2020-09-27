@@ -1,0 +1,1 @@
+../../../client/src/contracts/deployedAddresses.ts
