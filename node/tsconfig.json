@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "strict": true,  
+    "esModuleInterop": true,
+    "skipLibCheck": true, 
+    "outDir": "build",
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "build"]
+}

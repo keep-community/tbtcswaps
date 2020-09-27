@@ -1,0 +1,43 @@
+{
+  "name": "ln2tbtc-node",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Node for tbtcswap liquidity providers",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src --ext ts --no-ignore --fix && prettier --write \"src/**/*.ts\"",
+    "start": "node build/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corollari/ln2tBTC.git"
+  },
+  "keywords": [
+    "tbtc"
+  ],
+  "author": "@corollari",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corollari/ln2tBTC/issues"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.5"
+  },
+  "homepage": "https://github.com/corollari/ln2tBTC#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "ln-service": "^49.11.1"
+  }
+}
