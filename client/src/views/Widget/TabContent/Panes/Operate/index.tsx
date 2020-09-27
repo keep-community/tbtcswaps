@@ -68,6 +68,12 @@ const Operate: React.FC = () => {
 
     return (
         (
+            <OperatePane
+                handleInputChange={(form) => {
+                    console.log(form)
+                }}
+            />
+        ) || (
             web3 === null && (
                 <span>No web3 detected.</span>
             )
