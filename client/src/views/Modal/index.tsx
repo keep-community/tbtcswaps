@@ -18,7 +18,7 @@ const iconsMap: { [key: string]: string } = {
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-    const { isOpen, title, buttonText, children, onButtonClick, type = 'success' } = props
+    const { isOpen, title, buttonText, children, onButtonClick, type = 'normal' } = props
     const icon = ICONS + '#' + iconsMap[type]
 
     return (

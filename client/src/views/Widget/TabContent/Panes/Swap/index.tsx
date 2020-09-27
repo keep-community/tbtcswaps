@@ -63,8 +63,8 @@ const Swap: React.FC = () => {
 
     const [errModalName, setErrModalName] = useState<string>()
 
-    const [tbtcAmount, setTbtcAmount] = useState(0)
-    const [lnAmount, setLnAmount] = useState(0)
+    const [tbtcAmount, setTbtcAmount] = useState('')
+    const [lnAmount, setLnAmount] = useState('')
     const [fromName, setFromName] = useState('')
 
     const [stage, setStage] = useState<'initial' | 'invoice'>('initial');

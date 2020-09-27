@@ -21,7 +21,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
         nodeAddress: ''
     })
 
-    const onInput = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         //setXAmount is the amount displayed in the input, should be string
         const name = ev.target.name
         let value = ev.target.value
@@ -52,7 +52,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                             <div className="form-group">
                                 <Input
                                     value={formValues['lnBalance']}
-                                    onInput={onInput}
+                                    onChange={onChange}
                                     name="lnBalance"
                                     label="LN Balance "
                                     svgIcon={
@@ -67,7 +67,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                             <div className="form-group">
                                 <Input
                                     value={formValues['tbtcBalance']}
-                                    onInput={onInput}
+                                    onChange={onChange}
                                     name="tbtcBalance"
                                     label="tBTC Balance "
                                     svgIcon={
@@ -82,7 +82,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                             <div className="form-group">
                                 <Input
                                     value={formValues['linearFee']}
-                                    onInput={onInput}
+                                    onChange={onChange}
                                     name="linearFee"
                                     label="Linear Fee "
                                     placeholder="0.0"
@@ -98,7 +98,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                             <div className="form-group">
                                 <Input
                                     value={formValues['constantFee']}
-                                    onInput={onInput}
+                                    onChange={onChange}
                                     name="constantFee"
                                     label="Constant Fee "
                                     placeholder="0.0"
@@ -114,7 +114,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                             <div className="form-group">
                                 <Input
                                     value={formValues['nodeAddress']}
-                                    onInput={onInput}
+                                    onChange={onChange}
                                     name="nodeAddress"
                                     label="Node Address "
                                     placeholder="0.0"

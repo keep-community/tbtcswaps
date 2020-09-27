@@ -27,8 +27,8 @@ export default function Footer() {
             </div>
             <nav className="footer__right">
               <ul className="footer__menu menu">
-                <li className="menu__item"><button data-id="code" onClick={handleNavClick} className="menu__link">Code</button></li>
-                <li className="menu__item"><button data-id="docs" onClick={handleNavClick} className="menu__link">Docs</button></li>
+                <li className="menu__item"><a data-id="code" rel="noopener noreferrer" href="https://github.com/corollari/ln2tBTC" target="_blank" className="menu__link">Code</a></li>
+                <li className="menu__item"><a data-id="docs" rel="noopener noreferrer" href="https://github.com/corollari/ln2tBTC/blob/master/README.md" target="_blank" className="menu__link">Docs</a></li>
                 <li className="menu__item"><button data-id="about" onClick={handleNavClick} className="menu__link">About</button></li>
                 <li className="menu__item"><button data-id="contact-us" onClick={handleNavClick} className="menu__link">Contact us</button></li>
               </ul>

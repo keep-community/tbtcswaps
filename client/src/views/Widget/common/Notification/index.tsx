@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Notification: React.FC = ({ children }) => {
+const Notification: React.FC<{ className?: string }> = (props) => {
+    const { children, className = '' } = props
     return (
-        <div className="notification">
+        <div className={`notification ${className}`}>
             <div className="notification__text">
                 {children}
             </div>

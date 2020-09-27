@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     'max-width': 500,
     "box-shadow": "0px 0px 16px 6px rgba(0, 0, 139, .4)",
-    position:'absolute',
+    position: 'absolute',
     top: '20%'
   },
 }));

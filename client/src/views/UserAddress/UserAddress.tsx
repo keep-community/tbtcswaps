@@ -13,7 +13,11 @@ export default function UserAddress() {
   return (
     <div className={`header__connect connect connect--${selectedAddress ? 'success' : 'no'}`}>
       <div className="connect__label">{selectedAddress ? 'Mainnet:' : 'Connect Wallet'}</div>
-      {selectedAddress && <div className="connect__text">{selectedAddress.substring(0, 6)}...{selectedAddress.substring(selectedAddress.length - 4)}</div>}
+      {selectedAddress && <div className="connect__text">
+        {
+          selectedAddress.substring(0, 6) + "..." + selectedAddress.substring(selectedAddress.length - 4)
+        }
+      </div>}
       <div className="connect__status"><span></span></div>
     </div >
   );
