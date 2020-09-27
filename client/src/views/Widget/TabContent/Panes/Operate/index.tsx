@@ -69,9 +69,7 @@ const Operate: React.FC = () => {
     return (
         (
             <OperatePane
-                handleInputChange={(form) => {
-                    console.log(form)
-                }}
+                handleInputChange={(form) => { }}
             />
         ) || (
             web3 === null && (
@@ -91,9 +89,7 @@ const Operate: React.FC = () => {
             )
         ) || (
             <OperatePane
-                handleInputChange={(form) => {
-                    console.log(form)
-                }}
+                handleInputChange={(form) => { }}
             />
         )
     )

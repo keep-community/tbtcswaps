@@ -35,14 +35,13 @@ const Input: React.FC<InputProps> = (props) => {
                             </span>
                             {hint &&
                                 <Hint ref={questionMarkElement} onClick={() => {
-                                    console.log(questionMarkElement!.current!.getBoundingClientRect())
                                     setDisplayTooltip(true)
                                 }} />
                             }
                         </label>
                     }
                     <div className="form-block__box">
-                        <input step={props.step} min={props.min} name={name} onInput={onInput} type={type} className="form-block__input form-control" value={value} placeholder={placeholder} />
+                        <input step={props.step} min={props.min} name={name} onChange={onInput} type={type} className="form-block__input form-control" value={value} placeholder={placeholder} />
                         {actionText && <div className="form-block__unit">{actionText}</div>}
                         {svgIcon &&
                             <div className="form-block__icon">

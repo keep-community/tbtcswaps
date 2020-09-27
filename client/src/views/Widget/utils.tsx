@@ -11,6 +11,5 @@ export const toMaxDecimalsRound = (n: number | string, step: number) => {
     //let factor = Number('1e' + decimals)
     let factor = (1 / step)
     let nRound = Math.round((amount) * factor) / factor
-    console.log('nroud', step === 1, step, (1 / step))
     return !isFinite(nRound) ? 0 : nRound
 }
