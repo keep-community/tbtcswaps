@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import UserAddress from "../UserAddress/UserAddress";
 import LOGO from '../../img/logo.svg'
 import ICONS from '../../img/icons.svg'

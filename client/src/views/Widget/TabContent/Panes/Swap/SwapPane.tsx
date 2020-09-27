@@ -9,16 +9,16 @@ interface SwapPaneProps {
     onConnectWalletClick?: () => void
     onSwapClick?: () => void
     isConnected?: boolean
-    handleFromDenomChange?: (denom: string) => void
+    handleFromNameChange?: (denom: string) => void
 }
 
 const SwapPane: React.FC<SwapPaneProps> = (props) => {
-    const { handleInputChange = () => null, onConnectWalletClick = () => null, onSwapClick = () => null, isConnected = false, handleFromDenomChange = () => null } = props
+    const { handleInputChange = () => null, onConnectWalletClick = () => null, onSwapClick = () => null, isConnected = false, handleFromNameChange = () => null } = props
 
     const [leftInputDenom, setLeftInputDenom] = useState('tbtc')
     useEffect(() => {
-        handleFromDenomChange(leftInputDenom)
-    }, [leftInputDenom, handleFromDenomChange])
+        handleFromNameChange(leftInputDenom)
+    }, [leftInputDenom, handleFromNameChange])
 
     const [tbtcAmount, setTbtcAmount] = useState<string>('')
     const [lnAmount, setLnAmount] = useState<string>('')

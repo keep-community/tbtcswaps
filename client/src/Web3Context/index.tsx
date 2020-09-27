@@ -21,7 +21,6 @@ const Web3Provider: React.FC = (props) => {
             console.log('started looking for web3')
             const accounts = await window.ethereum?.request({ method: "eth_accounts" })
             if (accounts && accounts.length > 0) {
-                console.log('web3Found!!')
                 setWeb3(new Web3(window.ethereum as any))
             }
         }

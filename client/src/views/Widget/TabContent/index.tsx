@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SwapPane, OperatePane, InvoicePane } from './Panes'
+import { SwapPane, OperatePane } from './Panes'
 
 
 interface TabContentProps {
@@ -8,8 +8,6 @@ interface TabContentProps {
 }
 
 const TabContent: React.FC<TabContentProps> = ({ activeTabId }) => {
-
-
     return (
         <div className="tab-content">
             {

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 
-import Pane from './SwapPane'
+import SwapPane from './SwapPane'
 import InvoicePane from './InvoicePane'
 
 
@@ -53,7 +53,7 @@ function calculateLowestSwap(operators: Operator[], fromAmount: number, fromLN: 
 }
 
 
-const SwapPane: React.FC = () => {
+const Swap: React.FC = () => {
 
     const { web3, connectWallet } = useContext(Web3Context)
     const [isConnectedMetamask, setIsConnectedMetamask] = useState(web3 !== null)
@@ -65,7 +65,7 @@ const SwapPane: React.FC = () => {
 
     const [tbtcAmount, setTbtcAmount] = useState(0)
     const [lnAmount, setLnAmount] = useState(0)
-    const [fromDenom, setFromDenom] = useState('')
+    const [fromName, setFromName] = useState('')
 
     const [stage, setStage] = useState<'initial' | 'invoice'>('initial');
 
@@ -91,7 +91,7 @@ const SwapPane: React.FC = () => {
         (
             stage === 'initial' &&
             <>
-                <Pane
+                <SwapPane
                     onConnectWalletClick={() => {
                         connectWallet((err) => {
                             if (err === 'NO_METAMASK')
@@ -110,7 +110,7 @@ const SwapPane: React.FC = () => {
                         else if (name === 'ln')
                             setLnAmount(value)
                     }}
-                    handleFromDenomChange={setFromDenom}
+                    handleFromNameChange={setFromName}
                 />
                 <Modal
                     isOpen={!!errModalName}
@@ -131,4 +131,4 @@ const SwapPane: React.FC = () => {
     )
 }
 
-export default SwapPane
+export default Swap

@@ -1,23 +1,59 @@
-import React from 'react'
-import ICONS from '../../../../img/icons.svg'
-import ActionButton from '../../common/ActionButton'
-import Input from '../../common/Input'
-import Notification from '../../common/Notification'
+import React, { useState, useEffect } from 'react'
+import ICONS from '../../../../../img/icons.svg'
+import ActionButton from '../../../common/ActionButton'
+import Input from '../../../common/Input'
+import Notification from '../../../common/Notification'
+import { toMaxDecimalsRound } from '../../../utils'
 
-const OperatePane: React.FC = () => {
 
+interface OperatePaneProps {
+    handleInputChange?: (form: { [key: string]: string | number }) => void
+}
+
+const OperatePane: React.FC<OperatePaneProps> = (props) => {
+    const { handleInputChange = () => null } = props
+
+    const [formValues, setFormValues] = useState({
+        lnBalance: '',
+        tbtcBalance: '',
+        linearFee: '',
+        constantFee: '',
+        nodeAddress: ''
+    })
+
+    const onInput = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        //setXAmount is the amount displayed in the input, should be string
+        const name = ev.target.name
+        let value = ev.target.value
+        if (ev.target.type === 'number')
+            value = ev.target.value === '' ? ev.target.value : toMaxDecimalsRound(ev.target.value, +ev.target.step).toString()
+
+        setFormValues(old => {
+            return {
+                ...old,
+                [name]: value
+            }
+        })
+    }
+
+    useEffect(() => {
+        handleInputChange(formValues)
+    }, [formValues, handleInputChange])
 
     return (
         <div className="tab-pane is_active">
             <div className="tab-pane__content">
                 <div className="box-operation__content">
                     <div className="box-operation__operate operate">
-                        <form action="#" className="operate__form">
+                        <div className="operate__form">
                             <Notification>
                                 Add liquidity and earn fees on user swaps. <a href="/">Learn more</a>
                             </Notification>
                             <div className="form-group">
                                 <Input
+                                    value={formValues['lnBalance']}
+                                    onInput={onInput}
+                                    name="lnBalance"
                                     label="LN Balance "
                                     svgIcon={
                                         <svg className="icon icon-flash">
@@ -25,11 +61,14 @@ const OperatePane: React.FC = () => {
                                         </svg>
                                     }
                                     placeholder="0.0"
-                                    type="text"
+                                    type="number"
                                 />
                             </div>
                             <div className="form-group">
                                 <Input
+                                    value={formValues['tbtcBalance']}
+                                    onInput={onInput}
+                                    name="tbtcBalance"
                                     label="tBTC Balance "
                                     svgIcon={
                                         <svg className="icon icon-man">
@@ -37,14 +76,17 @@ const OperatePane: React.FC = () => {
                                         </svg>
                                     }
                                     placeholder="0.0"
-                                    type="text"
+                                    type="number"
                                 />
                             </div>
                             <div className="form-group">
                                 <Input
+                                    value={formValues['linearFee']}
+                                    onInput={onInput}
+                                    name="linearFee"
                                     label="Linear Fee "
                                     placeholder="0.0"
-                                    type="text"
+                                    type="number"
                                     hint={(
                                         <>
                                             <b>Linear Fee</b> is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. <br />
@@ -55,9 +97,12 @@ const OperatePane: React.FC = () => {
                             </div>
                             <div className="form-group">
                                 <Input
+                                    value={formValues['constantFee']}
+                                    onInput={onInput}
+                                    name="constantFee"
                                     label="Constant Fee "
                                     placeholder="0.0"
-                                    type="text"
+                                    type="number"
                                     hint={(
                                         <>
                                             <b>Linear Fee</b> is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. <br />
@@ -68,9 +113,12 @@ const OperatePane: React.FC = () => {
                             </div>
                             <div className="form-group">
                                 <Input
+                                    value={formValues['nodeAddress']}
+                                    onInput={onInput}
+                                    name="nodeAddress"
                                     label="Node Address "
                                     placeholder="0.0"
-                                    type="text"
+                                    type="number"
                                     hint={(
                                         <>
                                             <b>Linear Fee</b> is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. <br />
@@ -80,7 +128,7 @@ const OperatePane: React.FC = () => {
                                 />
                             </div>
                             <ActionButton text="Register" className="operate__button" />
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

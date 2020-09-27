@@ -8,7 +8,6 @@ export default function UserAddress() {
 
   useEffect(() => {
     setSelectedAddress(web3 === null ? undefined : (web3.currentProvider as any).selectedAddress)
-    console.log('called!!!!!!', web3)
   }, [web3])
 
   return (

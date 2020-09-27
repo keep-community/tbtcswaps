@@ -6,7 +6,7 @@ interface WidgetProps {
 }
 
 const Widget: React.FC<WidgetProps> = () => {
-    const defaultTab = 'swap'
+    const defaultTab = 'operate'
     const [activeTabId, setActiveTabId] = useState(defaultTab)
 
     return (

@@ -7,9 +7,10 @@ export const toMaxDecimalsFloor = (n: number | string, step: number) => {
 
 export const toMaxDecimalsRound = (n: number | string, step: number) => {
     const amount = typeof n === 'string' ? Number(n.replace(',', '.')) : n
+    if (step <= 0) return amount
     //let factor = Number('1e' + decimals)
-    let factor = 1 / step
+    let factor = (1 / step)
     let nRound = Math.round((amount) * factor) / factor
-    console.log('nroud', nRound)
+    console.log('nroud', step === 1, step, (1 / step))
     return !isFinite(nRound) ? 0 : nRound
 }
