@@ -1,12 +1,10 @@
-import React from 'react'
-/* import styles from './styles.module.css' */
+import React, {useContext} from 'react'
 import UserAddress from "../UserAddress/UserAddress";
-import { Web3Provider } from "../../ethereum";
 import LOGO from '../../img/logo.svg'
 import ICONS from '../../img/icons.svg'
 
+const Header: React.FC = () => {
 
-const Header: React.FC<{ web3: Web3Provider }> = ({ web3 }) => {
     return (
         <header className={'header'}>
             <div className={'container'}>
@@ -17,7 +15,7 @@ const Header: React.FC<{ web3: Web3Provider }> = ({ web3 }) => {
                         </a>
                     </div>
                     <div className={'header__right row'}>
-                        <UserAddress web3={web3} />
+                        <UserAddress />
                         <div className="header__settings settings">
                             <button className="settings__button">
                                 <svg className="icon icon-gear">

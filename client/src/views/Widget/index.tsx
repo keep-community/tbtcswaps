@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Web3Provider } from "../../ethereum";
 import TabHeader from './TabHeader'
 import TabContent from './TabContent'
 
+interface WidgetProps {
+}
 
-const Widget: React.FC<{ web3: Web3Provider }> = ({ web3 }) => {
-    const defaultTab = 'invoice'
+const Widget: React.FC<WidgetProps> = () => {
+    const defaultTab = 'swap'
     const [activeTabId, setActiveTabId] = useState(defaultTab)
 
     return (

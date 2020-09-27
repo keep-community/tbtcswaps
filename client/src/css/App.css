@@ -2147,6 +2147,7 @@ input::-ms-clear {
       -ms-flex-pack: center;
           justify-content: center;
   height: 56px;
+  cursor: pointer;
 }
 
 @media (max-width: 575px) {

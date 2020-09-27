@@ -13,10 +13,14 @@ interface InputProps {
     className?: string
     hint?: React.ReactNode
     error?: string
+    onInput?: (ev: React.ChangeEvent<HTMLInputElement>) => void
+    name?: string
+    step?: number
+    min?: number
 }
 
-const Input: React.FC<InputProps> = ({ label, actionText, svgIcon, placeholder, value, type, className, hint, error }) => {
-
+const Input: React.FC<InputProps> = (props) => {
+    const { label, actionText, svgIcon, placeholder, value, type, className, hint, error, onInput, name } = props
     let questionMarkElement = useRef<HTMLSpanElement>(null);
     const [displayTooltip, setDisplayTooltip] = useState(false)
 
@@ -38,7 +42,7 @@ const Input: React.FC<InputProps> = ({ label, actionText, svgIcon, placeholder, 
                         </label>
                     }
                     <div className="form-block__box">
-                        <input type={type} className="form-block__input form-control" value={value} placeholder={placeholder} />
+                        <input step={props.step} min={props.min} name={name} onInput={onInput} type={type} className="form-block__input form-control" value={value} placeholder={placeholder} />
                         {actionText && <div className="form-block__unit">{actionText}</div>}
                         {svgIcon &&
                             <div className="form-block__icon">

@@ -15,7 +15,6 @@ const TabContent: React.FC<TabContentProps> = ({ activeTabId }) => {
             {
                 (activeTabId === 'swap' && <SwapPane />)
                 || (activeTabId === 'operate' && <OperatePane />)
-                || (activeTabId === 'invoice' && <InvoicePane />)
                 || <div>Contact us.</div>
             }
         </div>

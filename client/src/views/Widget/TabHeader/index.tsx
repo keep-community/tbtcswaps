@@ -19,7 +19,6 @@ const TabHeader: React.FC<TabHeaderProps> = ({ onTabClick, defaultTab }) => {
         <ul className="tab-nav" data-tabs-nav="">
             <li onClick={handleTabClick} data-tab-id="swap" className={currentTabId === 'swap' ? 'is_active' : ''} ><span>Swap</span></li>
             <li onClick={handleTabClick} data-tab-id="operate" className={currentTabId === 'operate' ? 'is_active' : ''} ><span>Operate</span></li>
-            <li onClick={handleTabClick} data-tab-id="invoice" className={currentTabId === 'invoice' ? 'is_active' : ''} ><span>Invoice</span></li>
         </ul>
     )
 }

@@ -1,13 +1,10 @@
 import React from 'react'
 import Widget from "../Widget";
-import { Web3Provider } from "../../ethereum";
 
 interface BodyProps {
-    web3: Web3Provider;
-    connectWallet: () => void;
 }
 
-const Body: React.FC<BodyProps> = ({ web3, connectWallet }) => {
+const Body: React.FC<BodyProps> = () => {
     return (
         <div className='wrapper-content' >
             <div className="container">
@@ -18,7 +15,7 @@ const Body: React.FC<BodyProps> = ({ web3, connectWallet }) => {
                         </div>
                         <div className="heading__text">Power of tBTC with Lightning speed</div>
                     </div>
-                    <Widget {...{ web3, connectWallet }} />
+                    <Widget />
                 </div>
             </div>
         </div>

@@ -1,8 +1,6 @@
 import React from 'react'
-import ICONS from '../../../../img/icons.svg'
-import ActionButton from '../../common/ActionButton'
-import { Hint, Tooltip } from '../../common/Tooltip'
-import ContentBlock, { TextQR } from '../../common/ContentBlock'
+import ActionButton from '../../../common/ActionButton'
+import ContentBlock, { TextQR } from '../../../common/ContentBlock'
 
 const InvoicePane: React.FC = () => {
 
