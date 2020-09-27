@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of button disabled 1`] = `
+<body>
+  <div>
+    <div
+      class=""
+    >
+      <button
+        class="btn btn--full btn--primary"
+        disabled=""
+      >
+        <span>
+          Test
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`snapshot of button type loading 1`] = `
+<body>
+  <div>
+    <div
+      class=""
+    >
+      <button
+        class="btn btn--full btn--loading"
+        disabled=""
+      >
+        <span>
+          Test
+        </span>
+        <i
+          class="icon icon-loader"
+        />
+      </button>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`snapshot of button type primary 1`] = `
+<body>
+  <div>
+    <div
+      class=""
+    >
+      <button
+        class="btn btn--full btn--primary"
+      >
+        <span>
+          Test
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`snapshot of button type secondary 1`] = `
+<body>
+  <div>
+    <div
+      class=""
+    >
+      <button
+        class="btn btn--full btn--secondary"
+      >
+        <span>
+          Test
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`snapshot of button with default attributes 1`] = `
+<body>
+  <div>
+    <div
+      class=""
+    >
+      <button
+        class="btn btn--full btn--primary"
+      >
+        <span>
+          Test
+        </span>
+      </button>
+    </div>
+  </div>
+</body>
+`;

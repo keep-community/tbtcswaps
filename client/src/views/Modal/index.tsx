@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = (props) => {
 
     return (
         isOpen ?
-            <div className="jquery-modal blocker current">
+            <div role="presentation" className="jquery-modal blocker current">
                 < div className="modal" style={{ display: 'inline-block' }
                 }>
                     <div className="modal__content">

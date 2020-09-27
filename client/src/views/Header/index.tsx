@@ -1,7 +1,6 @@
 import React from 'react'
-import UserAddress from "../UserAddress/UserAddress";
+import UserAddress from "../UserAddress";
 import LOGO from '../../img/logo.svg'
-/* import ICONS from '../../img/icons.svg' */
 
 const Header: React.FC = () => {
 
@@ -16,13 +15,6 @@ const Header: React.FC = () => {
                     </div>
                     <div className={'header__right row'}>
                         <UserAddress />
-                        {/* <div className="header__settings settings">
-                            <button className="settings__button">
-                                <svg className="icon icon-gear">
-                                    <use xlinkHref={`${ICONS}#icon-gear`}></use>
-                                </svg>
-                            </button>
-                        </div> */}
                     </div>
                 </div>
             </div>

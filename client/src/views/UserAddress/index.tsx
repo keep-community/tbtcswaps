@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import "./UserAddress.css";
 import Web3Context from '../../Web3Context'
 
 export default function UserAddress() {

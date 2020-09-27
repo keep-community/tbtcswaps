@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered closed 1`] = `
+<body>
+  <div />
+</body>
+`;
+
+exports[`snapshot of component rendered open 1`] = `
+<body>
+  <div>
+    <div
+      class="jquery-modal blocker current"
+      role="presentation"
+    >
+      <div
+        class="modal"
+        style="display: inline-block;"
+      >
+        <div
+          class="modal__content"
+        >
+          <div
+            class="modal__title"
+          >
+            Test
+          </div>
+          <div
+            class=""
+          >
+            <div
+              class="modal__text"
+            >
+              <span>
+                Test description
+              </span>
+            </div>
+          </div>
+          <div
+            class="modal__button row justify-end"
+          >
+            <button
+              class="btn"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+        <a
+          class="close-modal "
+          href="#close-modal"
+          rel="modal:close"
+        >
+          Close
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+`;

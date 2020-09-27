@@ -2,10 +2,7 @@ import React from 'react'
 import { default as TextQR } from './TextQR'
 
 interface ContentBlockProps {
-    label: string
-    className?: string
-    type?: 'primary' | 'secondary' | 'loading'
-    disabled?: boolean
+    label?: string
 }
 
 const ContentBlock: React.FC<ContentBlockProps> = (props) => {

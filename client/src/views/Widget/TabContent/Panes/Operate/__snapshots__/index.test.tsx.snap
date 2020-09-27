@@ -1,0 +1,263 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered 1`] = `
+<body>
+  <div>
+    <div
+      class="tab-pane is_active"
+    >
+      <div
+        class="tab-pane__content"
+      >
+        <div
+          class="box-operation__content"
+        >
+          <div
+            class="box-operation__operate operate"
+          >
+            <div
+              class="operate__form"
+            >
+              <div
+                class="notification "
+              >
+                <div
+                  class="notification__text"
+                >
+                  Add liquidity and earn fees on user swaps. 
+                  <a
+                    href="/"
+                  >
+                    Learn more
+                  </a>
+                </div>
+              </div>
+              <div
+                class="form-group"
+              >
+                <div
+                  class="exchange__column "
+                >
+                  <div
+                    class="form-block "
+                  >
+                    <label
+                      class="form-block__label"
+                    >
+                      <span>
+                        LN Balance 
+                      </span>
+                    </label>
+                    <div
+                      class="form-block__box"
+                    >
+                      <input
+                        aria-label="input"
+                        class="form-block__input form-control"
+                        name="lnBalance"
+                        placeholder="0.0"
+                        type="number"
+                        value=""
+                      />
+                      <div
+                        class="form-block__icon"
+                      >
+                        <svg
+                          class="icon icon-flash"
+                        >
+                          <use
+                            xlink:href="icons.svg#icon-flash"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group"
+              >
+                <div
+                  class="exchange__column "
+                >
+                  <div
+                    class="form-block "
+                  >
+                    <label
+                      class="form-block__label"
+                    >
+                      <span>
+                        tBTC Balance 
+                      </span>
+                    </label>
+                    <div
+                      class="form-block__box"
+                    >
+                      <input
+                        aria-label="input"
+                        class="form-block__input form-control"
+                        name="tbtcBalance"
+                        placeholder="0.0"
+                        type="number"
+                        value=""
+                      />
+                      <div
+                        class="form-block__icon"
+                      >
+                        <svg
+                          class="icon icon-man"
+                        >
+                          <use
+                            xlink:href="icons.svg#icon-man"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group"
+              >
+                <div
+                  class="exchange__column "
+                >
+                  <div
+                    class="form-block "
+                  >
+                    <label
+                      class="form-block__label"
+                    >
+                      <span>
+                        Linear Fee 
+                      </span>
+                      <span
+                        class="tooltip-help"
+                      >
+                        <svg
+                          class="icon icon-question"
+                        >
+                          <use
+                            xlink:href="icons.svg#icon-question"
+                          />
+                        </svg>
+                      </span>
+                    </label>
+                    <div
+                      class="form-block__box"
+                    >
+                      <input
+                        aria-label="input"
+                        class="form-block__input form-control"
+                        name="linearFee"
+                        placeholder="0.0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group"
+              >
+                <div
+                  class="exchange__column "
+                >
+                  <div
+                    class="form-block "
+                  >
+                    <label
+                      class="form-block__label"
+                    >
+                      <span>
+                        Constant Fee 
+                      </span>
+                      <span
+                        class="tooltip-help"
+                      >
+                        <svg
+                          class="icon icon-question"
+                        >
+                          <use
+                            xlink:href="icons.svg#icon-question"
+                          />
+                        </svg>
+                      </span>
+                    </label>
+                    <div
+                      class="form-block__box"
+                    >
+                      <input
+                        aria-label="input"
+                        class="form-block__input form-control"
+                        name="constantFee"
+                        placeholder="0.0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group"
+              >
+                <div
+                  class="exchange__column "
+                >
+                  <div
+                    class="form-block "
+                  >
+                    <label
+                      class="form-block__label"
+                    >
+                      <span>
+                        Node Address 
+                      </span>
+                      <span
+                        class="tooltip-help"
+                      >
+                        <svg
+                          class="icon icon-question"
+                        >
+                          <use
+                            xlink:href="icons.svg#icon-question"
+                          />
+                        </svg>
+                      </span>
+                    </label>
+                    <div
+                      class="form-block__box"
+                    >
+                      <input
+                        aria-label="input"
+                        class="form-block__input form-control"
+                        name="nodeAddress"
+                        placeholder="0.0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="operate__button"
+              >
+                <button
+                  class="btn btn--full btn--primary"
+                >
+                  <span>
+                    Register
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

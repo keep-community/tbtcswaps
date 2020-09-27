@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import ICONS from '../../../../../img/icons.svg'
 import ActionButton from '../../../common/ActionButton'
 import Input from '../../../common/Input'

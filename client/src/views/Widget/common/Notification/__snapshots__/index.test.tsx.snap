@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered 1`] = `
+<body>
+  <div>
+    <div
+      class="notification "
+    >
+      <div
+        class="notification__text"
+      >
+        <span>
+          Notify!
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;

@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = (props) => {
                         </label>
                     }
                     <div className="form-block__box">
-                        <input step={props.step} min={props.min} name={name} onChange={onChange} type={type} className="form-block__input form-control" value={value} placeholder={placeholder} />
+                        <input aria-label="input" step={props.step} min={props.min} name={name} onChange={onChange} type={type} className="form-block__input form-control" value={value} placeholder={placeholder} />
                         {actionText && <div className="form-block__unit">{actionText}</div>}
                         {svgIcon &&
                             <div className="form-block__icon">

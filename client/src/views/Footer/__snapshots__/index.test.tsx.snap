@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered without dialogs 1`] = `
+<body>
+  <div>
+    <footer
+      class="footer"
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="footer__row row align-end justify-between"
+        >
+          <div
+            class="footer__left"
+          >
+            <div
+              class="footer__site"
+            >
+              <span>
+                tbtcswaps.com
+              </span>
+              <br />
+              Swap Engine
+            </div>
+          </div>
+          <nav
+            class="footer__right"
+          >
+            <ul
+              class="footer__menu menu"
+            >
+              <li
+                class="menu__item"
+              >
+                <a
+                  class="menu__link"
+                  data-id="code"
+                  href="https://github.com/corollari/ln2tBTC"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Code
+                </a>
+              </li>
+              <li
+                class="menu__item"
+              >
+                <a
+                  class="menu__link"
+                  data-id="docs"
+                  href="https://github.com/corollari/ln2tBTC/blob/master/README.md"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Docs
+                </a>
+              </li>
+              <li
+                class="menu__item"
+              >
+                <button
+                  class="menu__link"
+                  data-id="about"
+                >
+                  About
+                </button>
+              </li>
+              <li
+                class="menu__item"
+              >
+                <button
+                  class="menu__link"
+                  data-id="contact-us"
+                >
+                  Contact us
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+`;

@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered with default tab first 1`] = `
+<body>
+  <div>
+    <ul
+      class="tab-nav"
+      data-tabs-nav=""
+    >
+      <li
+        aria-label="swap"
+        class=""
+        data-tab-id="swap"
+      >
+        <span>
+          Swap
+        </span>
+      </li>
+      <li
+        aria-label="operate"
+        class="is_active"
+        data-tab-id="operate"
+      >
+        <span>
+          Operate
+        </span>
+      </li>
+    </ul>
+  </div>
+</body>
+`;
+
+exports[`snapshot of component rendered with default tab second 1`] = `
+<body>
+  <div>
+    <ul
+      class="tab-nav"
+      data-tabs-nav=""
+    >
+      <li
+        aria-label="swap"
+        class="is_active"
+        data-tab-id="swap"
+      >
+        <span>
+          Swap
+        </span>
+      </li>
+      <li
+        aria-label="operate"
+        class=""
+        data-tab-id="operate"
+      >
+        <span>
+          Operate
+        </span>
+      </li>
+    </ul>
+  </div>
+</body>
+`;
