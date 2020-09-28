@@ -92,7 +92,7 @@ const Swap: React.FC = () => {
   const [operators, setOperators] = React.useState<Operator[] | null>(null);
   useEffect(() => {
     getOperators().then(setOperators);
-  });
+  }, []);
   /*
     let selectedOperator: ReturnType<typeof calculateLowestSwap> | undefined;
     if (fromAmount === null || fromAmount === 0 || operators === null) {
