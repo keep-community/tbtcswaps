@@ -5,4 +5,5 @@ export default function parseInvoice(rawInvoice:string){
     if(invoice.network !== 'bitcoin'){
         throw new Error("This service is only available for Mainnet")
     }
+    return invoice
 }

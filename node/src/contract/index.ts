@@ -17,10 +17,9 @@ const web3ws = new Web3(
     "wss://mainnet.infura.io/ws/v3/a94d8fec07d14f058824938b13ad64b3"
   )
 );
-const contract = new web3ws.eth.Contract(
+export const contract = new web3ws.eth.Contract(
     contractABI.abi as AbiItem[],
     ln2tbtcAddress
   ) as Ln2tbtcContract;
 
-export default contract
-
+export const {address} = web3ws.eth.accounts.wallet.add(process.env.PRIVKEY!);
