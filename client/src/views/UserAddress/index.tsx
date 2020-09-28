@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Web3Context from '../../Web3Context'
 
 export default function UserAddress() {
-  const { web3 } = useContext(Web3Context)
+  const { web3, connectWallet } = useContext(Web3Context)
   const [selectedAddress, setSelectedAddress] = useState<string>()
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function UserAddress() {
   }, [web3])
 
   return (
-    <div className={`header__connect connect connect--${selectedAddress ? 'success' : 'no'}`}>
+    <div className={`header__connect connect connect--${selectedAddress ? 'success' : 'no'}`} onClick={() => !selectedAddress ? connectWallet() : null}>
       <div className="connect__label">{selectedAddress ? 'Mainnet:' : 'Connect Wallet'}</div>
       {selectedAddress && <div className="connect__text">
         {

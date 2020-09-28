@@ -5,8 +5,8 @@ import { Web3Provider as Web3ProviderType } from "../ethereum";
 const Web3Context = React.createContext<{
     web3: Web3ProviderType
     connectWallet: (
-        onError: (errType: 'NO_METAMASK' | 'ALREADY_CONNECTED') => void,
-        onSuccess: () => void,
+        onError?: (errType: 'NO_METAMASK' | 'ALREADY_CONNECTED') => void,
+        onSuccess?: () => void,
     ) => void
 }>({
     web3: null,
@@ -27,21 +27,24 @@ const Web3Provider: React.FC = (props) => {
     }, [])
 
     const connectWallet = useCallback((
-        onError: (errType: 'NO_METAMASK' | 'ALREADY_CONNECTED') => void,
-        onSuccess: () => void,
+        onError?: (errType: 'NO_METAMASK' | 'ALREADY_CONNECTED') => void,
+        onSuccess?: () => void,
     ) => {
         if (web3 !== null) {
-            onError('ALREADY_CONNECTED')
+            if (onError)
+                onError('ALREADY_CONNECTED')
         }
         if (window.ethereum === undefined) {
-            onError('NO_METAMASK')
+            if (onError)
+                onError('NO_METAMASK')
             return;
         }
         window.ethereum
             .enable()
             .then(() => {
                 setWeb3(new Web3(window.ethereum as any))
-                onSuccess()
+                if (onSuccess)
+                    onSuccess()
             });
     }, [web3]);
 

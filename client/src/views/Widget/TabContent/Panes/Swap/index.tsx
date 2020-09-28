@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 
 import SwapPane from './SwapPane'
-import InvoicePane from './InvoicePane'
+import InvoicePane from './InvoicePaneEditable'
 
 
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";

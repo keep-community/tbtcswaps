@@ -1717,6 +1717,10 @@ input::-ms-clear {
   color: #404C58;
 }
 
+.connect--no {
+  cursor: pointer;
+}
+
 .connect--success .connect__status span {
   background: #4ADBB4;
 }
@@ -2224,6 +2228,17 @@ input::-ms-clear {
   padding: 14px 13px 15px;
   background: #F4F8F9;
   border-radius: 8px;
+}
+
+.invoice__block-content--editable {
+  border: none;
+  overflow: auto;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: vertical;
+  width: 100%;
 }
 
 .invoice__block-text {
