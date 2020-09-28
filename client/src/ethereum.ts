@@ -109,9 +109,11 @@ export interface Ln2tbtcContract {
       tBTCAmount: NumericalString;
     }>;
     TBTC2LNSwapCreated: Event<{
+      paymentHash: HexString;
       amount: NumericalString;
       userAddress: Address;
       providerAddress: Address;
+      lockTime: NumericalString;
       invoice: string;
     }>;
   };
