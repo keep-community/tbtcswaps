@@ -1555,6 +1555,10 @@ input::-ms-clear {
   transition: 0.25s background ease-in-out;
 }
 
+.action-text {
+  cursor: pointer;
+}
+
 .form-block__unit {
   margin-right: 13px;
   -ms-flex-negative: 0;
@@ -2289,6 +2293,15 @@ input::-ms-clear {
   color: #9EA6A8;
 }
 
+.note--bottom {
+  margin-top: 15px;
+  font-size: 13px;
+  line-height: 1.769;
+  letter-spacing: -0.373px;
+  color: #9EA6A8;
+  text-align: center;
+}
+
 /* Общий блок с вкладками */
 
 .box-operation {
@@ -2302,6 +2315,10 @@ input::-ms-clear {
 
 .box-operation__content {
   padding: 20px 30px 30px;
+}
+
+.box-operation__content--swap {
+  padding: 20px 30px 20px 30px;
 }
 
 @media (max-width: 575px) {

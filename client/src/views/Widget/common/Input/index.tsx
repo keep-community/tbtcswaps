@@ -17,6 +17,7 @@ interface InputProps {
   name?: string;
   step?: number;
   min?: number;
+  onActionTextClick?: (name: string | undefined) => void
 }
 
 const Input: React.FC<InputProps> = (props) => {
@@ -32,6 +33,7 @@ const Input: React.FC<InputProps> = (props) => {
     error,
     onChange,
     name,
+    onActionTextClick
   } = props;
   let questionMarkElement = useRef<HTMLSpanElement>(null);
   const [displayTooltip, setDisplayTooltip] = useState(false);
@@ -65,7 +67,7 @@ const Input: React.FC<InputProps> = (props) => {
               value={value}
               placeholder={placeholder}
             />
-            {actionText && <div className="form-block__unit">{actionText}</div>}
+            {actionText && <div className="form-block__unit action-text" onClick={(ev) => onActionTextClick ? onActionTextClick(name) : {}}>{actionText}</div>}
             {svgIcon && <div className="form-block__icon">{svgIcon}</div>}
           </div>
           {error && <div className="form-block__message">{error}</div>}
