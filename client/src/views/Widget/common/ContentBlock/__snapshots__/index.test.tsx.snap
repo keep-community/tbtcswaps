@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered with label 1`] = `
+<body>
+  <div>
+    <div
+      class="invoice__block invoice__block--invoice"
+    >
+      <div
+        class="invoice__block-title"
+      >
+        test
+      </div>
+      <div
+        class="invoice__block-content row"
+      >
+        <span>
+          Test
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`snapshot of component rendered with no label 1`] = `
+<body>
+  <div>
+    <div
+      class="invoice__block invoice__block--invoice"
+    >
+      <div
+        class="invoice__block-content row"
+      >
+        <span>
+          Test
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;

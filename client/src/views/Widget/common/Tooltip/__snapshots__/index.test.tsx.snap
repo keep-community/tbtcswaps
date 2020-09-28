@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered hint custom logo 1`] = `
+<body>
+  <div>
+    <span
+      class="tooltip-general"
+    >
+      <svg>
+        <symbol
+          id="icon-clock"
+          viewBox="0 0 47 47"
+        >
+          <circle
+            cx="23.5"
+            cy="23.5"
+            r="22"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+          />
+          <path
+            d="M23.5 9.5V23.5H37.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+          />
+        </symbol>
+      </svg>
+    </span>
+  </div>
+</body>
+`;
+
+exports[`snapshot of component rendered hint question mark (default) 1`] = `
+<body>
+  <div>
+    <span
+      class="tooltip-help"
+    >
+      <svg
+        class="icon icon-question"
+      >
+        <use
+          xlink:href="icons.svg#icon-question"
+        />
+      </svg>
+    </span>
+  </div>
+</body>
+`;
+
+exports[`snapshot of tooltip active 1`] = `
+<body>
+  <div>
+    <div
+      class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-show"
+      style="position: absolute; max-width: 340px; max-height: 400px; z-index: 9999999; top: -1000px; left: -1000px; animation-duration: 350ms; transition-duration: 350ms;"
+    >
+      <div
+        class="tooltipster-box"
+      >
+        <div
+          class="tooltipster-content"
+        >
+          Hint
+        </div>
+      </div>
+      <div
+        class="tooltipster-arrow"
+        style="left: 0px;"
+      >
+        <div
+          class="tooltipster-arrow-uncropped"
+        >
+          <div
+            class="tooltipster-arrow-border"
+          />
+          <div
+            class="tooltipster-arrow-background"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`snapshot of tooltip hidden 1`] = `
+<body>
+  <div>
+    <div
+      class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-dying"
+      style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+    >
+      <div
+        class="tooltipster-box"
+      >
+        <div
+          class="tooltipster-content"
+        >
+          Hint
+        </div>
+      </div>
+      <div
+        class="tooltipster-arrow"
+        style="left: 0px;"
+      >
+        <div
+          class="tooltipster-arrow-uncropped"
+        >
+          <div
+            class="tooltipster-arrow-border"
+          />
+          <div
+            class="tooltipster-arrow-background"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

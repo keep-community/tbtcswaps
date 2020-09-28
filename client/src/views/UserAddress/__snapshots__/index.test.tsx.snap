@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered when no address found 1`] = `
+<body>
+  <div>
+    <div
+      class="header__connect connect connect--no"
+    >
+      <div
+        class="connect__label"
+      >
+        Connect Wallet
+      </div>
+      <div
+        class="connect__status"
+      >
+        <span />
+      </div>
+    </div>
+  </div>
+</body>
+`;

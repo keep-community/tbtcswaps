@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot of component rendered without web3 1`] = `
+<body>
+  <div>
+    <header
+      class="header header--short"
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="header__row row justify-between"
+        >
+          <div
+            class="header__left"
+          >
+            <a
+              class="logo"
+              href="/"
+            >
+              <img
+                alt=""
+                class="logo__img"
+                height="66"
+                src="logo.svg"
+                width="111"
+              />
+            </a>
+          </div>
+          <div
+            class="header__right row"
+          >
+            <div
+              class="header__connect connect connect--no"
+            >
+              <div
+                class="connect__label"
+              >
+                Connect Wallet
+              </div>
+              <div
+                class="connect__status"
+              >
+                <span />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+</body>
+`;
