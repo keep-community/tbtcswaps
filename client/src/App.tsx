@@ -3,7 +3,7 @@ import Footer from "./views/Footer";
 import Header from "./views/Header";
 import Body from "./views/Body";
 import "./css/App.css";
-import { Web3Provider } from './Web3Context'
+import { Web3Provider } from "./Web3Context";
 
 function App() {
   return (

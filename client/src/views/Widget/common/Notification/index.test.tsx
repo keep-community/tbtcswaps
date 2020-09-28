@@ -4,7 +4,7 @@ import Notification from ".";
 
 test("snapshot of component rendered", () => {
   const component = render(
-    <Notification >
+    <Notification>
       <span>Notify!</span>
     </Notification>
   );

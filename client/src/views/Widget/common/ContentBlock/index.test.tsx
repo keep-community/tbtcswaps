@@ -4,7 +4,7 @@ import ContentBlock from ".";
 
 test("snapshot of component rendered with no label", () => {
   const component = render(
-    <ContentBlock >
+    <ContentBlock>
       <span>Test</span>
     </ContentBlock>
   );
@@ -13,7 +13,7 @@ test("snapshot of component rendered with no label", () => {
 
 test("snapshot of component rendered with label", () => {
   const component = render(
-    <ContentBlock label='test' >
+    <ContentBlock label="test">
       <span>Test</span>
     </ContentBlock>
   );

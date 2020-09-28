@@ -20,13 +20,11 @@ test("dialog opens when 'Contact us' is clicked", async () => {
   render(<Footer />);
   fireEvent.click(screen.getByText("Contact us"));
   /* await waitFor(() => screen.getByRole("presentation")); */
-  expect(screen.getByRole("presentation")).toHaveTextContent(
-    "Contact us"
-  );
+  expect(screen.getByRole("presentation")).toHaveTextContent("Contact us");
 });
 
 test("'Code' and 'Docs' is an anchor with href", async () => {
   render(<Footer />);
-  expect(screen.getByText('Code').closest('a')).toHaveAttribute('href')
-  expect(screen.getByText('Docs').closest('a')).toHaveAttribute('href')
+  expect(screen.getByText("Code").closest("a")).toHaveAttribute("href");
+  expect(screen.getByText("Docs").closest("a")).toHaveAttribute("href");
 });

@@ -1,18 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from "react";
 
-import SwapPane from './SwapPane'
-import InvoicePane from './InvoicePaneEditable'
-
+import SwapPane from "./SwapPane";
+import InvoicePane from "./InvoicePaneEditable";
 
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";
 import Web3 from "web3";
-import ln2tbtcABI from '../../../../../contracts/LN2tBTC.json'
-import type { AbiItem } from 'web3-utils'
-import { ln2tbtcAddress } from '../../../../../contracts/deployedAddresses'
+import ln2tbtcABI from "../../../../../contracts/LN2tBTC.json";
+import type { AbiItem } from "web3-utils";
+import { ln2tbtcAddress } from "../../../../../contracts/deployedAddresses";
 
-import Web3Context from '../../../../../Web3Context'
+import Web3Context from "../../../../../Web3Context";
 
-import Modal from '../../../../Modal'
+import Modal from "../../../../Modal";
 
 /* async function getOperators(): Promise<Operator[]> {
     const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/965c5ec028c84ffcb22c799eddba83a4'));
@@ -52,25 +51,23 @@ import Modal from '../../../../Modal'
     }
 } */
 
-
 const Swap: React.FC = () => {
+  const { web3, connectWallet } = useContext(Web3Context);
+  const [isConnectedMetamask, setIsConnectedMetamask] = useState(web3 !== null);
+  useEffect(() => {
+    setIsConnectedMetamask(web3 !== null);
+  }, [web3]);
 
-    const { web3, connectWallet } = useContext(Web3Context)
-    const [isConnectedMetamask, setIsConnectedMetamask] = useState(web3 !== null)
-    useEffect(() => {
-        setIsConnectedMetamask(web3 !== null)
-    }, [web3])
+  const [errModalName, setErrModalName] = useState<string>();
 
-    const [errModalName, setErrModalName] = useState<string>()
+  const [tbtcAmount, setTbtcAmount] = useState("");
+  const [lnAmount, setLnAmount] = useState("");
+  const [fromName, setFromName] = useState("");
 
-    const [tbtcAmount, setTbtcAmount] = useState('')
-    const [lnAmount, setLnAmount] = useState('')
-    const [fromName, setFromName] = useState('')
+  const [stage, setStage] = useState<"initial" | "invoice">("initial");
 
-    const [stage, setStage] = useState<'initial' | 'invoice'>('initial');
-
-    let error = false;
-    /* const [fromLN, setFromLN] = React.useState(false);
+  let error = false;
+  /* const [fromLN, setFromLN] = React.useState(false);
     const [fromAmount, setFromAmount] = React.useState<number | null>(null);
 
     const [operators, setOperators] = React.useState<Operator[] | null>(null);
@@ -87,48 +84,53 @@ const Swap: React.FC = () => {
         }
     } */
 
-    return (
-        (
-            stage === 'initial' &&
-            <>
-                <SwapPane
-                    onConnectWalletClick={() => {
-                        connectWallet((err) => {
-                            if (err === 'NO_METAMASK')
-                                setErrModalName('NO_METAMASK')
-                        }, () => setIsConnectedMetamask(true))
-                    }}
-                    onSwapClick={() => {
-                        if (!error) {
-                            setStage('invoice')
-                        }
-                    }}
-                    isConnected={isConnectedMetamask}
-                    handleInputChange={(name, value) => {
-                        if (name === 'tbtc')
-                            setTbtcAmount(value)
-                        else if (name === 'ln')
-                            setLnAmount(value)
-                    }}
-                    handleFromNameChange={setFromName}
-                />
-                <Modal
-                    isOpen={!!errModalName}
-                    type='error'
-                    title={"Wallet not found"}
-                    buttonText={"Okay"}
-                    onButtonClick={() => setErrModalName(undefined)}
-                >
-                    <span>You must have MetaMask installed to use this product, get it <a rel="noopener noreferrer" target="_blank" href="https://metamask.io/">here</a>.</span>
-                </Modal>
-            </>
-        )
-        || (
-            stage === 'invoice' &&
-            <InvoicePane />
-        )
-        || <span>Contact us.</span>
-    )
-}
+  return (
+    (stage === "initial" && (
+      <>
+        <SwapPane
+          onConnectWalletClick={() => {
+            connectWallet(
+              (err) => {
+                if (err === "NO_METAMASK") setErrModalName("NO_METAMASK");
+              },
+              () => setIsConnectedMetamask(true)
+            );
+          }}
+          onSwapClick={() => {
+            if (!error) {
+              setStage("invoice");
+            }
+          }}
+          isConnected={isConnectedMetamask}
+          handleInputChange={(name, value) => {
+            if (name === "tbtc") setTbtcAmount(value);
+            else if (name === "ln") setLnAmount(value);
+          }}
+          handleFromNameChange={setFromName}
+        />
+        <Modal
+          isOpen={!!errModalName}
+          type="error"
+          title={"Wallet not found"}
+          buttonText={"Okay"}
+          onButtonClick={() => setErrModalName(undefined)}
+        >
+          <span>
+            You must have MetaMask installed to use this product, get it{" "}
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://metamask.io/"
+            >
+              here
+            </a>
+            .
+          </span>
+        </Modal>
+      </>
+    )) ||
+    (stage === "invoice" && <InvoicePane />) || <span>Contact us.</span>
+  );
+};
 
-export default Swap
+export default Swap;
