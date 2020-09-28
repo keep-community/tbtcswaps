@@ -149,10 +149,10 @@ contract LN2tBTC {
 		// Amount of tBTC that is locked in the swap
 		// A value of 0 is used to represent that the swap has been finalized
 		uint tBTCAmount;
-		// Timestamp of the moment the swap was created.
-		// Always set to `now` on creation
+		// Timestamp of the moment the swap will time out
+		// Always set to `now + lockTime` on creation, where lockTime is the maximum swap duration as set by the user
 		// This field is also used to check for struct existence by comparing it against 0
-		uint startTimestamp;
+		uint timeoutTimestamp;
 	}
 
 	// A double mapping is used for the following reasons:
@@ -162,7 +162,7 @@ contract LN2tBTC {
 	mapping (address => mapping (bytes32 => TBTC2LNSwap)) public tbtcSwaps;
 
 	// Event fired when a new tBTC->LN swap process has been started
-	event TBTC2LNSwapCreated(bytes32 paymentHash, uint amount, address userAddress, address providerAddress, string invoice);
+	event TBTC2LNSwapCreated(bytes32 paymentHash, uint amount, address userAddress, address providerAddress, uint lockTime, string invoice);
 
 	// TODO: Send LN invoice to operator through an off-chain medium to lower costs (not by much tho)
 	// Create a new swap from tBTC to LN, locking the tBTC tokens required from the swap in the contract
@@ -170,11 +170,11 @@ contract LN2tBTC {
 	// Note that this function doesn't reduce the `tBTCBalance` of the provider, as doing otherwise would open the provider to griefing attacks,
 	// so, if two users create swaps concurrently, a provider may not have enough liquidity to serve both of them
 	// This can be solved by having the users listen to the `TBTC2LNSwapCreated` events emitted by the contract
-	function createTBTC2LNSwap(bytes32 paymentHash, uint amount, address providerAddress, string memory invoice) public {
-		require(tbtcSwaps[msg.sender][paymentHash].startTimestamp==0, "Swap already exists");
-		tbtcSwaps[msg.sender][paymentHash] = TBTC2LNSwap(providerAddress, amount, now);
+	function createTBTC2LNSwap(bytes32 paymentHash, uint amount, address providerAddress, uint lockTime, string memory invoice) public {
+		require(tbtcSwaps[msg.sender][paymentHash].timeoutTimestamp == 0, "Swap already exists");
+		tbtcSwaps[msg.sender][paymentHash] = TBTC2LNSwap(providerAddress, amount, now + lockTime);
 		tBTContract.transferFrom(msg.sender, address(this), amount);
-		emit TBTC2LNSwapCreated(paymentHash, amount, msg.sender, providerAddress, invoice);
+		emit TBTC2LNSwapCreated(paymentHash, amount, msg.sender, providerAddress, lockTime, invoice);
 	}
 
 	// Reverts a swap, returning the locked tBTC tokens to the user, if the pre-image hasn't been revealed within 1 hour of swap creation
@@ -183,9 +183,9 @@ contract LN2tBTC {
 	// (it could also happen if the operator malfunctions and doesn't claim it's payment after the swap, but this should never happen)
 	function revertTBTC2LNSwap(bytes32 paymentHash) public {
 		TBTC2LNSwap storage swap = tbtcSwaps[msg.sender][paymentHash];
-		require(swap.startTimestamp != 0, "Swap doesn't exist");
+		require(swap.timeoutTimestamp != 0, "Swap doesn't exist");
 		require(swap.tBTCAmount > 0, "Swap has already been finalized");
-		require((swap.startTimestamp + timeoutPeriod) < now, "Swap hasn't timed out yet");
+		require(swap.timeoutTimestamp < now, "Swap hasn't timed out yet");
 		uint tBTCAmount = swap.tBTCAmount;
 		swap.tBTCAmount = 0;
 		tBTContract.transfer(msg.sender, tBTCAmount);
