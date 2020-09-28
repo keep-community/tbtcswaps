@@ -43,6 +43,7 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
     step: 0.001,
     min: 0,
     actionText: "MAX",
+    onActionTextClick: console.log
   };
   const lnInputProps = {
     svgIcon: (

@@ -1555,6 +1555,10 @@ input::-ms-clear {
   transition: 0.25s background ease-in-out;
 }
 
+.action-text {
+  cursor: pointer;
+}
+
 .form-block__unit {
   margin-right: 13px;
   -ms-flex-negative: 0;
