@@ -19,10 +19,20 @@ test("snapshot of component rendered hint custom logo", () => {
   expect(component.baseElement).toMatchSnapshot();
 });
 
-test("snapshot of tooltip", () => {
+test("snapshot of tooltip active", () => {
   const myRef = React.createRef<HTMLSpanElement>();
   const component = render(
-    <Tooltip hintButton={myRef} onDismiss={() => null} >
+    <Tooltip active={true} hintButton={myRef} onDismiss={() => null} >
+      Hint
+    </Tooltip>
+  );
+  expect(component.baseElement).toMatchSnapshot();
+});
+
+test("snapshot of tooltip hidden", () => {
+  const myRef = React.createRef<HTMLSpanElement>();
+  const component = render(
+    <Tooltip active={false} hintButton={myRef} onDismiss={() => null} >
       Hint
     </Tooltip>
   );

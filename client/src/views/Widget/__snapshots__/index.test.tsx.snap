@@ -99,6 +99,33 @@ exports[`snapshot of component rendered 1`] = `
                         </div>
                       </div>
                       <div
+                        class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-dying"
+                        style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                      >
+                        <div
+                          class="tooltipster-box"
+                        >
+                          <div
+                            class="tooltipster-content"
+                          />
+                        </div>
+                        <div
+                          class="tooltipster-arrow"
+                          style="left: 0px;"
+                        >
+                          <div
+                            class="tooltipster-arrow-uncropped"
+                          >
+                            <div
+                              class="tooltipster-arrow-border"
+                            />
+                            <div
+                              class="tooltipster-arrow-background"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
                         class="exchange__column exchange__column--icon"
                       >
                         <div
@@ -150,6 +177,33 @@ exports[`snapshot of component rendered 1`] = `
                                 />
                               </svg>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-dying"
+                        style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                      >
+                        <div
+                          class="tooltipster-box"
+                        >
+                          <div
+                            class="tooltipster-content"
+                          />
+                        </div>
+                        <div
+                          class="tooltipster-arrow"
+                          style="left: 0px;"
+                        >
+                          <div
+                            class="tooltipster-arrow-uncropped"
+                          >
+                            <div
+                              class="tooltipster-arrow-border"
+                            />
+                            <div
+                              class="tooltipster-arrow-background"
+                            />
                           </div>
                         </div>
                       </div>

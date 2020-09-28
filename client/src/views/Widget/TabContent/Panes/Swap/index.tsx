@@ -14,7 +14,7 @@ import Web3Context from '../../../../../Web3Context'
 
 import Modal from '../../../../Modal'
 
-async function getOperators(): Promise<Operator[]> {
+/* async function getOperators(): Promise<Operator[]> {
     const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/965c5ec028c84ffcb22c799eddba83a4'));
     const contract = new web3.eth.Contract(ln2tbtcABI.abi as AbiItem[], ln2tbtcAddress) as Ln2tbtcContract;
     const length = Number(await contract.methods.getOperatorListLength().call());
@@ -26,13 +26,13 @@ async function getOperators(): Promise<Operator[]> {
     )
     );
     return operators;
-}
+} */
 
-function removeFees(amount: number, linearFee: number, constantFee: number) {
+/* function removeFees(amount: number, linearFee: number, constantFee: number) {
     return (((amount * 10 ** 8 - constantFee) * 10 ** 8) / (10 ** 8 + linearFee));
-}
+} */
 
-function calculateLowestSwap(operators: Operator[], fromAmount: number, fromLN: boolean) {
+/* function calculateLowestSwap(operators: Operator[], fromAmount: number, fromLN: boolean) {
     console.log(fromAmount)
     const selectedOps = operators.map(op => {
         const totalProvided = removeFees(fromAmount, Number(op.linearFee), Number(op.constantFee));
@@ -50,7 +50,7 @@ function calculateLowestSwap(operators: Operator[], fromAmount: number, fromLN: 
     } else {
         return selectedOps[0];
     }
-}
+} */
 
 
 const Swap: React.FC = () => {
@@ -69,7 +69,8 @@ const Swap: React.FC = () => {
 
     const [stage, setStage] = useState<'initial' | 'invoice'>('initial');
 
-    const [fromLN, setFromLN] = React.useState(false);
+    let error = false;
+    /* const [fromLN, setFromLN] = React.useState(false);
     const [fromAmount, setFromAmount] = React.useState<number | null>(null);
 
     const [operators, setOperators] = React.useState<Operator[] | null>(null);
@@ -77,7 +78,6 @@ const Swap: React.FC = () => {
         getOperators().then(setOperators);
     }
     let selectedOperator: ReturnType<typeof calculateLowestSwap> | undefined;
-    let error = false;
     if (fromAmount === null || fromAmount === 0 || operators === null) {
         selectedOperator = undefined;
     } else {
@@ -85,7 +85,7 @@ const Swap: React.FC = () => {
         if (selectedOperator === undefined) {
             error = true;
         }
-    }
+    } */
 
     return (
         (

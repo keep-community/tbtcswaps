@@ -73,6 +73,33 @@ exports[`snapshot of component rendered 1`] = `
                     </div>
                   </div>
                 </div>
+                <div
+                  class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-dying"
+                  style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                >
+                  <div
+                    class="tooltipster-box"
+                  >
+                    <div
+                      class="tooltipster-content"
+                    />
+                  </div>
+                  <div
+                    class="tooltipster-arrow"
+                    style="left: 0px;"
+                  >
+                    <div
+                      class="tooltipster-arrow-uncropped"
+                    >
+                      <div
+                        class="tooltipster-arrow-border"
+                      />
+                      <div
+                        class="tooltipster-arrow-background"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="form-group"
@@ -115,6 +142,33 @@ exports[`snapshot of component rendered 1`] = `
                     </div>
                   </div>
                 </div>
+                <div
+                  class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-dying"
+                  style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                >
+                  <div
+                    class="tooltipster-box"
+                  >
+                    <div
+                      class="tooltipster-content"
+                    />
+                  </div>
+                  <div
+                    class="tooltipster-arrow"
+                    style="left: 0px;"
+                  >
+                    <div
+                      class="tooltipster-arrow-uncropped"
+                    >
+                      <div
+                        class="tooltipster-arrow-border"
+                      />
+                      <div
+                        class="tooltipster-arrow-background"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="form-group"
@@ -153,6 +207,44 @@ exports[`snapshot of component rendered 1`] = `
                         placeholder="0.0"
                         type="number"
                         value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tooltipster-base tooltipster-sidetip tooltipster-bottom fff tooltipster-fade tooltipster-dying"
+                  style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                >
+                  <div
+                    class="tooltipster-box"
+                  >
+                    <div
+                      class="tooltipster-content"
+                    >
+                      <b>
+                        Linear Fee
+                      </b>
+                       is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. 
+                      <br />
+                      <a
+                        href="/"
+                      >
+                        Learn more
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="tooltipster-arrow"
+                    style="left: 0px;"
+                  >
+                    <div
+                      class="tooltipster-arrow-uncropped"
+                    >
+                      <div
+                        class="tooltipster-arrow-border"
+                      />
+                      <div
+                        class="tooltipster-arrow-background"
                       />
                     </div>
                   </div>
@@ -199,6 +291,44 @@ exports[`snapshot of component rendered 1`] = `
                     </div>
                   </div>
                 </div>
+                <div
+                  class="tooltipster-base tooltipster-sidetip tooltipster-bottom fff tooltipster-fade tooltipster-dying"
+                  style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                >
+                  <div
+                    class="tooltipster-box"
+                  >
+                    <div
+                      class="tooltipster-content"
+                    >
+                      <b>
+                        Linear Fee
+                      </b>
+                       is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. 
+                      <br />
+                      <a
+                        href="/"
+                      >
+                        Learn more
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="tooltipster-arrow"
+                    style="left: 0px;"
+                  >
+                    <div
+                      class="tooltipster-arrow-uncropped"
+                    >
+                      <div
+                        class="tooltipster-arrow-border"
+                      />
+                      <div
+                        class="tooltipster-arrow-background"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="form-group"
@@ -237,6 +367,44 @@ exports[`snapshot of component rendered 1`] = `
                         placeholder="0.0"
                         type="number"
                         value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tooltipster-base tooltipster-sidetip tooltipster-bottom fff tooltipster-fade tooltipster-dying"
+                  style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+                >
+                  <div
+                    class="tooltipster-box"
+                  >
+                    <div
+                      class="tooltipster-content"
+                    >
+                      <b>
+                        Linear Fee
+                      </b>
+                       is a format for a Lightning Network invoice uses a bech32 encoding, which is also used for Bitcoin’s Segregated Witness. 
+                      <br />
+                      <a
+                        href="/"
+                      >
+                        Learn more
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    class="tooltipster-arrow"
+                    style="left: 0px;"
+                  >
+                    <div
+                      class="tooltipster-arrow-uncropped"
+                    >
+                      <div
+                        class="tooltipster-arrow-border"
+                      />
+                      <div
+                        class="tooltipster-arrow-background"
                       />
                     </div>
                   </div>
