@@ -55,7 +55,7 @@ const Input: React.FC<InputProps> = (props) => {
                 </div>
             </div>
             {
-                displayTooltip && <Tooltip hintButton={questionMarkElement} onDismiss={() => setDisplayTooltip(false)} >
+                <Tooltip active={displayTooltip} hintButton={questionMarkElement} onDismiss={() => setDisplayTooltip(false)} >
                     {hint}
                 </Tooltip>
             }

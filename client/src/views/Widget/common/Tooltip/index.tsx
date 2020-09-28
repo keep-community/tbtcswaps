@@ -52,7 +52,7 @@ const calculateTooltipPosition = (el: HTMLElement, tooltipWidth: number, tooltip
     }
 }
 
-const Tooltip: React.FC<{ hintButton: React.RefObject<HTMLSpanElement>, onDismiss: () => void, active?: boolean }> = ({ hintButton, onDismiss, children, active }) => {
+const Tooltip: React.FC<{ hintButton: React.RefObject<HTMLSpanElement>, onDismiss: () => void, active: boolean }> = ({ hintButton, onDismiss, children, active }) => {
     const [tooltipRect, setTooltipRect] = useState({
         position: '0',
         x: -1000,
@@ -98,14 +98,14 @@ const Tooltip: React.FC<{ hintButton: React.RefObject<HTMLSpanElement>, onDismis
     return (
         <div
             ref={myself}
-            className={`tooltipster-base tooltipster-sidetip tooltipster-${tooltipRect.position} fff tooltipster-fade ${active ? 'tooltipster-show' : 'tooltipster-show'}`}
+            className={`tooltipster-base tooltipster-sidetip tooltipster-${tooltipRect.position} fff tooltipster-fade ${active ? 'tooltipster-show' : 'tooltipster-dying'}`}
             style={{
                 position: 'absolute',
-                maxWidth: `${width}px`,
-                maxHeight: `${height}px`,
+                maxWidth: `${!active ? '0' : width}px`,
+                maxHeight: `${!active ? '0' : height}px`,
                 zIndex: 9999999,
-                top: `${tooltipRect.x}px`,
-                left: `${tooltipRect.y}px`,
+                top: `${!active ? '0' : tooltipRect.x}px`,
+                left: `${!active ? '0' : tooltipRect.y}px`,
                 /* height: '122px', */
                 /* width: `${width}px`, */
                 animationDuration: '350ms',

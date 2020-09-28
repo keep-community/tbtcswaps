@@ -17,8 +17,7 @@ const TextQR: React.FC<TextQRProps> = ({ text, hint }) => {
             <div className="invoice__block-code">
                 <Hint
                     ref={questionMarkElement}
-                    onMouseEnter={() => { setDisplayTooltip(true) }}
-                    onMouseLeave={() => { setDisplayTooltip(false) }}
+                    onClick={() => { setDisplayTooltip(true) }}
                     svgIcon={
                         <svg className="icon icon-code">
                             <use xlinkHref={`${ICONS}#icon-code`}></use>
@@ -26,7 +25,7 @@ const TextQR: React.FC<TextQRProps> = ({ text, hint }) => {
                     } />
             </div>
             {
-                displayTooltip && <Tooltip hintButton={questionMarkElement} onDismiss={() => setDisplayTooltip(false)} >
+                <Tooltip active={displayTooltip} hintButton={questionMarkElement} onDismiss={() => setDisplayTooltip(false)} >
                     <img className="image-code" src={QR_DEMO} width="185" height="187" alt="" />
                 </Tooltip>
             }
