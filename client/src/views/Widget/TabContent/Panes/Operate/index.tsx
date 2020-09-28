@@ -11,10 +11,6 @@ import {
   tbtcAddress,
   ln2tbtcAddress,
 } from "../../../../../contracts/deployedAddresses";
-import lnLogo from "../Swap/lightning.png";
-import tbtcLogo from "../Swap/tBTC.png";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 
 import {
   Operator,

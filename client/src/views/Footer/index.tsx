@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "../Modal";
-/* import "./Footer.css"; */
 import modalData from "./modal-data";
 
 export default function Footer() {
