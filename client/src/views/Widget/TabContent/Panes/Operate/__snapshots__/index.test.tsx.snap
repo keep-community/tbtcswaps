@@ -24,12 +24,15 @@ exports[`snapshot of component rendered 1`] = `
                 <div
                   class="notification__text"
                 >
-                  Add liquidity and earn fees on user swaps. 
-                  <a
-                    href="/"
-                  >
-                    Learn more
-                  </a>
+                  <span>
+                    Add liquidity and earn fees on user swaps. 
+                    <a
+                      href="/"
+                    >
+                      Learn more
+                    </a>
+                    .
+                  </span>
                 </div>
               </div>
               <div

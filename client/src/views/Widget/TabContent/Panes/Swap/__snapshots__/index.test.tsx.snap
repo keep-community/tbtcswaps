@@ -10,7 +10,7 @@ exports[`snapshot of component rendered 1`] = `
         class="tab-pane__content"
       >
         <div
-          class="box-operation__content"
+          class="box-operation__content box-operation__content--swap"
         >
           <div
             class="box-operation__exchange exchange"
@@ -48,7 +48,7 @@ exports[`snapshot of component rendered 1`] = `
                         value=""
                       />
                       <div
-                        class="form-block__unit"
+                        class="form-block__unit action-text"
                       >
                         MAX
                       </div>

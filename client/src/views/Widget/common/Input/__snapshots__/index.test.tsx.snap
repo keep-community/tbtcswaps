@@ -25,7 +25,7 @@ exports[`snapshot of component rendered with actionText 1`] = `
             value=""
           />
           <div
-            class="form-block__unit"
+            class="form-block__unit action-text"
           >
             MAX
           </div>
