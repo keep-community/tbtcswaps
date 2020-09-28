@@ -3,25 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
     "@node-lightning/invoice": "^0.11.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^10.4.9",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/qrcode": "^1.3.5",
-    "@types/react": "^16.9.48",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-swipeable-views": "^0.13.0",
-    "prettier": "^2.1.1",
     "qrcode": "^1.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "react-swipeable-views": "^0.13.9",
-    "typescript": "^3.9.7",
     "web3": "^1.2.11"
   },
   "scripts": {
@@ -47,6 +33,16 @@
     ]
   },
   "devDependencies": {
+    "typescript": "^3.9.7",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/qrcode": "^1.3.5",
+    "@types/react": "^16.9.48",
+    "@types/react-dom": "^16.9.0",
+    "prettier": "^2.1.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^10.4.9",
+    "@testing-library/user-event": "^7.1.2",
     "jest-environment-jsdom-sixteen": "^1.0.3"
   }
 }
