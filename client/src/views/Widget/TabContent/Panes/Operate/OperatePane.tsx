@@ -49,8 +49,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
           <div className="box-operation__operate operate">
             <div className="operate__form">
               <Notification>
-                Add liquidity and earn fees on user swaps.{" "}
-                <a href="/">Learn more</a>
+                <span>Add liquidity and earn fees on user swaps. <a href="/">Learn more</a>.</span>
               </Notification>
               <div className="form-group">
                 <Input
