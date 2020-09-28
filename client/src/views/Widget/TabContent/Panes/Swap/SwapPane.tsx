@@ -65,8 +65,8 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
       ev.target.value === ""
         ? ev.target.value
         : ev.target.type === "number"
-        ? toMaxDecimalsRound(ev.target.value, +ev.target.step).toString()
-        : ev.target.value;
+          ? toMaxDecimalsRound(ev.target.value, +ev.target.step).toString()
+          : ev.target.value;
     if (name === "tbtc") setTbtcAmount(value);
     else if (name === "ln") setLnAmount(value);
 
@@ -77,7 +77,7 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
   return (
     <div className="tab-pane is_active">
       <div className="tab-pane__content">
-        <div className="box-operation__content">
+        <div className="box-operation__content box-operation__content--swap">
           <div className="box-operation__exchange exchange">
             <div className="exchange__form">
               <div className="exchange__row row align-end">
@@ -114,24 +114,24 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                 />
               </div>
               {isConnected ? (
-                <Notification className="notification--bottom">
-                  <span>1 eth will be locked</span>
-                </Notification>
-              ) : null}
-              {isConnected ? (
-                <ActionButton
-                  onClick={onSwapClick}
-                  text="Swap"
-                  className="exchange__button"
-                />
+                <>
+                  <ActionButton
+                    onClick={onSwapClick}
+                    text="Swap"
+                    className="exchange__button"
+                  />
+                  <div className="note--bottom">
+                    Note: 1ETH will be licked during Swap Process.
+                  </div>
+                </>
               ) : (
-                <ActionButton
-                  onClick={onConnectWalletClick}
-                  text="Connect wallet"
-                  type="secondary"
-                  className="exchange__button"
-                />
-              )}
+                  <ActionButton
+                    onClick={onConnectWalletClick}
+                    text="Connect wallet"
+                    type="secondary"
+                    className="exchange__button"
+                  />
+                )}
             </div>
           </div>
         </div>
