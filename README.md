@@ -1,5 +1,20 @@
-# LN 2 tBTC
-> Trustless Lightning Network <-> tBTC swaps
+<h1 align="center">
+  <img src="./client/src/img/logo.svg" width="128"></a>
+  <br>
+  tbtcswaps
+  <br>
+</h1>
+
+<h4 align="center">Trustless Lightning Network <-> tBTC swaps</h4>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#how-it-works">How it works</a> •
+  <a href="#how-to-become-a-liquidity-provider">Provide liquidity</a> •
+  <a href="#development">Development</a>
+</p>
+
+![screenshot](./images/screenshot.png)
 
 ## Features
 - User-friendly: Works with all lightning and web3-enabled wallets
