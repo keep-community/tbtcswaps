@@ -6,6 +6,7 @@ import Invoicetbtc2ln from "./Invoicetbtc2ln";
 
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";
 import Web3Context from "../../../../../Web3Context";
+import {convertToUint, addDecimalsToUint} from '../../../utils'
 
 import Modal from "../../../../Modal";
 
@@ -28,9 +29,26 @@ async function getOperators(contract:Ln2tbtcContract): Promise<ExtendedOperator[
   );
   return operators;
 }
+const tokenDecimals = {
+  tbtc: 18,
+  ln: 8
+}
 
-function removeFees(amount: number, linearFee: number, constantFee: number) {
-  return ((amount * 10 ** 8 - constantFee) * 10 ** 8) / (10 ** 8 + linearFee);
+function removeFees(amount: bigint, linearFee: bigint, rawConstantFee: bigint, fromName:'tbtc'|'ln') {
+  const diffNominator = (BigInt(10)**BigInt(tokenDecimals['tbtc']-tokenDecimals['ln']))
+  let constantFee:bigint
+  if(fromName==='ln'){
+    constantFee = rawConstantFee
+  } else {
+    constantFee = rawConstantFee*diffNominator
+  }
+  const e8 = BigInt(10)**BigInt(8)
+  const computed = ((amount - constantFee) * e8) / (e8 + linearFee);
+  if(fromName==='ln'){
+    return computed*diffNominator
+  } else {
+    return computed/diffNominator
+  }
 }
 
 function calculateLowestSwap(
@@ -38,16 +56,15 @@ function calculateLowestSwap(
   fromAmountRaw: string,
   fromName: 'tbtc'|'ln'
 ) {
-  const fromAmount = Number(fromAmountRaw) //TODO: Change
-  console.log(fromAmount);
+  const fromAmount = BigInt(convertToUint(fromAmountRaw, tokenDecimals[fromName]))
   const selectedOps = operators
     .map((op) => {
       const totalProvided = removeFees(
         fromAmount,
-        Number(op.linearFee),
-        Number(op.constantFee)
+        BigInt(op.linearFee),
+        BigInt(op.constantFee),
+        fromName
       );
-      console.log(totalProvided);
       return {
         ...op,
         totalProvided,
@@ -55,9 +72,9 @@ function calculateLowestSwap(
     })
     .filter((op) => {
       const opBalance = fromName==='ln' ? op.tBTCBalance : op.lnBalance;
-      return Number(opBalance) > op.totalProvided && op.totalProvided > 0;
+      return BigInt(opBalance) >= op.totalProvided && op.totalProvided > 0;
     })
-    .sort((a, b) => b.totalProvided - a.totalProvided); // From highest to lowest
+    .sort((a, b) => Number(b.totalProvided - a.totalProvided)); // From highest to lowest
   if (selectedOps.length === 0) {
     return undefined;
   } else {
@@ -93,7 +110,8 @@ const Swap: React.FC = () => {
     if (selectedOperator === undefined) {
       notEnoughLiquidityError = true;
     } else {
-      toAmount=selectedOperator.totalProvided.toString()
+      const toDecimals = tokenDecimals[fromName==='tbtc'?'ln':'tbtc']
+      toAmount=addDecimalsToUint(selectedOperator.totalProvided.toString(), toDecimals)
     }
   }
 

@@ -92,9 +92,9 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                   {...(leftInputDenom === "tbtc"
                     ? tbtcInputProps
                     : lnInputProps)}
-                  {...(leftInputDenom==="tbtc"?{
+                  {...(leftInputDenom==="tbtc" && userAddress!==null?{
                     actionText: "MAX",
-                    onActionTextClick: ()=>getMaxTbtcAmount(tbtcContract, userAddress!).then(amount=>handleInputChange('tbtc', amount))
+                    onActionTextClick: ()=>getMaxTbtcAmount(tbtcContract, userAddress).then(amount=>handleInputChange('tbtc', amount))
                   }:{})}
                 />
                 <div className="exchange__column exchange__column--icon">
