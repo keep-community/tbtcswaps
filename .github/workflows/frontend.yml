@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: '12.x'
     - run: (cd ../contract && npm ci && npm run build)
-    - run: npm ci
+    - run: CI=false npm ci
     - run: npm run build
   test:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
         node-version: '12.x'
     - run: (cd ../contract && npm ci && npm run build)
     - run: npm ci
-    - run: npm run build
+    - run: CI=false npm run build
     - name: Deploy to Github Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
