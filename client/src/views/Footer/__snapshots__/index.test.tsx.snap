@@ -37,7 +37,7 @@ exports[`snapshot of component rendered without dialogs 1`] = `
                 <a
                   class="menu__link"
                   data-id="code"
-                  href="https://github.com/corollari/ln2tBTC"
+                  href="https://github.com/corollari/tbtcswaps"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -50,7 +50,7 @@ exports[`snapshot of component rendered without dialogs 1`] = `
                 <a
                   class="menu__link"
                   data-id="docs"
-                  href="https://github.com/corollari/ln2tBTC/blob/master/README.md"
+                  href="https://github.com/corollari/tbtcswaps/blob/master/README.md"
                   rel="noopener noreferrer"
                   target="_blank"
                 >

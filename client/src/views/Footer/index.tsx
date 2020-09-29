@@ -32,7 +32,7 @@ export default function Footer() {
                   <a
                     data-id="code"
                     rel="noopener noreferrer"
-                    href="https://github.com/corollari/ln2tBTC"
+                    href="https://github.com/corollari/tbtcswaps"
                     target="_blank"
                     className="menu__link"
                   >
@@ -43,7 +43,7 @@ export default function Footer() {
                   <a
                     data-id="docs"
                     rel="noopener noreferrer"
-                    href="https://github.com/corollari/ln2tBTC/blob/master/README.md"
+                    href="https://github.com/corollari/tbtcswaps/blob/master/README.md"
                     target="_blank"
                     className="menu__link"
                   >
