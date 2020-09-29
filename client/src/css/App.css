@@ -2287,6 +2287,14 @@ input::-ms-clear {
   max-width: calc(100% - 25px);
 }
 
+.invoice__block-content.is_error {
+  border: 1px solid #FF6D4A;
+}
+
+.invoice__block-error {
+  color: #FF6D4A;
+}
+
 .invoice__note {
   margin-bottom: 15px;
   font-size: 13px;
