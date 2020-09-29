@@ -1491,10 +1491,12 @@ input::-ms-clear {
   outline: none;
 }
 
+/*
 .form-control:disabled {
   color: #999;
   background: #ddd;
 }
+*/
 
 .form-textarea {
   resize: none;

@@ -3,14 +3,17 @@ import ICONS from "../../../../../img/icons.svg";
 import ActionButton from "../../../common/ActionButton";
 import Input from "../../../common/Input";
 import { toMaxDecimalsRound } from "../../../utils";
-import Notification from "../../../common/Notification";
 
 interface SwapPaneProps {
   handleInputChange?: (name: string, value: string) => void;
   onConnectWalletClick?: () => void;
   onSwapClick?: () => void;
   isConnected?: boolean;
-  handleFromNameChange?: (denom: string) => void;
+  handleFromNameChange?: (denom: 'tbtc' | 'ln') => void;
+  notEnoughLiquidityError: boolean;
+  lnAmount:string,
+  tbtcAmount:string,
+  noInputProvided:boolean
 }
 
 const SwapPane: React.FC<SwapPaneProps> = (props) => {
@@ -20,15 +23,16 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
     onSwapClick = () => null,
     isConnected = false,
     handleFromNameChange = () => null,
+    lnAmount,
+    tbtcAmount,
+    noInputProvided,
+    notEnoughLiquidityError
   } = props;
 
-  const [leftInputDenom, setLeftInputDenom] = useState("tbtc");
+  const [leftInputDenom, setLeftInputDenom] = useState<'tbtc' | 'ln'>("tbtc");
   useEffect(() => {
     handleFromNameChange(leftInputDenom);
   }, [leftInputDenom, handleFromNameChange]);
-
-  const [tbtcAmount, setTbtcAmount] = useState<string>("");
-  const [lnAmount, setLnAmount] = useState<string>("");
 
   const tbtcInputProps = {
     svgIcon: (
@@ -37,11 +41,8 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
       </svg>
     ),
     placeholder: "0.0",
-    type: "number",
     value: tbtcAmount,
     name: "tbtc",
-    step: 0.001,
-    min: 0,
     actionText: "MAX",
     onActionTextClick: console.log
   };
@@ -52,11 +53,8 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
       </svg>
     ),
     placeholder: "0.0",
-    type: "number",
     value: lnAmount,
     name: "ln",
-    step: 0.001,
-    min: 0,
   };
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,8 +66,6 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
         : ev.target.type === "number"
           ? toMaxDecimalsRound(ev.target.value, +ev.target.step).toString()
           : ev.target.value;
-    if (name === "tbtc") setTbtcAmount(value);
-    else if (name === "ln") setLnAmount(value);
 
     //this will be sent to parent's component, conversion to number type
     handleInputChange(name, value);
@@ -108,7 +104,7 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                 <Input
                   label="To"
                   className="exchange__column--to"
-                  onChange={onChange}
+                  disabled={true}
                   {...(leftInputDenom === "tbtc"
                     ? lnInputProps
                     : tbtcInputProps)}
@@ -116,14 +112,26 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
               </div>
               {isConnected ? (
                 <>
-                  <ActionButton
-                    onClick={onSwapClick}
-                    text="Swap"
-                    className="exchange__button"
-                  />
-                  <div className="note--bottom">
-                    Note: 1ETH will be licked during Swap Process.
-                  </div>
+                  {notEnoughLiquidityError || noInputProvided?
+                    <ActionButton
+                      disabled={true}
+                      text={notEnoughLiquidityError?"Not enough liquidity":"Input an amount"}
+                      className="exchange__button"
+                    />
+                    :
+                    <>
+                      <ActionButton
+                        onClick={onSwapClick}
+                        text="Swap"
+                        className="exchange__button"
+                      />
+                      {leftInputDenom === 'ln' &&
+                        <div className="note--bottom">
+                          Note: 1 ETH will be locked during Swap Process.
+                        </div>
+                      }
+                    </>
+                  }
                 </>
               ) : (
                   <ActionButton

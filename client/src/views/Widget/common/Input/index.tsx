@@ -17,6 +17,7 @@ interface InputProps {
   name?: string;
   step?: number;
   min?: number;
+  disabled?: boolean,
   onActionTextClick?: (name: string | undefined) => void
 }
 
@@ -33,6 +34,7 @@ const Input: React.FC<InputProps> = (props) => {
     error,
     onChange,
     name,
+    disabled,
     onActionTextClick
   } = props;
   let questionMarkElement = useRef<HTMLSpanElement>(null);
@@ -63,6 +65,7 @@ const Input: React.FC<InputProps> = (props) => {
               name={name}
               onChange={onChange}
               type={type}
+              disabled={disabled}
               className="form-block__input form-control"
               value={value}
               placeholder={placeholder}

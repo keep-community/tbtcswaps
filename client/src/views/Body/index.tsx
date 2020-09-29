@@ -13,7 +13,7 @@ const Body: React.FC<BodyProps> = () => {
               <h1>tBTC Swap Engine</h1>
             </div>
             <div className="heading__text">
-              Power of tBTC with Lightning speed
+              Trustless swaps between tBTC and the lightning network
             </div>
           </div>
           <Widget />

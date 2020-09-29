@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ICONS from "../../../../../img/icons.svg";
 import ActionButton from "../../../common/ActionButton";
 import Input from "../../../common/Input";
 import Notification from "../../../common/Notification";
 import { toMaxDecimalsRound } from "../../../utils";
+import Web3Context from "../../../../../Web3Context";
+import {
+  Operator
+} from "../../../../../ethereum";
 
 interface OperatePaneProps {
   handleInputChange?: (form: { [key: string]: string | number }) => void;
+  isConnected: boolean,
+  registerOperator: (op: Operator) => Promise<void>
 }
 
 const OperatePane: React.FC<OperatePaneProps> = (props) => {
-  const { handleInputChange = () => null } = props;
+  const { handleInputChange = () => null, isConnected, registerOperator } = props;
+
+  const { connectWallet } = useContext(Web3Context);
 
   const [formValues, setFormValues] = useState({
     lnBalance: "",
@@ -123,8 +131,6 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                   onChange={onChange}
                   name="nodeAddress"
                   label="Node Address "
-                  placeholder="0.0"
-                  type="number"
                   hint={
                     <>
                       <b>Linear Fee</b> is a format for a Lightning Network
@@ -135,7 +141,24 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                   }
                 />
               </div>
-              <ActionButton text="Register" className="operate__button" />
+              {isConnected ?
+                <ActionButton
+                  text="Register"
+                  className="operate__button"
+                  onClick={() => {
+                    registerOperator({
+                      tBTCBalance: formValues.tbtcBalance,
+                      lnBalance: formValues.lnBalance,
+                      linearFee: formValues.linearFee,
+                      constantFee: formValues.constantFee,
+                      publicUrl: formValues.nodeAddress,
+                      exists:true
+                    })
+                  }}
+                />
+                :
+                <ActionButton text="Connect wallet" className="operate__button" type="secondary" onClick={connectWallet} />
+              }
             </div>
           </div>
         </div>

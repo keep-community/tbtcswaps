@@ -7,7 +7,6 @@ interface ContentBlockProps {
 
 const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { label, children } = props;
-  console.log(children);
   return (
     <div className="invoice__block invoice__block--invoice">
       {label && <div className="invoice__block-title">{label}</div>}

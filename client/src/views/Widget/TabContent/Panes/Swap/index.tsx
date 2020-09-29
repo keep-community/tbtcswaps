@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import SwapPane from "./SwapPane";
-import InvoicePane from "./InvoicePaneEditable";
+import InvoiceLN2tbtc from "./InvoiceLN2tbtc";
+import Invoicetbtc2ln from "./Invoicetbtc2ln";
 
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";
 import Web3 from "web3";
@@ -13,7 +14,8 @@ import Web3Context from "../../../../../Web3Context";
 
 import Modal from "../../../../Modal";
 
-async function getOperators(): Promise<Operator[]> {
+type ExtendedOperator = Operator&{operatorAddress:string}
+async function getOperators(): Promise<ExtendedOperator[]> {
   const web3 = new Web3(
     new Web3.providers.HttpProvider(
       "https://ropsten.infura.io/v3/965c5ec028c84ffcb22c799eddba83a4"
@@ -31,7 +33,10 @@ async function getOperators(): Promise<Operator[]> {
         .operatorList(index)
         .call()
         .then((operatorAddress) =>
-          contract.methods.operators(operatorAddress).call()
+          contract.methods.operators(operatorAddress).call().then(op=>({
+            ...op,
+            operatorAddress
+          }))
         )
     )
   );
@@ -43,10 +48,11 @@ function removeFees(amount: number, linearFee: number, constantFee: number) {
 }
 
 function calculateLowestSwap(
-  operators: Operator[],
-  fromAmount: number,
-  fromLN: boolean
+  operators: ExtendedOperator[],
+  fromAmountRaw: string,
+  fromName: 'tbtc'|'ln'
 ) {
+  const fromAmount = Number(fromAmountRaw) //TODO: Change
   console.log(fromAmount);
   const selectedOps = operators
     .map((op) => {
@@ -62,7 +68,7 @@ function calculateLowestSwap(
       };
     })
     .filter((op) => {
-      const opBalance = fromLN ? op.tBTCBalance : op.lnBalance;
+      const opBalance = fromName==='ln' ? op.tBTCBalance : op.lnBalance;
       return Number(opBalance) > op.totalProvided && op.totalProvided > 0;
     })
     .sort((a, b) => b.totalProvided - a.totalProvided); // From highest to lowest
@@ -82,28 +88,28 @@ const Swap: React.FC = () => {
 
   const [errModalName, setErrModalName] = useState<string>();
 
-  const [tbtcAmount, setTbtcAmount] = useState("");
-  const [lnAmount, setLnAmount] = useState("");
-  const [fromName, setFromName] = useState("");
+  const [fromAmount, setFromAmount] = useState("");
+  const [fromName, setFromName] = useState<'tbtc'|'ln'>('tbtc');
 
   const [stage, setStage] = useState<"initial" | "invoice">("initial");
 
-  let error = false;
-  const [operators, setOperators] = React.useState<Operator[] | null>(null);
+  const [operators, setOperators] = React.useState<ExtendedOperator[] | null>(null);
   useEffect(() => {
     getOperators().then(setOperators);
   }, []);
-  /*
-    let selectedOperator: ReturnType<typeof calculateLowestSwap> | undefined;
-    if (fromAmount === null || fromAmount === 0 || operators === null) {
-        selectedOperator = undefined;
+  let selectedOperator: ReturnType<typeof calculateLowestSwap> | undefined;
+  let notEnoughLiquidityError = false;
+  let toAmount = '';
+  if (fromAmount === '' || fromAmount === '0' || operators === null) {
+    selectedOperator = undefined;
+  } else {
+    selectedOperator = calculateLowestSwap(operators, fromAmount, fromName);
+    if (selectedOperator === undefined) {
+      notEnoughLiquidityError = true;
     } else {
-        selectedOperator = calculateLowestSwap(operators, fromAmount, fromLN);
-        if (selectedOperator === undefined) {
-            error = true;
-        }
+      toAmount=selectedOperator.totalProvided.toString()
     }
-    */
+  }
 
   return (
     (stage === "initial" && (
@@ -118,16 +124,19 @@ const Swap: React.FC = () => {
             );
           }}
           onSwapClick={() => {
-            if (!error) {
+            if (!notEnoughLiquidityError) {
               setStage("invoice");
             }
           }}
           isConnected={isConnectedMetamask}
           handleInputChange={(name, value) => {
-            if (name === "tbtc") setTbtcAmount(value);
-            else if (name === "ln") setLnAmount(value);
+            setFromAmount(value);
           }}
           handleFromNameChange={setFromName}
+          notEnoughLiquidityError={notEnoughLiquidityError}
+          lnAmount={fromName==='ln'?fromAmount:toAmount}
+          tbtcAmount={fromName==='tbtc'?fromAmount:toAmount}
+          noInputProvided={fromAmount===''||fromAmount==='0'}
         />
         <Modal
           isOpen={!!errModalName}
@@ -150,7 +159,7 @@ const Swap: React.FC = () => {
         </Modal>
       </>
     )) ||
-    (stage === "invoice" && <InvoicePane />) || <span>Contact us.</span>
+    (stage === "invoice" && selectedOperator !== undefined && (fromName === 'ln' ? <InvoiceLN2tbtc /> : <Invoicetbtc2ln operatorAddress={selectedOperator.operatorAddress} tBTCAmount={fromAmount} />)) || <span>Contact us.</span>
   );
 };
 

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ActionButton from "../../../common/ActionButton";
-import ContentBlock, { TextQR } from "../../../common/ContentBlock";
-import Web3 from "web3";
-import { Ln2tbtcContract, ERC20Contract } from "../../../../../ethereum";
+import ContentBlock from "../../../common/ContentBlock";
+import { Ln2tbtcContract, ERC20Contract, Web3Provider } from "../../../../../ethereum";
 import { decode } from "@node-lightning/invoice";
 import ln2tbtcABI from "../../../../../contracts/LN2tBTC.json";
 import tbtcABI from "../../../../../contracts/IERC20.json";
@@ -11,14 +10,18 @@ import {
   tbtcAddress,
   ln2tbtcAddress,
 } from "../../../../../contracts/deployedAddresses";
+import Web3Context from "../../../../../Web3Context";
 
 async function createSwap(
-  web3: Web3,
   invoice: string,
-  paymentHash: string,
   tBTCAmount: string,
-  operatorAddress: string
+  operatorAddress: string,
+  web3: Web3Provider
 ) {
+  if(web3 === null){
+    throw new Error("At the second stage wallet should already be connected")
+  }
+  const {paymentHash} = decode(invoice);
   const ln2tbtcContract: Ln2tbtcContract = new web3.eth.Contract(
     ln2tbtcABI.abi as AbiItem[],
     ln2tbtcAddress
@@ -32,14 +35,18 @@ async function createSwap(
     from: userAddress,
   });
   await ln2tbtcContract.methods
-    .createTBTC2LNSwap(paymentHash, tBTCAmount, operatorAddress, invoice)
+    .createTBTC2LNSwap(paymentHash.toString('hex'), tBTCAmount, operatorAddress, invoice)
     .send({
       from: userAddress,
     });
 }
 
-const InvoicePane: React.FC = () => {
+const InvoiceTbtc2LN: React.FC<{
+  operatorAddress:string,
+  tBTCAmount: string,
+}> = ({tBTCAmount, operatorAddress}) => {
   const [invoice, setInvoice] = useState<string>("");
+  const [swapping, setSwapping] = useState<boolean>(false);
   let error = false;
   let result: ReturnType<typeof decode>;
   if (invoice !== "") {
@@ -49,6 +56,7 @@ const InvoicePane: React.FC = () => {
       error = true;
     }
   }
+  const { web3 } = useContext(Web3Context);
 
   return (
     <div className="tab-pane is_active">
@@ -56,30 +64,21 @@ const InvoicePane: React.FC = () => {
         <div className="box-operation__content">
           <div className="box-operation__invoice invoice">
             <form action="#" className="invoice__form">
-              <div className="invoice__title">
-                Pay Lightning Network invoice
+            <div className="invoice__title">
+                Provide Lightning Network invoice
               </div>
-              <ContentBlock label="Invoice">
-                <TextQR text="lnbc1pwr3fk2pp5zh36fav42ngkxfzywag42y06e03drpcujg38mq5gzkftdhp3phhsdqqcqzysvq8mgc5782mje6x0hgqd70pc83aa52g8pmpnc0j9x4pa3hrz3csp0ezl477f06ee4qmt4plcmmsftypy727w9zn06h9h6cz4n02t9qcp0c74yt" />
-              </ContentBlock>
-              <ContentBlock label="Swap details">
-                <div className="invoice__block-text">
-                  <div>
-                    <strong>LN Paid:</strong> 0.01 LN
-                  </div>
-                  <div>
-                    <strong>Swap Fee:</strong> 0.0001 LN
-                  </div>
-                  <div>
-                    <strong>You’ll Get:</strong> 0.0099 tBTC
-                  </div>
-                </div>
-              </ContentBlock>
+              <ContentBlock label="Invoice" />
+              {//<ContentBlock label="Swap details" />
+            }
               <div className="invoice__note">
                 Note: Funds will be locked for 3 days if this transaction gets
                 reverted
               </div>
-              <ActionButton text="Waiting for Payment" type="loading" />
+              {swapping ?
+                <ActionButton text="Waiting for Payment" type="loading" />
+                :
+                <ActionButton text="Swap" type="primary" onClick={()=>createSwap(invoice, tBTCAmount, operatorAddress, web3)}/>
+              }
             </form>
           </div>
         </div>
@@ -88,4 +87,4 @@ const InvoicePane: React.FC = () => {
   );
 };
 
-export default InvoicePane;
+export default InvoiceTbtc2LN;

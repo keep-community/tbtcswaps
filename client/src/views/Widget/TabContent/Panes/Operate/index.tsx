@@ -49,10 +49,8 @@ async function registerOperator(
 
 const Operate: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string>();
-
-  const { web3 } = useContext(Web3Context);
-
   const [operatorInfo, setOperatorInfo] = React.useState<Operator | null>(null);
+  const { web3 } = useContext(Web3Context);
 
   useEffect(() => {
     // Avoid initializing contracts several times
@@ -79,6 +77,7 @@ const Operate: React.FC = () => {
     );
   }, [web3]);
 
+  /*
   useEffect(() => {
     if (operatorInfo === null && ln2tbtcContract !== null && userAddress) {
       ln2tbtcContract.methods
@@ -88,16 +87,18 @@ const Operate: React.FC = () => {
         .catch((err) => setErrorMsg(err.message));
     }
   }, [userAddress, operatorInfo]);
+  */
 
-  return (
-    <OperatePane handleInputChange={(form) => {}} /> ||
-    (web3 === null && <span>No web3 detected.</span>) ||
-    (!!errorMsg && <span>{errorMsg}</span>) ||
-    (operatorInfo === null && <span>Loading...</span>) ||
-    (operatorInfo !== null && operatorInfo.exists && (
-      <span>Operator alreade exists</span>
-    )) || <OperatePane handleInputChange={(form) => {}} />
-  );
+  if(!!errorMsg){
+    return <span>{errorMsg}</span>
+  } else {
+    return <OperatePane 
+    handleInputChange={(form) => {}}
+    isConnected={web3!==null}
+    registerOperator={
+      (op:Operator)=>registerOperator(op, userAddress!, ln2tbtcContract!, tbtcContract!)
+    }/>
+  }
 };
 
 export default Operate;
