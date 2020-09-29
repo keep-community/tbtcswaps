@@ -57,7 +57,7 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
           <div className="box-operation__operate operate">
             <div className="operate__form">
               <Notification>
-                <span>Add liquidity and earn fees on user swaps. <a href="/">Learn more</a>.</span>
+                <span>Add liquidity and earn fees on user swaps. <a href="https://github.com/corollari/tbtcswaps">Learn more</a>.</span>
               </Notification>
               <div className="form-group">
                 <Input
@@ -99,10 +99,12 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                   type="number"
                   hint={
                     <>
-                      <b>Linear Fee</b> is a format for a Lightning Network
-                      invoice uses a bech32 encoding, which is also used for
-                      Bitcoin’s Segregated Witness. <br />
-                      <a href="/">Learn more</a>
+                      <b>Linear Fee</b> is a percentual fee that will
+                      be charged on all swaps and grows with the amount swapped.
+                      <br />
+                      The total fee is calculated as:
+                      <br />
+                      totalFee = amount*linearFee + constantFee
                     </>
                   }
                 />
@@ -117,10 +119,13 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                   type="number"
                   hint={
                     <>
-                      <b>Linear Fee</b> is a format for a Lightning Network
-                      invoice uses a bech32 encoding, which is also used for
-                      Bitcoin’s Segregated Witness. <br />
-                      <a href="/">Learn more</a>
+                      <b>Constant Fee</b> is a fee denominated in satoshis
+                      that will be applied on all swaps by simply incrementing
+                      the cost.
+                      <br />
+                      The total fee is calculated as:
+                      <br />
+                      totalFee = amount*linearFee + constantFee
                     </>
                   }
                 />
@@ -130,13 +135,13 @@ const OperatePane: React.FC<OperatePaneProps> = (props) => {
                   value={formValues["nodeAddress"]}
                   onChange={onChange}
                   name="nodeAddress"
-                  label="Node Address "
+                  label="Public URL "
                   hint={
                     <>
-                      <b>Linear Fee</b> is a format for a Lightning Network
-                      invoice uses a bech32 encoding, which is also used for
-                      Bitcoin’s Segregated Witness. <br />
-                      <a href="/">Learn more</a>
+                      <b>Public URL</b> should be the URL of your node
+                      which should have a publicly-exposed HTTP interface.
+                      <br />
+                      SSL should be forced on all connections for security reasons.
                     </>
                   }
                 />

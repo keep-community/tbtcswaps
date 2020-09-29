@@ -21,6 +21,17 @@ import {
 let ln2tbtcContract: Ln2tbtcContract | null = null;
 let tbtcContract: ERC20Contract | null = null;
 
+function convertToUint(amount:string, tokenDecimals:number){
+    let [int, decimals] = amount.split('.');
+    decimals = decimals ?? '';
+    int = int.replace(/^0+/, '');
+    decimals = decimals.padEnd(tokenDecimals, '0')
+    if(decimals.length > tokenDecimals){
+      throw new Error("Too many decimals were provided")
+    }
+    return int + decimals;
+}
+
 async function registerOperator(
   operatorInfo: Operator,
   operatorAddress: string,
@@ -36,10 +47,10 @@ async function registerOperator(
   }
   await ln2tbtcContract.methods
     .operatorRegister(
-      operatorInfo.tBTCBalance,
-      operatorInfo.lnBalance,
-      operatorInfo.linearFee,
-      operatorInfo.constantFee,
+      convertToUint(operatorInfo.tBTCBalance, 18),
+      convertToUint(operatorInfo.lnBalance, 8),
+      convertToUint(operatorInfo.linearFee, 8+2), // Transform to %
+      convertToUint(operatorInfo.constantFee, 8),
       operatorInfo.publicUrl
     )
     .send({
