@@ -435,6 +435,7 @@ corresponds to the arrow we want to display */
   background-color: #000000;
   background-color: rgba(0, 0, 0, 0.75);
   text-align: center;
+  z-index: 999;
 }
 
 .blocker:before {
