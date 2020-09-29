@@ -5,26 +5,12 @@ import InvoiceLN2tbtc from "./InvoiceLN2tbtc";
 import Invoicetbtc2ln from "./Invoicetbtc2ln";
 
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";
-import Web3 from "web3";
-import ln2tbtcABI from "../../../../../contracts/LN2tBTC.json";
-import type { AbiItem } from "web3-utils";
-import { ln2tbtcAddress } from "../../../../../contracts/deployedAddresses";
-
 import Web3Context from "../../../../../Web3Context";
 
 import Modal from "../../../../Modal";
 
 type ExtendedOperator = Operator&{operatorAddress:string}
-async function getOperators(): Promise<ExtendedOperator[]> {
-  const web3 = new Web3(
-    new Web3.providers.HttpProvider(
-      "https://ropsten.infura.io/v3/965c5ec028c84ffcb22c799eddba83a4"
-    )
-  );
-  const contract = new web3.eth.Contract(
-    ln2tbtcABI.abi as AbiItem[],
-    ln2tbtcAddress
-  ) as Ln2tbtcContract;
+async function getOperators(contract:Ln2tbtcContract): Promise<ExtendedOperator[]> {
   const length = Number(await contract.methods.getOperatorListLength().call());
   const indexArray = Array.from(Array(length), (_, i) => i);
   const operators = await Promise.all(
@@ -80,7 +66,7 @@ function calculateLowestSwap(
 }
 
 const Swap: React.FC = () => {
-  const { web3, connectWallet } = useContext(Web3Context);
+  const { web3, connectWallet, ln2tbtcContract } = useContext(Web3Context);
   const [isConnectedMetamask, setIsConnectedMetamask] = useState(web3 !== null);
   useEffect(() => {
     setIsConnectedMetamask(web3 !== null);
@@ -95,8 +81,8 @@ const Swap: React.FC = () => {
 
   const [operators, setOperators] = React.useState<ExtendedOperator[] | null>(null);
   useEffect(() => {
-    getOperators().then(setOperators);
-  }, []);
+    getOperators(ln2tbtcContract).then(setOperators);
+  }, [ln2tbtcContract]);
   let selectedOperator: ReturnType<typeof calculateLowestSwap> | undefined;
   let notEnoughLiquidityError = false;
   let toAmount = '';

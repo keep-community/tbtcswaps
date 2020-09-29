@@ -35,6 +35,7 @@ export interface ERC20Contract {
       address: Address,
       amount: NumericalString
     ) => ContractMethod<void>;
+    balanceOf: (address: Address) => ContractMethod<NumericalString>
   };
 }
 

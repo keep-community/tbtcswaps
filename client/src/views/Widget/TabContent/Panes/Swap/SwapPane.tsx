@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ICONS from "../../../../../img/icons.svg";
 import ActionButton from "../../../common/ActionButton";
 import Input from "../../../common/Input";
 import { toMaxDecimalsRound } from "../../../utils";
+import Web3Context from "../../../../../Web3Context";
+import { ERC20Contract } from "../../../../../ethereum";
+import {addDecimalsToUint} from '../../../utils'
 
 interface SwapPaneProps {
   handleInputChange?: (name: string, value: string) => void;
@@ -14,6 +17,10 @@ interface SwapPaneProps {
   lnAmount:string,
   tbtcAmount:string,
   noInputProvided:boolean
+}
+
+function getMaxTbtcAmount(contract:ERC20Contract, userAddress:string){
+  return contract.methods.balanceOf(userAddress).call().then(balance => addDecimalsToUint(balance, 18))
 }
 
 const SwapPane: React.FC<SwapPaneProps> = (props) => {
@@ -34,6 +41,8 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
     handleFromNameChange(leftInputDenom);
   }, [leftInputDenom, handleFromNameChange]);
 
+  const { tbtcContract, userAddress } = useContext(Web3Context);
+
   const tbtcInputProps = {
     svgIcon: (
       <svg className="icon icon-man no-fill-transition">
@@ -43,8 +52,6 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
     placeholder: "0.0",
     value: tbtcAmount,
     name: "tbtc",
-    actionText: "MAX",
-    onActionTextClick: console.log
   };
   const lnInputProps = {
     svgIcon: (
@@ -85,6 +92,10 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                   {...(leftInputDenom === "tbtc"
                     ? tbtcInputProps
                     : lnInputProps)}
+                  {...(leftInputDenom==="tbtc"?{
+                    actionText: "MAX",
+                    onActionTextClick: ()=>getMaxTbtcAmount(tbtcContract, userAddress!).then(amount=>handleInputChange('tbtc', amount))
+                  }:{})}
                 />
                 <div className="exchange__column exchange__column--icon">
                   <div className="exchange__icon">
@@ -127,7 +138,7 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                       />
                       {leftInputDenom === 'ln' &&
                         <div className="note--bottom">
-                          Note: 1 ETH will be locked during Swap Process.
+                          Note: 1 ETH will be locked during the swap process.
                         </div>
                       }
                     </>

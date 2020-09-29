@@ -1,36 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
-
 import OperatePane from "./OperatePane";
-
 import Web3Context from "../../../../../Web3Context";
-
-import ln2tbtcABI from "../../../../../contracts/LN2tBTC.json";
-import tbtcABI from "../../../../../contracts/IERC20.json";
-import type { AbiItem } from "web3-utils";
 import {
-  tbtcAddress,
   ln2tbtcAddress,
 } from "../../../../../contracts/deployedAddresses";
-
 import {
   Operator,
   Ln2tbtcContract,
   ERC20Contract,
 } from "../../../../../ethereum";
-
-let ln2tbtcContract: Ln2tbtcContract | null = null;
-let tbtcContract: ERC20Contract | null = null;
-
-function convertToUint(amount:string, tokenDecimals:number){
-    let [int, decimals] = amount.split('.');
-    decimals = decimals ?? '';
-    int = int.replace(/^0+/, '');
-    decimals = decimals.padEnd(tokenDecimals, '0')
-    if(decimals.length > tokenDecimals){
-      throw new Error("Too many decimals were provided")
-    }
-    return int + decimals;
-}
+import {convertToUint} from '../../../utils'
 
 async function registerOperator(
   operatorInfo: Operator,
@@ -61,32 +40,7 @@ async function registerOperator(
 const Operate: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string>();
   const [operatorInfo, setOperatorInfo] = React.useState<Operator | null>(null);
-  const { web3 } = useContext(Web3Context);
-
-  useEffect(() => {
-    // Avoid initializing contracts several times
-    if (web3 === null) return;
-    if (ln2tbtcContract === null) {
-      ln2tbtcContract = new web3.eth.Contract(
-        ln2tbtcABI.abi as AbiItem[],
-        ln2tbtcAddress
-      );
-    }
-    if (tbtcContract === null) {
-      tbtcContract = new web3.eth.Contract(
-        tbtcABI.abi as AbiItem[],
-        tbtcAddress
-      );
-    }
-  }, [web3]);
-
-  const [userAddress, setUserAddress] = useState<string>();
-
-  useEffect(() => {
-    setUserAddress(
-      web3 === null ? undefined : (web3.currentProvider as any).selectedAddress
-    );
-  }, [web3]);
+  const { web3, userAddress, ln2tbtcContract, tbtcContract } = useContext(Web3Context);
 
   /*
   useEffect(() => {
@@ -107,7 +61,7 @@ const Operate: React.FC = () => {
     handleInputChange={(form) => {}}
     isConnected={web3!==null}
     registerOperator={
-      (op:Operator)=>registerOperator(op, userAddress!, ln2tbtcContract!, tbtcContract!)
+      (op:Operator)=>registerOperator(op, userAddress!, ln2tbtcContract, tbtcContract)
     }/>
   }
 };

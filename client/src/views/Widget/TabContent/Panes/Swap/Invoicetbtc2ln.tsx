@@ -1,13 +1,9 @@
 import React, { useState, useContext } from "react";
 import ActionButton from "../../../common/ActionButton";
 import ContentBlock from "../../../common/ContentBlock";
-import { Ln2tbtcContract, ERC20Contract, Web3Provider } from "../../../../../ethereum";
+import { Ln2tbtcContract, ERC20Contract } from "../../../../../ethereum";
 import { decode } from "@node-lightning/invoice";
-import ln2tbtcABI from "../../../../../contracts/LN2tBTC.json";
-import tbtcABI from "../../../../../contracts/IERC20.json";
-import type { AbiItem } from "web3-utils";
 import {
-  tbtcAddress,
   ln2tbtcAddress,
 } from "../../../../../contracts/deployedAddresses";
 import Web3Context from "../../../../../Web3Context";
@@ -16,21 +12,11 @@ async function createSwap(
   invoice: string,
   tBTCAmount: string,
   operatorAddress: string,
-  web3: Web3Provider
+  userAddress: string,
+  ln2tbtcContract: Ln2tbtcContract,
+  tbtcContract:ERC20Contract
 ) {
-  if(web3 === null){
-    throw new Error("At the second stage wallet should already be connected")
-  }
   const {paymentHash} = decode(invoice);
-  const ln2tbtcContract: Ln2tbtcContract = new web3.eth.Contract(
-    ln2tbtcABI.abi as AbiItem[],
-    ln2tbtcAddress
-  );
-  const tbtcContract: ERC20Contract = new web3.eth.Contract(
-    tbtcABI.abi as AbiItem[],
-    tbtcAddress
-  );
-  const userAddress = (web3.currentProvider as any).selectedAddress;
   await tbtcContract.methods.approve(ln2tbtcAddress, tBTCAmount).send({
     from: userAddress,
   });
@@ -56,7 +42,7 @@ const InvoiceTbtc2LN: React.FC<{
       error = true;
     }
   }
-  const { web3 } = useContext(Web3Context);
+  const { ln2tbtcContract, tbtcContract, userAddress } = useContext(Web3Context);
 
   return (
     <div className="tab-pane is_active">
@@ -77,7 +63,7 @@ const InvoiceTbtc2LN: React.FC<{
               {swapping ?
                 <ActionButton text="Waiting for Payment" type="loading" />
                 :
-                <ActionButton text="Swap" type="primary" onClick={()=>createSwap(invoice, tBTCAmount, operatorAddress, web3)}/>
+                <ActionButton text="Swap" type="primary" onClick={()=>createSwap(invoice, tBTCAmount, operatorAddress, userAddress!, ln2tbtcContract, tbtcContract)}/>
               }
             </form>
           </div>
