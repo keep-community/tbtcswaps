@@ -10,16 +10,14 @@ test("snapshot of component rendered without dialogs", () => {
 test("dialog opens when 'About' is clicked", async () => {
   render(<Footer />);
   fireEvent.click(screen.getByText("About"));
-  /* await waitFor(() => screen.getByRole("presentation")); */
   expect(screen.getByRole("presentation")).toHaveTextContent(
-    "LN2tBTC is a decentralized service"
+    "is a decentralized service"
   );
 });
 
 test("dialog opens when 'Contact us' is clicked", async () => {
   render(<Footer />);
   fireEvent.click(screen.getByText("Contact us"));
-  /* await waitFor(() => screen.getByRole("presentation")); */
   expect(screen.getByRole("presentation")).toHaveTextContent("Contact us");
 });
 
