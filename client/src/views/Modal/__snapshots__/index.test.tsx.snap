@@ -10,7 +10,7 @@ exports[`snapshot of component rendered open 1`] = `
 <body>
   <div>
     <div
-      class="jquery-modal blocker current"
+      class="blocker current"
       role="presentation"
     >
       <div

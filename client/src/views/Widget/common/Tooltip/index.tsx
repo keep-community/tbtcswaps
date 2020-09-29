@@ -122,7 +122,7 @@ const Tooltip: React.FC<{
         position: "absolute",
         maxWidth: `${!active ? "0" : width}px`,
         maxHeight: `${!active ? "0" : height}px`,
-        zIndex: 9999999,
+        zIndex: 99,
         top: `${!active ? "0" : tooltipRect.x}px`,
         left: `${!active ? "0" : tooltipRect.y}px`,
         /* height: '122px', */

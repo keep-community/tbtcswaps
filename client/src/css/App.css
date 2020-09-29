@@ -435,6 +435,7 @@ corresponds to the arrow we want to display */
   background-color: #000000;
   background-color: rgba(0, 0, 0, 0.75);
   text-align: center;
+  z-index: 999;
 }
 
 .blocker:before {
@@ -2285,6 +2286,14 @@ input::-ms-clear {
 
 .invoice__block--invoice .invoice__block-text {
   max-width: calc(100% - 25px);
+}
+
+.invoice__block-content.is_error {
+  border: 1px solid #FF6D4A;
+}
+
+.invoice__block-error {
+  color: #FF6D4A;
 }
 
 .invoice__note {

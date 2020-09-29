@@ -29,7 +29,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   const icon = ICONS + "#" + iconsMap[type];
 
   return isOpen ? (
-    <div role="presentation" className="jquery-modal blocker current">
+    <div role="presentation" className="blocker current">
       <div className="modal" style={{ display: "inline-block" }}>
         <div className="modal__content">
           <div className="modal__title">{title}</div>
