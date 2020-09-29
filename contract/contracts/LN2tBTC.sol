@@ -65,6 +65,8 @@ contract LN2tBTC {
 	// It's necessary for doing floating-point arithmetic using EVM's integer arithmetic
 	// Conversion: a fee of 0.1% would be 0.1*linearFeeDenominator/100
 	uint constant linearFeeDenominator = 10**8;
+	// Bitcoin uses 8 decimals but tBTC uses 18, this should be corrected
+	uint constant tBTCDenominator = 10**10;
 
 	// Contains all operator info addressed by operator address
 	// Used by users in conjuction with `operatorList` to search for operators
@@ -206,7 +208,7 @@ contract LN2tBTC {
 		// But given that this can only happen if the operator assigns malicious fee parameters and
 		// the result only affects `lnBalance`, which is unverified and can be already set to any value by the operator
 		// then an overflow here won't cause any problems
-		operator.lnBalance -= removeFees(swap.tBTCAmount, operator.linearFee, operator.constantFee); 
+		operator.lnBalance -= removeFees(swap.tBTCAmount/tBTCDenominator, operator.linearFee, operator.constantFee); 
 	}
 
 	// The calculations done in this function may overflow or underflow
@@ -321,7 +323,7 @@ contract LN2tBTC {
 		Operator storage op = operators[swap.provider];
 		// The result of `addFees` must not be trusted as it can overflow/underflow. However, given that here we are
 		// using it to set the value of `Operator.lnBalance`, which is already under the control of the operator, it's fine.
-		op.lnBalance += addFees(tBTCAmount, op.linearFee, op.constantFee); // Update operator balance
+		op.lnBalance += addFees(tBTCAmount/tBTCDenominator, op.linearFee, op.constantFee); // Update operator balance
 		emit LN2TBTCPreimageRevealed(msg.sender, paymentHash, swap.provider, preimage);
 	}
 
