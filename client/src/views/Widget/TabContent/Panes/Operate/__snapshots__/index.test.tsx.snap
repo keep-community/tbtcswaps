@@ -367,8 +367,6 @@ exports[`snapshot of component rendered 1`] = `
                         aria-label="input"
                         class="form-block__input form-control"
                         name="nodeAddress"
-                        placeholder="0.0"
-                        type="number"
                         value=""
                       />
                     </div>
@@ -417,10 +415,10 @@ exports[`snapshot of component rendered 1`] = `
                 class="operate__button"
               >
                 <button
-                  class="btn btn--full btn--primary"
+                  class="btn btn--full btn--secondary"
                 >
                   <span>
-                    Register
+                    Connect wallet
                   </span>
                 </button>
               </div>

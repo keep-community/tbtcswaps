@@ -72,11 +72,8 @@ exports[`snapshot of component rendered 1`] = `
                             <input
                               aria-label="input"
                               class="form-block__input form-control"
-                              min="0"
                               name="tbtc"
                               placeholder="0.0"
-                              step="0.001"
-                              type="number"
                               value=""
                             />
                             <div
@@ -159,11 +156,9 @@ exports[`snapshot of component rendered 1`] = `
                             <input
                               aria-label="input"
                               class="form-block__input form-control"
-                              min="0"
+                              disabled=""
                               name="ln"
                               placeholder="0.0"
-                              step="0.001"
-                              type="number"
                               value=""
                             />
                             <div
