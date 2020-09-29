@@ -18,8 +18,8 @@ jobs:
       with:
         node-version: '12.x'
     - run: (cd ../contract && npm ci && npm run build)
-    - run: CI=false npm ci
-    - run: npm run build
+    - run: npm ci
+    - run: CI=false npm run build
   test:
     runs-on: ubuntu-latest
     steps:
