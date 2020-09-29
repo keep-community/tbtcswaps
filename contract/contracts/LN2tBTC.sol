@@ -72,7 +72,7 @@ contract LN2tBTC {
 	// List of operators, used by users to find the best operator for a swap
 	address[] public operatorList;
 	// ERC20 tBTC contract (vending machine)
-	IERC20 tBTContract = IERC20(0x179eabC663E7d282eF1d25bfcBdA19e5d210E7D7);
+	IERC20 tBTContract = IERC20(0x8dAEBADE922dF735c38C80C7eBD708Af50815fAa);
 
 	// Register a new operator
 	// Must only be called once by the operator itself when it starts operating
