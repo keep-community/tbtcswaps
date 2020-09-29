@@ -55,7 +55,7 @@ exports[`snapshot of tooltip active 1`] = `
   <div>
     <div
       class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-show"
-      style="position: absolute; max-width: 340px; max-height: 400px; z-index: 9999999; top: -1000px; left: -1000px; animation-duration: 350ms; transition-duration: 350ms;"
+      style="position: absolute; max-width: 340px; max-height: 400px; z-index: 99; top: -1000px; left: -1000px; animation-duration: 350ms; transition-duration: 350ms;"
     >
       <div
         class="tooltipster-box"
@@ -91,7 +91,7 @@ exports[`snapshot of tooltip hidden 1`] = `
   <div>
     <div
       class="tooltipster-base tooltipster-sidetip tooltipster-0 fff tooltipster-fade tooltipster-dying"
-      style="position: absolute; max-width: 0px; max-height: 0px; z-index: 9999999; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
+      style="position: absolute; max-width: 0px; max-height: 0px; z-index: 99; top: 0px; left: 0px; animation-duration: 350ms; transition-duration: 350ms;"
     >
       <div
         class="tooltipster-box"
