@@ -10,7 +10,7 @@ async function getCurrentBlockHeight(lnd: LND) {
 export function calculateDelay(blocks: number) {
   const extraDelayBlocks = 144; // Add one extra day
   const delayPerBlock = 60 * 12; // Assumes 12 minutes/block
-  const delay = blocks * delayPerBlock + extraDelayBlocks;
+  const delay = (blocks + extraDelayBlocks) * delayPerBlock;
   const secondsInDay = 24 * 60 * 60;
   if (delay > 5 * secondsInDay) {
     throw new Error("We don't serve swaps that take longer than 5 days");

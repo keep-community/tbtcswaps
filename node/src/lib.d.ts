@@ -93,11 +93,13 @@ declare module "ln-service" {
     lnd: LND;
     secret: string;
   }): Promise<void>;
-  export function payViaRoutes(params: {
+  export function subscribeToPayViaRoutes(params: {
     id: string;
     lnd: LND;
     routes: Route[];
-  }): Promise<{
+    }): {on(
+      event: "success",
+      cb: (res: {
     failures: [number, string, any][];
     fee: number;
     fee_mtokens: string;
@@ -116,7 +118,9 @@ declare module "ln-service" {
     safe_tokens: number;
     secret: string;
     tokens: number;
-  }>;
+  }) => void
+  ): void
+  };
   export function getWalletInfo(params: {
     lnd: LND;
   }): Promise<{
