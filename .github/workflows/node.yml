@@ -1,0 +1,33 @@
+name: Node
+
+on:
+  push:
+  pull_request:
+
+defaults:
+  run:
+    working-directory: node
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: (cd ../contract && npm ci && npm run build)
+    - run: npm ci
+    - run: npm run build
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: (cd ../contract && npm ci && npm run build)
+    - run: npm ci
+    - run: npm run lint
