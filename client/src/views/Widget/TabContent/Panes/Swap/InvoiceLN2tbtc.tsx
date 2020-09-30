@@ -21,7 +21,7 @@ const InvoicePane: React.FC<{
   const [waitingForPayment, setWaitingForPayment] = useState(true);
   const [invoice, setInvoice] = useState<string>("Loading...");
   useEffect(()=>{
-    fetch(`${operator.publicUrl}/tbtc2ln/invoice/${userAddress}/${paymentHash}`).then(res=>res.json()).then((res:APIResponse)=>{
+    fetch(`${operator.publicUrl}/tbtc2ln/invoice/${userAddress?.toLowerCase()}/${paymentHash}`).then(res=>res.json()).then((res:APIResponse)=>{
       try {
         const decodedInvoice = decode(res.invoice);
         if(decodedInvoice.paymentHash.toString('hex') !== paymentHash){
