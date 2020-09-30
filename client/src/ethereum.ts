@@ -11,7 +11,7 @@ interface TemplatableEventData<T> extends EventData {
 }
 type Event<T> = (
   options: any,
-  cb: (event: TemplatableEventData<T>) => void
+  cb: (error: any, event: TemplatableEventData<T>) => void
 ) => EventEmitter;
 
 export type Web3Provider = Web3 | null;
@@ -35,7 +35,7 @@ export interface ERC20Contract {
       address: Address,
       amount: NumericalString
     ) => ContractMethod<void>;
-    balanceOf: (address: Address) => ContractMethod<NumericalString>
+    balanceOf: (address: Address) => ContractMethod<NumericalString>;
   };
 }
 

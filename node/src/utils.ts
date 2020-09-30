@@ -1,15 +1,17 @@
-import { address } from './contract'
+import { ethAddress } from "./contract";
 
 interface commonEvent {
-    returnValues: {
-        providerAddress: string
-    }
+  returnValues: {
+    providerAddress: string;
+  };
 }
-export function ignoreUnrelatedEvents<T extends commonEvent>(handler: (event: T) => void) {
-    return (_: any, event: T) => {
-        if (event.returnValues.providerAddress !== address) {
-            return;
-        }
-        handler(event);
+export function ignoreUnrelatedEvents<T extends commonEvent>(
+  handler: (event: T) => void
+) {
+  return (_: any, event: T) => {
+    if (event.returnValues.providerAddress !== ethAddress) {
+      return;
     }
+    handler(event);
+  };
 }
