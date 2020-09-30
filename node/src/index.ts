@@ -54,71 +54,74 @@ app.get("/ln2tbtc/lockTime/:invoice", async (req, res) => {
 contract.events.TBTC2LNSwapCreated(
   {},
   ignoreUnrelatedEvents(async (event) => {
-  console.log(event)
-  try{
-    const invoice = parseInvoice(event.returnValues.invoice);
-    let { paymentHash, amount, lockTime, userAddress } = event.returnValues;
-    paymentHash = paymentHash.substr(2);
-    console.log(invoice.id)
-    // Check matching hash
-    if (invoice.id !== paymentHash) {
-      throw new Error("paymentHash doesn't match the one provided in invoice")
-    }
-    // Check that lockup time is corect
-    const { timeoutDelta, fee, route } = await getRoute(lnd, invoice);
-    const paymentDelay = BigInt(calculateDelay(timeoutDelta));
-    if (BigInt(lockTime) < paymentDelay) {
-      throw new Error("lockTime is too low");
-    }
-    // Check amount
-    const { linearFee, constantFee } = await operatorFees;
-    const amountLockedInSats = BigInt(amount) / (BigInt(10) ** BigInt(10));
-    const amountToPay =
-      addFees(amountLockedInSats, constantFee, linearFee); // TODO: Add LN & ethereum fees
-    const { mtokens, tokens, safe_tokens } = invoice;
-    if (
-      mtokens === undefined &&
-      tokens === undefined &&
-      safe_tokens === undefined
-    ) {
-      throw new Error("No amount provided in invoice, user could lose money");
-    }
-    if (tokens !== undefined) {
-      if (BigInt(tokens) > amountToPay) {
-        throw new Error("Amount to pay is too large");
+    console.log(event);
+    try {
+      const invoice = parseInvoice(event.returnValues.invoice);
+      let { paymentHash, amount, lockTime, userAddress } = event.returnValues;
+      paymentHash = paymentHash.substr(2);
+      console.log(invoice.id);
+      // Check matching hash
+      if (invoice.id !== paymentHash) {
+        throw new Error(
+          "paymentHash doesn't match the one provided in invoice"
+        );
       }
-    }
-    if (mtokens !== undefined) {
-      if (BigInt(tokens) > amountToPay * BigInt(1000)) {
-        throw new Error("Amount to pay is too large");
+      // Check that lockup time is corect
+      const { timeoutDelta, fee, route } = await getRoute(lnd, invoice);
+      const paymentDelay = BigInt(calculateDelay(timeoutDelta));
+      if (BigInt(lockTime) < paymentDelay) {
+        throw new Error("lockTime is too low");
       }
-    }
-    if (safe_tokens !== undefined) {
-      if (BigInt(safe_tokens) > amountToPay) {
-        throw new Error("Amount to pay is too large");
+      // Check amount
+      const { linearFee, constantFee } = await operatorFees;
+      const amountLockedInSats = BigInt(amount) / BigInt(10) ** BigInt(10);
+      const amountToPay = addFees(amountLockedInSats, constantFee, linearFee); // TODO: Add LN & ethereum fees
+      const { mtokens, tokens, safe_tokens } = invoice;
+      if (
+        mtokens === undefined &&
+        tokens === undefined &&
+        safe_tokens === undefined
+      ) {
+        throw new Error("No amount provided in invoice, user could lose money");
       }
+      if (tokens !== undefined) {
+        if (BigInt(tokens) > amountToPay) {
+          throw new Error("Amount to pay is too large");
+        }
+      }
+      if (mtokens !== undefined) {
+        if (BigInt(tokens) > amountToPay * BigInt(1000)) {
+          throw new Error("Amount to pay is too large");
+        }
+      }
+      if (safe_tokens !== undefined) {
+        if (BigInt(safe_tokens) > amountToPay) {
+          throw new Error("Amount to pay is too large");
+        }
+      }
+      // Pay invoice
+      const sub = subscribeToPayViaRoutes({
+        lnd,
+        id: invoice.id,
+        routes: [route],
+      });
+      // Once paid send an eth tx revealing pre-image
+      sub.on("success", async ({ secret }) => {
+        const gasPrice = await web3.eth.getGasPrice();
+        const gasEstimate = await contract.methods
+          .operatorClaimPayment(userAddress, `0x${paymentHash}`, `0x${secret}`)
+          .estimateGas({ from: ethAddress });
+        await contract.methods
+          .operatorClaimPayment(userAddress, `0x${paymentHash}`, `0x${secret}`)
+          .send({
+            from: ethAddress,
+            gasPrice,
+            gas: gasEstimate,
+          });
+      });
+    } catch (e) {
+      console.log(e);
     }
-    // Pay invoice
-    const sub = subscribeToPayViaRoutes({
-      lnd,
-      id: invoice.id,
-      routes: [route],
-    });
-    // Once paid send an eth tx revealing pre-image
-    sub.on('success', async ({secret})=>{
-      const gasPrice = await web3.eth.getGasPrice();
-      const gasEstimate = await contract.methods
-      .operatorClaimPayment(userAddress, `0x${paymentHash}`, `0x${secret}`)
-      .estimateGas({ from: ethAddress });
-      await contract.methods
-        .operatorClaimPayment(userAddress, `0x${paymentHash}`, `0x${secret}`)
-        .send({
-          from: ethAddress,
-	  gasPrice,
-	  gas: gasEstimate
-	});
-    })
-  } catch(e){console.log(e)}
   })
 );
 
@@ -153,10 +156,12 @@ contract.events.LN2TBTCSwapCreated(
   {},
   ignoreUnrelatedEvents(async (event) => {
     let { paymentHash, tBTCAmount, userAddress } = event.returnValues;
-    userAddress = userAddress.toLowerCase()
-    paymentHash = paymentHash.substr(2)
+    userAddress = userAddress.toLowerCase();
+    paymentHash = paymentHash.substr(2);
     const { linearFee, constantFee } = await operatorFees;
-    const satsToReceive = addFees(BigInt(tBTCAmount), constantFee, linearFee)/(BigInt(10)**BigInt(10));
+    const satsToReceive =
+      addFees(BigInt(tBTCAmount), constantFee, linearFee) /
+      BigInt(10) ** BigInt(10);
     // Create new hold invoice with specified paymentHash
     const { request } = await createHodlInvoice({
       lnd,
@@ -164,7 +169,7 @@ contract.events.LN2TBTCSwapCreated(
       tokens: Number(satsToReceive),
     });
     storeInvoice(userAddress, paymentHash, request);
-    console.log(generatedInvoices)
+    console.log(generatedInvoices);
     // When HTLCs are locked (payment sent) - lock tbtc
     const sub = subscribeToInvoice({
       lnd,
@@ -175,17 +180,17 @@ contract.events.LN2TBTCSwapCreated(
       // Only actively held invoices can be settled
       if (invoice.is_held && !contractCallSubmitted) {
         contractCallSubmitted = true;
-	const gasPrice = await web3.eth.getGasPrice();
+        const gasPrice = await web3.eth.getGasPrice();
         const gasEstimate = await contract.methods
-	.operatorLockTBTCForLN2TBTCSwap(userAddress, `0x${paymentHash}`)
-	.estimateGas({ from: ethAddress });
-	console.log(gasEstimate, gasPrice)
+          .operatorLockTBTCForLN2TBTCSwap(userAddress, `0x${paymentHash}`)
+          .estimateGas({ from: ethAddress });
+        console.log(gasEstimate, gasPrice);
         await contract.methods
           .operatorLockTBTCForLN2TBTCSwap(userAddress, `0x${paymentHash}`)
           .send({
             from: ethAddress,
-	    gasPrice,
-	    gas: gasEstimate
+            gasPrice,
+            gas: gasEstimate,
           });
       }
     });
@@ -194,7 +199,11 @@ contract.events.LN2TBTCSwapCreated(
 
 app.get("/tbtc2ln/invoice/:userAddress/:paymentHash", (req, res) => {
   const { userAddress, paymentHash } = req.params;
-  console.log(generatedInvoices, generatedInvoices[userAddress], generatedInvoices[userAddress]?.[paymentHash])
+  console.log(
+    generatedInvoices,
+    generatedInvoices[userAddress],
+    generatedInvoices[userAddress]?.[paymentHash]
+  );
   const invoice = generatedInvoices[userAddress]?.[paymentHash];
   if (invoice === undefined) {
     throw new Error("Invoice for this payment has not been generated");

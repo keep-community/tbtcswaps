@@ -97,29 +97,30 @@ declare module "ln-service" {
     id: string;
     lnd: LND;
     routes: Route[];
-    }): {on(
+  }): {
+    on(
       event: "success",
       cb: (res: {
-    failures: [number, string, any][];
-    fee: number;
-    fee_mtokens: string;
-    hops: {
-      channel: string;
-      channel_capacity: number;
-      fee_mtokens: string;
-      forward_mtokens: string;
-      timeout: number;
-    }[];
-    id: string;
-    is_confirmed: boolean;
-    is_outgoing: boolean;
-    mtokens: string;
-    safe_fee: number;
-    safe_tokens: number;
-    secret: string;
-    tokens: number;
-  }) => void
-  ): void
+        failures: [number, string, any][];
+        fee: number;
+        fee_mtokens: string;
+        hops: {
+          channel: string;
+          channel_capacity: number;
+          fee_mtokens: string;
+          forward_mtokens: string;
+          timeout: number;
+        }[];
+        id: string;
+        is_confirmed: boolean;
+        is_outgoing: boolean;
+        mtokens: string;
+        safe_fee: number;
+        safe_tokens: number;
+        secret: string;
+        tokens: number;
+      }) => void
+    ): void;
   };
   export function getWalletInfo(params: {
     lnd: LND;

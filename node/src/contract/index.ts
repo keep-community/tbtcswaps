@@ -15,9 +15,9 @@ export const contract = new web3.eth.Contract(
   ln2tbtcAddress
 ) as Ln2tbtcContract;
 
-const privkey = process.env.PRIVKEY
-if(privkey === undefined){
-  throw new Error("Environment variable PRIVKEY is not defined")
+const privkey = process.env.PRIVKEY;
+if (privkey === undefined) {
+  throw new Error("Environment variable PRIVKEY is not defined");
 }
 const { address } = web3.eth.accounts.wallet.add(privkey);
 export { address as ethAddress };
