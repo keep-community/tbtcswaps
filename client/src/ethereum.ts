@@ -28,6 +28,10 @@ export interface Operator {
   publicUrl: string;
   tBTCBalance: NumericalString;
 }
+export type ExtendedOperator = Operator&{
+  totalProvided: bigint;
+  operatorAddress:string
+}
 
 export interface ERC20Contract {
   methods: {
@@ -36,6 +40,7 @@ export interface ERC20Contract {
       amount: NumericalString
     ) => ContractMethod<void>;
     balanceOf: (address: Address) => ContractMethod<NumericalString>;
+    allowance: (owner:Address, spender:Address) => ContractMethod<NumericalString>;
   };
 }
 
@@ -65,6 +70,7 @@ export interface Ln2tbtcContract {
       paymentHash: HexString,
       amount: NumericalString,
       providerAddress: Address,
+      lockTime:NumericalString,
       invoice: string
     ) => ContractMethod<void>;
     revertTBTC2LNSwap: (paymentHash: HexString) => ContractMethod<void>;

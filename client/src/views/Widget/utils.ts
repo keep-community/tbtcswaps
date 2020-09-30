@@ -1,3 +1,5 @@
+import {createHash} from 'crypto';
+
 export const toMaxDecimalsFloor = (n: number | string, step: number) => {
   const amount = typeof n === "string" ? Number(n.replace(",", ".")) : n;
   //let factor = Number('1e' + decimals)
@@ -37,4 +39,8 @@ export function addDecimalsToUint(amount:string, tokenDecimals:number){
   } else {
       return `${int}.${decimals}`
   }  
+}
+
+export function sha256(buffer:Buffer){
+  return createHash('sha256').update(buffer).digest('hex');
 }

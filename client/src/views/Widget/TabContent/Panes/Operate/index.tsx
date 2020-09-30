@@ -17,18 +17,21 @@ async function registerOperator(
   ln2tbtcContract: Ln2tbtcContract,
   tbtcContract: ERC20Contract
 ) {
-  if (Number(operatorInfo.tBTCBalance) !== 0) {
+  const allowance = await tbtcContract.methods.allowance(operatorAddress, ln2tbtcAddress).call()
+  const tBTCBalance = convertToUint(operatorInfo.tBTCBalance, 18)
+  if (Number(operatorInfo.tBTCBalance) !== 0 && BigInt(allowance)<BigInt(tBTCBalance)) {
     await tbtcContract.methods
-      .approve(ln2tbtcAddress, operatorInfo.tBTCBalance)
+      .approve(ln2tbtcAddress, tBTCBalance)
       .send({
         from: operatorAddress,
       });
   }
+  console.log(operatorAddress)
   await ln2tbtcContract.methods
     .operatorRegister(
-      convertToUint(operatorInfo.tBTCBalance, 18),
+      tBTCBalance,
       convertToUint(operatorInfo.lnBalance, 8),
-      convertToUint(operatorInfo.linearFee, 8+2), // Transform to %
+      convertToUint(operatorInfo.linearFee, 8-2), // Transform to %
       convertToUint(operatorInfo.constantFee, 8),
       operatorInfo.publicUrl
     )

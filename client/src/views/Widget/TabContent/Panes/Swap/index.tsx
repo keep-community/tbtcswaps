@@ -3,10 +3,11 @@ import React, { useState, useContext, useEffect } from "react";
 import SwapPane from "./SwapPane";
 import InvoiceLN2tbtc from "./InvoiceLN2tbtc";
 import Invoicetbtc2ln from "./Invoicetbtc2ln";
+import {randomBytes} from 'crypto';
 
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";
 import Web3Context from "../../../../../Web3Context";
-import {convertToUint, addDecimalsToUint} from '../../../utils'
+import {convertToUint, addDecimalsToUint, sha256} from '../../../utils'
 
 import Modal from "../../../../Modal";
 
@@ -83,11 +84,15 @@ function calculateLowestSwap(
 }
 
 const Swap: React.FC = () => {
-  const { web3, connectWallet, ln2tbtcContract } = useContext(Web3Context);
+  const { web3, connectWallet, ln2tbtcContract, userAddress } = useContext(Web3Context);
   const [isConnectedMetamask, setIsConnectedMetamask] = useState(web3 !== null);
   useEffect(() => {
     setIsConnectedMetamask(web3 !== null);
   }, [web3]);
+  const [secret, setSecret] = useState<Buffer>();
+  useEffect(() => {
+    setSecret(randomBytes(32));
+  }, []);
 
   const [errModalName, setErrModalName] = useState<string>();
 
@@ -127,13 +132,19 @@ const Swap: React.FC = () => {
               () => setIsConnectedMetamask(true)
             );
           }}
-          onSwapClick={() => {
-            if (!notEnoughLiquidityError) {
+          onSwapClick={async () => {
+            if (!notEnoughLiquidityError && selectedOperator!==undefined) {
+              if(fromName==='ln'){
+                await ln2tbtcContract.methods.createLN2TBTCSwap('0x'+sha256(secret!), selectedOperator.operatorAddress, selectedOperator.totalProvided.toString()).send({
+                  from:userAddress!,
+                  value:'1'.padEnd(19, '0')
+                })
+              }
               setStage("invoice");
             }
           }}
           isConnected={isConnectedMetamask}
-          handleInputChange={(name, value) => {
+          handleInputChange={(_, value) => {
             setFromAmount(value);
           }}
           handleFromNameChange={setFromName}
@@ -163,7 +174,7 @@ const Swap: React.FC = () => {
         </Modal>
       </>
     )) ||
-    (stage === "invoice" && selectedOperator !== undefined && (fromName === 'ln' ? <InvoiceLN2tbtc /> : <Invoicetbtc2ln operatorAddress={selectedOperator.operatorAddress} tBTCAmount={fromAmount} />)) || <span>Contact us.</span>
+    (stage === "invoice" && selectedOperator !== undefined && (fromName === 'ln' ? <InvoiceLN2tbtc lnAmount={convertToUint(fromAmount, tokenDecimals['ln'])} secret={secret!} operator={selectedOperator} /> : <Invoicetbtc2ln operator={selectedOperator} tBTCAmount={convertToUint(fromAmount, tokenDecimals['tbtc'])} />)) || <span>Contact us.</span>
   );
 };
 

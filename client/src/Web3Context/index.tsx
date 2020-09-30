@@ -69,7 +69,7 @@ const Web3Provider: React.FC = (props) => {
   if (web3 === null) {
     web3Normalized = new Web3(
       new Web3.providers.HttpProvider(
-        "https://ropsten.infura.io/v3/965c5ec028c84ffcb22c799eddba83a4"
+        "https://rinkeby.infura.io/v3/965c5ec028c84ffcb22c799eddba83a4"
       )
     );
   } else {
