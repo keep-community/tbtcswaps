@@ -12,7 +12,7 @@
   "keywords": [],
   "author": "corollari",
   "license": "MIT",
-  "devDependencies" : {
+  "devDependencies": {
     "truffle": "^5.1.42"
   },
   "dependencies": {
