@@ -18,6 +18,7 @@ export type Web3Provider = Web3 | null;
 type ContractMethod<ReturnType> = {
   call: () => Promise<ReturnType>;
   send: (options: SendOptions) => Promise<ReturnType>;
+  estimateGas: (options: any) => Promise<any>;
 };
 
 export interface Operator {
@@ -28,10 +29,10 @@ export interface Operator {
   publicUrl: string;
   tBTCBalance: NumericalString;
 }
-export type ExtendedOperator = Operator&{
+export type ExtendedOperator = Operator & {
   totalProvided: bigint;
-  operatorAddress:string
-}
+  operatorAddress: string;
+};
 
 export interface ERC20Contract {
   methods: {
@@ -40,7 +41,10 @@ export interface ERC20Contract {
       amount: NumericalString
     ) => ContractMethod<void>;
     balanceOf: (address: Address) => ContractMethod<NumericalString>;
-    allowance: (owner:Address, spender:Address) => ContractMethod<NumericalString>;
+    allowance: (
+      owner: Address,
+      spender: Address
+    ) => ContractMethod<NumericalString>;
   };
 }
 
@@ -70,7 +74,7 @@ export interface Ln2tbtcContract {
       paymentHash: HexString,
       amount: NumericalString,
       providerAddress: Address,
-      lockTime:NumericalString,
+      lockTime: NumericalString,
       invoice: string
     ) => ContractMethod<void>;
     revertTBTC2LNSwap: (paymentHash: HexString) => ContractMethod<void>;
