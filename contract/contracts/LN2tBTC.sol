@@ -198,7 +198,7 @@ contract LN2tBTC {
 	// which is revealed when the invoice is accepted by the user's wallet/node
 	function operatorClaimPayment(address userAddress, bytes32 paymentHash, bytes memory preimage) public {
 		TBTC2LNSwap storage swap = tbtcSwaps[userAddress][paymentHash];
-		require(swap.provider != msg.sender, "Swap doesn't use this provider or doesn't exist at all");
+		require(swap.provider == msg.sender, "Swap doesn't use this provider or doesn't exist at all");
 		require(swap.tBTCAmount > 0, "Swap has already been finalized");
 		require(sha256(preimage) == paymentHash, "Preimage doesn't match the payment hash");
 		Operator storage operator = operators[msg.sender];
