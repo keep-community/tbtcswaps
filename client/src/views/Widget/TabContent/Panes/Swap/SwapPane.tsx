@@ -16,7 +16,8 @@ interface SwapPaneProps {
   notEnoughLiquidityError: boolean;
   lnAmount:string,
   tbtcAmount:string,
-  noInputProvided:boolean
+  noInputProvided:boolean,
+  notANumberError:boolean
 }
 
 function getMaxTbtcAmount(contract:ERC20Contract, userAddress:string){
@@ -33,7 +34,8 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
     lnAmount,
     tbtcAmount,
     noInputProvided,
-    notEnoughLiquidityError
+    notEnoughLiquidityError,
+    notANumberError
   } = props;
 
   const [leftInputDenom, setLeftInputDenom] = useState<'tbtc' | 'ln'>("tbtc");
@@ -89,6 +91,11 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                   label="From"
                   className="exchange__column--from"
                   onChange={onChange}
+                  error={
+                    notANumberError?
+                    "Value is not a number":
+                    undefined
+                  }
                   {...(leftInputDenom === "tbtc"
                     ? tbtcInputProps
                     : lnInputProps)}

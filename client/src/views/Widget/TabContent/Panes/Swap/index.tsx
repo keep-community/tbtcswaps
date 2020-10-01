@@ -110,16 +110,21 @@ const Swap: React.FC = () => {
   }, [ln2tbtcContract]);
   let selectedOperator: ReturnType<typeof calculateLowestSwap> | undefined;
   let notEnoughLiquidityError = false;
+  let notANumberError = false;
   let toAmount = '';
   if (fromAmount === '' || fromAmount === '0' || operators === null) {
     selectedOperator = undefined;
   } else {
+    try{
     selectedOperator = calculateLowestSwap(operators, fromAmount, fromName);
     if (selectedOperator === undefined) {
       notEnoughLiquidityError = true;
     } else {
       const toDecimals = tokenDecimals[fromName==='tbtc'?'ln':'tbtc']
       toAmount=addDecimalsToUint(selectedOperator.totalProvided.toString(), toDecimals)
+    }
+    } catch(e){
+      notANumberError = true;
     }
   }
 
@@ -136,7 +141,7 @@ const Swap: React.FC = () => {
             );
           }}
           onSwapClick={async () => {
-            if (!notEnoughLiquidityError && selectedOperator!==undefined) {
+            if (!notEnoughLiquidityError && !notANumberError && selectedOperator!==undefined) {
               if(fromName==='ln'){
                 await ln2tbtcContract.methods.createLN2TBTCSwap('0x'+sha256(secret!), selectedOperator.operatorAddress, selectedOperator.totalProvided.toString()).send({
                   from:userAddress!,
@@ -152,6 +157,7 @@ const Swap: React.FC = () => {
           }}
           handleFromNameChange={setFromName}
           notEnoughLiquidityError={notEnoughLiquidityError}
+          notANumberError={notANumberError}
           lnAmount={fromName==='ln'?fromAmount:toAmount}
           tbtcAmount={fromName==='tbtc'?fromAmount:toAmount}
           noInputProvided={fromAmount===''||fromAmount==='0'}
