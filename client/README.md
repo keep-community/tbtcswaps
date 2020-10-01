@@ -11,3 +11,6 @@ npm run build # Build page for deployment
 
 ## Deployment
 This page is automatically built and deployed to Github Pages on every commit to `master` through a Github CI workflow.
+
+## Acknowledgements
+All credit for the design goes to @bakarapara#3452
