@@ -10,6 +10,7 @@ import {
   ERC20Contract,
 } from "../../../../../ethereum";
 import {convertToUint} from '../../../utils'
+import BN from 'bn.js'
 
 async function registerOperator(
   operatorInfo: Operator,
@@ -19,7 +20,7 @@ async function registerOperator(
 ) {
   const allowance = await tbtcContract.methods.allowance(operatorAddress, ln2tbtcAddress).call()
   const tBTCBalance = convertToUint(operatorInfo.tBTCBalance, 18)
-  if (Number(operatorInfo.tBTCBalance) !== 0 && BigInt(allowance)<BigInt(tBTCBalance)) {
+  if (Number(operatorInfo.tBTCBalance) !== 0 && new BN(allowance).lt(new BN(tBTCBalance))) {
     await tbtcContract.methods
       .approve(ln2tbtcAddress, tBTCBalance)
       .send({

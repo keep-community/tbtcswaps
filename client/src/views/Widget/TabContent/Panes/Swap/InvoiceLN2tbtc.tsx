@@ -5,6 +5,7 @@ import { decode } from "@node-lightning/invoice";
 import {ExtendedOperator } from "../../../../../ethereum";
 import Web3Context from "../../../../../Web3Context";
 import {sha256} from '../../../utils'
+import BN from 'bn.js'
 
 interface APIResponse {
   invoice:string
@@ -27,7 +28,7 @@ const InvoicePane: React.FC<{
         if(decodedInvoice.paymentHash.toString('hex') !== paymentHash){
           throw new Error("Payment hashes don't match")
         }
-        if(BigInt(decodedInvoice.valueSat)>BigInt(lnAmount)){
+        if(new BN(decodedInvoice.valueSat).gt(new BN(lnAmount))){
           throw new Error("Amount requested in invoice is too high")
         }
         setInvoice(res.invoice)

@@ -8,6 +8,7 @@ import {randomBytes} from 'crypto';
 import { Operator, Ln2tbtcContract } from "../../../../../ethereum";
 import Web3Context from "../../../../../Web3Context";
 import {convertToUint, addDecimalsToUint, sha256} from '../../../utils'
+import BN from 'bn.js'
 
 import Modal from "../../../../Modal";
 
@@ -35,20 +36,20 @@ const tokenDecimals = {
   ln: 8
 }
 
-function removeFees(amount: bigint, linearFee: bigint, rawConstantFee: bigint, fromName:'tbtc'|'ln') {
-  const diffNominator = (BigInt(10)**BigInt(tokenDecimals['tbtc']-tokenDecimals['ln']))
-  let constantFee:bigint
+function removeFees(amount: BN, linearFee: BN, rawConstantFee: BN, fromName:'tbtc'|'ln') {
+  const diffNominator = (new BN(10).pow(new BN(tokenDecimals['tbtc']-tokenDecimals['ln'])))
+  let constantFee:BN
   if(fromName==='ln'){
     constantFee = rawConstantFee
   } else {
-    constantFee = rawConstantFee*diffNominator
+    constantFee = rawConstantFee.mul(diffNominator)
   }
-  const e8 = BigInt(10)**BigInt(8)
-  const computed = ((amount - constantFee) * e8) / (e8 + linearFee);
+  const e8 = new BN(10).pow(new BN(8))
+  const computed = ((amount.sub(constantFee)).mul(e8)).div(e8.add(linearFee));
   if(fromName==='ln'){
-    return computed*diffNominator
+    return computed.mul(diffNominator)
   } else {
-    return computed/diffNominator
+    return computed.div(diffNominator)
   }
 }
 
@@ -57,13 +58,13 @@ function calculateLowestSwap(
   fromAmountRaw: string,
   fromName: 'tbtc'|'ln'
 ) {
-  const fromAmount = BigInt(convertToUint(fromAmountRaw, tokenDecimals[fromName]))
+  const fromAmount = new BN(convertToUint(fromAmountRaw, tokenDecimals[fromName]))
   const selectedOps = operators
     .map((op) => {
       const totalProvided = removeFees(
         fromAmount,
-        BigInt(op.linearFee),
-        BigInt(op.constantFee),
+        new BN(op.linearFee),
+        new BN(op.constantFee),
         fromName
       );
       return {
@@ -73,9 +74,9 @@ function calculateLowestSwap(
     })
     .filter((op) => {
       const opBalance = fromName==='ln' ? op.tBTCBalance : op.lnBalance;
-      return BigInt(opBalance) >= op.totalProvided && op.totalProvided > 0;
+      return new BN(opBalance).gt(op.totalProvided) && op.totalProvided.gt(new BN(0));
     })
-    .sort((a, b) => Number(b.totalProvided - a.totalProvided)); // From highest to lowest
+    .sort((a, b) => Number(b.totalProvided.sub(a.totalProvided))); // From highest to lowest
   if (selectedOps.length === 0) {
     return undefined;
   } else {
