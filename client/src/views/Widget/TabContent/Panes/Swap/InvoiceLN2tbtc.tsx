@@ -36,7 +36,7 @@ const InvoicePane: React.FC<{
       }
     })
     ln2tbtcContract.events.LN2TBTCOperatorLockedTBTC({}, (_, event)=>{
-      if(event.returnValues.userAddress === userAddress && event.returnValues.paymentHash === paymentHash){
+      if(event.returnValues.userAddress.toLowerCase() === userAddress && event.returnValues.paymentHash === ('0x'+paymentHash)){
         setWaitingForPayment(false)
       }
     })
@@ -61,8 +61,12 @@ const InvoicePane: React.FC<{
               {waitingForPayment?
               <ActionButton text="Waiting for Payment" type="loading" />
               :
-              <ActionButton text="Finish swap" type="primary" onClick={()=>{
-                ln2tbtcContract.methods.claimTBTCPayment('0x'+paymentHash, '0x'+secret.toString('hex')).send({
+              <ActionButton
+              text="Finish swap"
+              className="exchange__button"
+              onClick={async (event?:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+                event?.preventDefault();
+                await ln2tbtcContract.methods.claimTBTCPayment('0x'+paymentHash, '0x'+secret.toString('hex')).send({
                   from:userAddress!
                 })
               }}/>

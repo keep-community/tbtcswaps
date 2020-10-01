@@ -91,7 +91,9 @@ const Swap: React.FC = () => {
   }, [web3]);
   const [secret, setSecret] = useState<Buffer>();
   useEffect(() => {
-    setSecret(randomBytes(32));
+    const generatedSecret = randomBytes(32);
+    setSecret(generatedSecret)
+    localStorage.setItem(sha256(generatedSecret), generatedSecret.toString('hex'));
   }, []);
 
   const [errModalName, setErrModalName] = useState<string>();
