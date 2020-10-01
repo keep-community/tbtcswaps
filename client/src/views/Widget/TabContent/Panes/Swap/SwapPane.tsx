@@ -143,6 +143,11 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                       }
                     </>
                   }
+                  {notEnoughLiquidityError &&
+                          <div className="note--bottom">
+                            Project in BETA, liquidity is limited
+                          </div>
+                  }
                 </>
               ) : (
                   <ActionButton
