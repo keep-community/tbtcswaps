@@ -32,7 +32,8 @@ const modalData: { [key: string]: modalDataType } = {
     content: (
       <p>
         Just drop a message on Keep's discord tagging me{" "}
-        <strong>@corollari#2127</strong> or send an email to{" "}
+        <strong>@corollari#2127</strong> or <strong>@bakarapara#3452</strong>.
+        Otherwise you can send an email to{" "}
         <a href="mailto:hello@tbtcswaps.com">hello@tbtcswaps.com</a>.
       </p>
     ),
