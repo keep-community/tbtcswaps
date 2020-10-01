@@ -79,8 +79,6 @@ const Tooltip: React.FC<{
   const height = 400;
   let myself = useRef<HTMLDivElement>(null);
 
-  const myselfComplexCheck = myself.current ? myself.current.clientHeight : 0;
-
   useLayoutEffect(() => {
     const getTooltipRect = (height: number) => {
       if (hintButton && hintButton.current !== null) {
@@ -89,11 +87,11 @@ const Tooltip: React.FC<{
       }
     };
 
-    if (myself !== null && myself.current !== null) {
+    if (active && myself !== null && myself.current !== null) {
       const height = myself.current.clientHeight;
       getTooltipRect(height);
     }
-  }, [myselfComplexCheck, hintButton]);
+  }, [hintButton, active]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -113,11 +111,9 @@ const Tooltip: React.FC<{
   return (
     <div
       ref={myself}
-      className={`tooltipster-base tooltipster-sidetip tooltipster-${
-        tooltipRect.position
-      } fff tooltipster-fade ${
-        active ? "tooltipster-show" : "tooltipster-dying"
-      }`}
+      className={`tooltipster-base tooltipster-sidetip tooltipster-${tooltipRect.position
+        } fff tooltipster-fade ${active ? "tooltipster-show" : "tooltipster-dying"
+        }`}
       style={{
         position: "absolute",
         maxWidth: `${!active ? "0" : width}px`,
