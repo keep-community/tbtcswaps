@@ -1,2 +1,2 @@
-export const tbtcAddress = "0xc778417E063141139Fce010982780140Aa0cD5Ab";
-export const ln2tbtcAddress = "0x5774B4A9d885C073C157cb2024041783e6196805";
+export const tbtcAddress = "0x8dAEBADE922dF735c38C80C7eBD708Af50815fAa";
+export const ln2tbtcAddress = "0x047bA332817849e6Ca0A3F9BA75060e99eaFa9Bb";
