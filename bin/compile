@@ -16,6 +16,8 @@ echo "       installing node and npm"
 node_url="http://s3pository.heroku.com/node/v$node_engine/node-v$node_engine-linux-x64.tar.gz"
 curl $node_url -s -o - | tar xzf - -C /tmp
 
+heroku_dir=$BUILD_DIR/.heroku
+mkdir -p $heroku_dir/node
 # Move node (and npm) into .heroku/node and make them executable
 mv /tmp/node-v$node_engine-linux-x64/* $heroku_dir/node
 chmod +x $heroku_dir/node/bin/*
