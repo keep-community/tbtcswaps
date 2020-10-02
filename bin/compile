@@ -10,6 +10,16 @@ echo "       creating cache: $CACHE_DIR"
 mkdir -p $CACHE_DIR
 TMP_DIR=`mktemp -d $CACHE_DIR/subdirXXXXX`
 echo "       created tmp dir: $TMP_DIR"
+node_engine="12.16.1"
+echo "       using node version $node_engine"
+echo "       installing node and npm"
+node_url="http://s3pository.heroku.com/node/v$node_engine/node-v$node_engine-linux-x64.tar.gz"
+curl $node_url -s -o - | tar xzf - -C /tmp
+
+# Move node (and npm) into .heroku/node and make them executable
+mv /tmp/node-v$node_engine-linux-x64/* $heroku_dir/node
+chmod +x $heroku_dir/node/bin/*
+PATH=$heroku_dir/node/bin:$PATH
 echo "       building contract ABI"
 (cd $BUILD_DIR/contract && npm install && npm run build)
 echo "       resolving symlinks"
