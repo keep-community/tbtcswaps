@@ -46,7 +46,7 @@ const operatorFees = contract.methods
 
 const app = express();
 app.use(cors());
-app.listen(PORT);
+app.listen(Number(PORT));
 
 let redisClient: redis.RedisClient;
 if (REDIS_URL === "local") {
