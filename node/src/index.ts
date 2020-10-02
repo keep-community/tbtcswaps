@@ -1,3 +1,4 @@
+/* global BigInt */
 import express from "express";
 import cors from "cors";
 import redis from "redis";
@@ -14,9 +15,17 @@ import { ignoreUnrelatedEvents } from "./utils";
 import getRoute, { calculateDelay } from "./getRoute";
 import { addFees } from "./fees";
 
-const {LND_CERT, LND_MACAROON, LND_URL, REDIS_URL, PORT} = process.env;
-if(LND_CERT===undefined || LND_MACAROON===undefined || LND_URL===undefined || REDIS_URL===undefined || PORT===undefined){
-  throw new Error("Environment variables PORT, REDIS_URL, LND_CERT, LND_MACAROON and LND_URL must be defined but some of them were not")
+const { LND_CERT, LND_MACAROON, LND_URL, REDIS_URL, PORT } = process.env;
+if (
+  LND_CERT === undefined ||
+  LND_MACAROON === undefined ||
+  LND_URL === undefined ||
+  REDIS_URL === undefined ||
+  PORT === undefined
+) {
+  throw new Error(
+    "Environment variables PORT, REDIS_URL, LND_CERT, LND_MACAROON and LND_URL must be defined but some of them were not"
+  );
 }
 const { lnd } = authenticatedLndGrpc({
   cert: LND_CERT,
@@ -41,7 +50,9 @@ app.listen(PORT);
 
 let redisClient: redis.RedisClient;
 if (REDIS_URL === "local") {
-  console.log("Using a local version of redis. This is meant for development, do not use in production");
+  console.log(
+    "Using a local version of redis. This is meant for development, do not use in production"
+  );
   redisClient = redis.createClient();
 } else {
   redisClient = redis.createClient(REDIS_URL);
@@ -70,8 +81,8 @@ contract.events.TBTC2LNSwapCreated(
     console.log(event);
     try {
       const invoice = parseInvoice(event.returnValues.invoice);
-      let { paymentHash, amount, lockTime, userAddress } = event.returnValues;
-      paymentHash = paymentHash.substr(2);
+      const { amount, lockTime, userAddress } = event.returnValues;
+      const paymentHash = event.returnValues.paymentHash.substr(2);
       console.log(invoice.id);
       // Check matching hash
       if (invoice.id !== paymentHash) {
@@ -80,7 +91,7 @@ contract.events.TBTC2LNSwapCreated(
         );
       }
       // Check that lockup time is corect
-      const { timeoutDelta, fee, route } = await getRoute(lnd, invoice);
+      const { timeoutDelta, route } = await getRoute(lnd, invoice);
       const paymentDelay = BigInt(calculateDelay(timeoutDelta));
       if (BigInt(lockTime) < paymentDelay) {
         throw new Error("lockTime is too low");
@@ -139,45 +150,50 @@ contract.events.TBTC2LNSwapCreated(
 );
 
 // LN -> tBTC
-function invoiceKey(
-  userAddress: string,
-  paymentHash: string){
-    return `${userAddress}#${paymentHash}`
+function invoiceKey(userAddress: string, paymentHash: string) {
+  return `${userAddress}#${paymentHash}`;
 }
 function storeInvoice(
   userAddress: string,
   paymentHash: string,
   invoice: string
 ) {
-  return new Promise((resolve, reject)=>{
-    redisClient.set(invoiceKey(userAddress, paymentHash), invoice, "NX", (err)=>{
-      if(err!==null){
-        reject("An invoice with the same paymentHash has already been created before by the same user");
-      } else {
-        resolve()
+  return new Promise((resolve, reject) => {
+    redisClient.set(
+      invoiceKey(userAddress, paymentHash),
+      invoice,
+      "NX",
+      (err) => {
+        if (err !== null) {
+          reject(
+            new Error(
+              "An invoice with the same paymentHash has already been created before by the same user"
+            )
+          );
+        } else {
+          resolve();
+        }
       }
-    })
-  })
+    );
+  });
 }
-function getInvoice(
-  userAddress: string,
-  paymentHash: string,
-) {
-  return new Promise<string>((resolve, reject)=>{
-    redisClient.get(invoiceKey(userAddress, paymentHash), (err, reply)=>{
-      if(err===null && reply !== null){
-        resolve(reply)
+function getInvoice(userAddress: string, paymentHash: string) {
+  return new Promise<string>((resolve, reject) => {
+    redisClient.get(invoiceKey(userAddress, paymentHash), (err, reply) => {
+      if (err === null && reply !== null) {
+        resolve(reply);
       } else {
-        reject("Invoice for this payment has not been generated");
+        reject(new Error("Invoice for this payment has not been generated"));
       }
-    })
-  })
+    });
+  });
 }
 
 contract.events.LN2TBTCSwapCreated(
   {},
   ignoreUnrelatedEvents(async (event) => {
-    let { paymentHash, tBTCAmount, userAddress } = event.returnValues;
+    const { tBTCAmount } = event.returnValues;
+    let { paymentHash, userAddress } = event.returnValues;
     userAddress = userAddress.toLowerCase();
     paymentHash = paymentHash.substr(2);
     const { linearFee, constantFee } = await operatorFees;

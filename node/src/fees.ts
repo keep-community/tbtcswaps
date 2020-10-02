@@ -1,3 +1,4 @@
+/* global BigInt */
 export function addFees(
   amount: bigint,
   constantFee: bigint,
