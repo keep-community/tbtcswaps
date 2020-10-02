@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import redis from "redis";
 import {
   authenticatedLndGrpc,
   createHodlInvoice,
@@ -13,10 +14,14 @@ import { ignoreUnrelatedEvents } from "./utils";
 import getRoute, { calculateDelay } from "./getRoute";
 import { addFees } from "./fees";
 
+const {LND_CERT, LND_MACAROON, LND_URL, REDIS_URL, PORT} = process.env;
+if(LND_CERT===undefined || LND_MACAROON===undefined || LND_URL===undefined || REDIS_URL===undefined || PORT===undefined){
+  throw new Error("Environment variables PORT, REDIS_URL, LND_CERT, LND_MACAROON and LND_URL must be defined but some of them were not")
+}
 const { lnd } = authenticatedLndGrpc({
-  cert: "base64 encoded tls.cert",
-  macaroon: "base64 encoded admin.macaroon",
-  socket: "127.0.0.1:10009",
+  cert: LND_CERT,
+  macaroon: LND_MACAROON,
+  socket: LND_URL,
 });
 const operatorFees = contract.methods
   .operators(ethAddress)
@@ -32,7 +37,15 @@ const operatorFees = contract.methods
 
 const app = express();
 app.use(cors());
-app.listen(80);
+app.listen(PORT);
+
+let redisClient: redis.RedisClient;
+if (REDIS_URL === "local") {
+  console.log("Using a local version of redis. This is meant for development, do not use in production");
+  redisClient = redis.createClient();
+} else {
+  redisClient = redis.createClient(REDIS_URL);
+}
 
 // tBTC -> LN
 app.get("/ln2tbtc/lockTime/:invoice", async (req, res) => {
@@ -126,30 +139,39 @@ contract.events.TBTC2LNSwapCreated(
 );
 
 // LN -> tBTC
-const generatedInvoices = {} as {
-  [userAddress: string]:
-    | undefined
-    | {
-        [paymentHash: string]: string | undefined;
-      };
-};
-
+function invoiceKey(
+  userAddress: string,
+  paymentHash: string){
+    return `${userAddress}#${paymentHash}`
+}
 function storeInvoice(
   userAddress: string,
   paymentHash: string,
   invoice: string
 ) {
-  if (generatedInvoices[userAddress] === undefined) {
-    generatedInvoices[userAddress] = {};
-  }
-  const userInvoices = generatedInvoices[userAddress]!;
-  if (userInvoices[paymentHash] === undefined) {
-    userInvoices[paymentHash] = invoice;
-  } else {
-    throw new Error(
-      "An invoice with the same paymentHash has already been created before by the same user"
-    );
-  }
+  return new Promise((resolve, reject)=>{
+    redisClient.set(invoiceKey(userAddress, paymentHash), invoice, "NX", (err)=>{
+      if(err!==null){
+        reject("An invoice with the same paymentHash has already been created before by the same user");
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+function getInvoice(
+  userAddress: string,
+  paymentHash: string,
+) {
+  return new Promise<string>((resolve, reject)=>{
+    redisClient.get(invoiceKey(userAddress, paymentHash), (err, reply)=>{
+      if(err===null && reply !== null){
+        resolve(reply)
+      } else {
+        reject("Invoice for this payment has not been generated");
+      }
+    })
+  })
 }
 
 contract.events.LN2TBTCSwapCreated(
@@ -168,8 +190,7 @@ contract.events.LN2TBTCSwapCreated(
       id: paymentHash,
       tokens: Number(satsToReceive),
     });
-    storeInvoice(userAddress, paymentHash, request);
-    console.log(generatedInvoices);
+    await storeInvoice(userAddress, paymentHash, request);
     // When HTLCs are locked (payment sent) - lock tbtc
     const sub = subscribeToInvoice({
       lnd,
@@ -197,17 +218,9 @@ contract.events.LN2TBTCSwapCreated(
   })
 );
 
-app.get("/tbtc2ln/invoice/:userAddress/:paymentHash", (req, res) => {
+app.get("/tbtc2ln/invoice/:userAddress/:paymentHash", async (req, res) => {
   const { userAddress, paymentHash } = req.params;
-  console.log(
-    generatedInvoices,
-    generatedInvoices[userAddress],
-    generatedInvoices[userAddress]?.[paymentHash]
-  );
-  const invoice = generatedInvoices[userAddress]?.[paymentHash];
-  if (invoice === undefined) {
-    throw new Error("Invoice for this payment has not been generated");
-  }
+  const invoice = await getInvoice(userAddress, paymentHash);
   res.send({
     invoice,
   });

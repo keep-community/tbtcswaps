@@ -4,10 +4,15 @@ import contractABI from "./LN2tBTC.json";
 import { ln2tbtcAddress } from "./deployedAddresses";
 import { Ln2tbtcContract } from "./types";
 
+const {ETH_PRIVATEKEY, INFURA_ID } = process.env;
+if (ETH_PRIVATEKEY === undefined || INFURA_ID === undefined) {
+  throw new Error("Environment variables ETH_PRIVATEKEY and INFURA_ID are not defined");
+}
+
 // Project id should be hidden but whatever, I have a free account that is worthless
 export const web3 = new Web3(
   new Web3.providers.WebsocketProvider(
-    "wss://rinkeby.infura.io/ws/v3/3ddcb4abe3bf4331897be020bb6a36f0"
+    `wss://mainnet.infura.io/ws/v3/${INFURA_ID}`
   )
 );
 export const contract = new web3.eth.Contract(
@@ -15,9 +20,5 @@ export const contract = new web3.eth.Contract(
   ln2tbtcAddress
 ) as Ln2tbtcContract;
 
-const privkey = process.env.PRIVKEY;
-if (privkey === undefined) {
-  throw new Error("Environment variable PRIVKEY is not defined");
-}
-const { address } = web3.eth.accounts.wallet.add(privkey);
+const { address } = web3.eth.accounts.wallet.add(ETH_PRIVATEKEY);
 export { address as ethAddress };

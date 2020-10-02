@@ -1,0 +1,41 @@
+{
+  "name": "tbtcswap-lp-node",
+  "description": "Node for tbtcswap liquidity providers",
+  "keywords": [
+    "tbtc",
+	"submarine-swaps"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/timanovsky/subdir-heroku-buildpack"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "repository": "https://github.com/corollari/tbtcswaps",
+  "env": {
+    "PROJECT_PATH": {
+      "description": "Root path of the nodejs package. Do not modify.",
+	  "value": "node"
+    },
+    "LND_URL": {
+      "description": "URL of the LND instance that will handle all lightning operations. Remember to set `tlsextraip` to enable remote connections. Example: '1.1.1.1:10009'"
+    },
+    "LND_CERT": {
+      "description": "base64 encoded file ~/.lnd/tls.cert. Example: '7924ab...c6f8dd'"
+    },
+    "LND_MACAROON": {
+      "description": "base64 encoded file ~/.lnd/data/chain/bitcoin/mainnet/admin.macaroon. Example: '7924ab...c6f8dd'"
+    },
+    "INFURA_ID": {
+      "description": "Infura project ID that will be used for all ethereum communicaction. Example: '3ddcb...6a36f0'"
+    },
+    "ETH_PRIVATEKEY": {
+      "description": "Private key of the ethereum account that has been registered as an operator. The account must own enough ETH to perform the contract calls. Example: '7924ab...c6f8dd'"
+    }
+  },
+  "addons": [
+    "heroku-redis:hobby-dev"
+  ]
+}
