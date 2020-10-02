@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import type { SendOptions, EventData } from "web3-eth-contract";
 import { EventEmitter } from "events";
-import type BN from 'bn.js';
+import type BN from "bn.js";
 
 type NumericalString = string;
 type HexString = string;
