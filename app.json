@@ -15,10 +15,6 @@
   ],
   "repository": "https://github.com/corollari/tbtcswaps",
   "env": {
-    "PROJECT_PATH": {
-      "description": "Root path of the nodejs package. Do not modify.",
-	  "value": "node"
-    },
     "LND_URL": {
       "description": "URL of the LND instance that will handle all lightning operations. Remember to set `tlsextraip` to enable remote connections. Example: '1.1.1.1:10009'"
     },
