@@ -9,3 +9,6 @@ REDIS_URL="redis://h:pe5...50@domain.com:8849"
 PORT="80"
 npm start
 ```
+
+## Deploy
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
