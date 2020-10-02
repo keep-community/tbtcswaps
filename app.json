@@ -7,7 +7,7 @@
   ],
   "buildpacks": [
     {
-      "url": "https://github.com/timanovsky/subdir-heroku-buildpack"
+      "url": "https://github.com/corollari/tbtcswaps"
     },
     {
       "url": "heroku/nodejs"

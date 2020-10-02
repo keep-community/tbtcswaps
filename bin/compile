@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+
+echo "-----> Buildpack for tbtcswaps/node"
+echo "       creating cache: $CACHE_DIR"
+mkdir -p $CACHE_DIR
+TMP_DIR=`mktemp -d $CACHE_DIR/subdirXXXXX`
+echo "       created tmp dir: $TMP_DIR"
+echo "       building contract ABI"
+(cd $BUILD_DIR/contract && npm install && npm run build)
+echo "       resolving symlinks"
+mv $BUILD_DIR/contract/build/contracts/LN2tBTC.json $BUILD_DIR/node/src/contract/LN2tBTC.json
+mv $BUILD_DIR/client/src/contracts/deployedAddresses.ts $BUILD_DIR/node/src/contract/deployedAddresses.ts
+mv $BUILD_DIR/client/src/ethereum.ts $BUILD_DIR/node/src/contract/types.ts
+echo "       moving working dir: node to $TMP_DIR"
+cp -R $BUILD_DIR/node/. $TMP_DIR/
+echo "       cleaning build dir $BUILD_DIR"
+rm -rf $BUILD_DIR
+echo "       recreating $BUILD_DIR"
+mkdir -p $BUILD_DIR
+echo "       copying preserved work dir from cache $TMP_DIR to build dir $BUILD_DIR"
+cp -R $TMP_DIR/. $BUILD_DIR/
+echo "       cleaning tmp dir $TMP_DIR"
+rm -rf $TMP_DIR
+exit 0
