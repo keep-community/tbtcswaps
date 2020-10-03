@@ -31,6 +31,12 @@
       "description": "Private key of the ethereum account that has been registered as an operator. The account must own enough ETH to perform the contract calls. Example: '7924ab...c6f8dd'"
     }
   },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "hobby"
+    }
+  },
   "addons": [
     "heroku-redis:hobby-dev"
   ]
