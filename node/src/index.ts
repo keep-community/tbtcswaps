@@ -253,3 +253,7 @@ contract.events.LN2TBTCPreimageRevealed(
     });
   })
 );
+
+console.log(
+  `Started up node with ETH address ${ethAddress} and connected to lnd node at ${LND_URL}`
+);
