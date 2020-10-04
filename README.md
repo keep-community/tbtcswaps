@@ -84,7 +84,11 @@ At the moment, I've thought of a few mechanisms that would prevent or punish tha
 Generally I don't like any of these solutions, so, for the time being, I won't implement any of them. Instead I'll see how this project evolves and defer my decisions to a later date. If you, the reader, know of a different solution, please let me know.
 
 ## How to become a liquidity provider
-TODO
+1. Run a well-connected lnd node
+2. Deploy `./node` on heroku with the parameters needed to connect to the lnd node
+3. Register as an operator on the **Operate** tab of [tbtcswaps.com](https://tbtcswaps.com)
+
+**Note**: I'd appreciate it if you contact me (@corollari#2127) in case you decide to run an LP node, as that would allow me to alert you if something goes wrong. Also, I'd suggest waiting a little bit before running the node. This should allow my node to act as a honeypot, so if there's a vulnerability only my funds are lost.
 
 ## Development
 This repository contains two projects:
