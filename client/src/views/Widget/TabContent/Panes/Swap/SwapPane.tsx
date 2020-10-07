@@ -141,6 +141,7 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                       <ActionButton
                         onClick={onSwapClick}
                         text="Swap"
+                        disabled={leftInputDenom === 'ln'}
                         className="exchange__button"
                       />
                       {leftInputDenom === 'ln' &&
