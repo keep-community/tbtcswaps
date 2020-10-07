@@ -51,6 +51,18 @@ export interface ERC20Contract {
 
 export interface Ln2tbtcContract {
   methods: {
+    tbtcSwaps: (userAddress: Address, paymentHash:HexString) => ContractMethod<{
+      provider: Address,
+      tBTCAmount: NumericalString,
+      timeoutTimestamp: NumericalString
+    }>
+    lnSwaps: (userAddress: Address, paymentHash:HexString) => ContractMethod<{
+      provider: Address,
+      tBTCAmount: NumericalString,
+      startTimestamp: NumericalString,
+      tBTCLockTimestamp: NumericalString,
+    }>;
+    timeoutPeriod: () => ContractMethod<NumericalString>;
     operators: (address: string) => ContractMethod<Operator>;
     operatorList: (index: number) => ContractMethod<Address>;
     operatorRegister: (
@@ -133,15 +145,9 @@ export interface Ln2tbtcContract {
     Missing methods:
     
     addFees:(uint256,uint256,uint256) => void;
-    lnSwaps: ƒ ()
-    lnSwaps(address,bytes32): ƒ ()
     removeFees: ƒ ()
     removeFees(uint256,uint256,uint256): ƒ ()
     securityDepositAmount: ƒ ()
     securityDepositAmount(): ƒ ()
-    tbtcSwaps: ƒ ()
-    tbtcSwaps(address,bytes32): ƒ ()
-    timeoutPeriod: ƒ ()
-    timeoutPeriod(): ƒ ()
     */
 }

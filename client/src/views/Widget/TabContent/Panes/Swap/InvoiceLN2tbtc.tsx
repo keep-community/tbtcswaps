@@ -60,7 +60,12 @@ const InvoicePane: React.FC<{
                 reverted
               </div>
               {waitingForPayment?
+              <>
               <ActionButton text="Waiting for Payment" type="loading" />
+              <ActionButton text="Revert" onClick={()=>{
+                window.open(`/?operation=revertLn2tbtc&paymentHash=0x${paymentHash}`)
+              }}/>
+              </>
               :
               <ActionButton
               text="Finish swap"

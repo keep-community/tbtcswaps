@@ -82,7 +82,12 @@ const InvoiceTbtc2LN: React.FC<{
                 reverted
               </div>
               {swapping ?
+                <>
                 <ActionButton text="Waiting for Payment" type="loading" />
+                <ActionButton text="Revert" onClick={()=>{
+                  window.open(`/?operation=revertTbtc2ln&paymentHash=0x${decodedInvoice.paymentHash.toString('hex')}`)
+                }}/>
+                </>
                 :
                 invoiceError?
                   <ActionButton text="Invoice is incorrect" type="primary" disabled={true}/>
@@ -90,7 +95,11 @@ const InvoiceTbtc2LN: React.FC<{
                   <ActionButton text="Swap" type="primary" onClick={async ()=>{
                     setSwapping(true)
                     try{
-                      await createSwap(invoice, tBTCAmount, operator.publicUrl, operator.operatorAddress, userAddress!, ln2tbtcContract, tbtcContract)
+                      if(userAddress===null){
+                        window.alert("Please refresh the page, metamask has not been properly connected")
+                        return;
+                      }
+                      await createSwap(invoice, tBTCAmount, operator.publicUrl, operator.operatorAddress, userAddress, ln2tbtcContract, tbtcContract)
                     } finally{
                       setSwapping(false);
                     }
