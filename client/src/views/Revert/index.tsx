@@ -76,7 +76,7 @@ const Revert: React.FC<{
         const currentTime = Date.now()/1000;
         if(timeout === null){
             return wrapJSX(<ActionButton text="Getting swap info" type="loading" />)
-        } else if(timeout < currentTime){
+        } else if(currentTime < timeout){
             setError(`You must wait until '${new Date(timeout)}' to be able to revert your swap. Please come back here after that time.`)
             return <></>
         } else if(operation === "revertTbtc2ln"){
