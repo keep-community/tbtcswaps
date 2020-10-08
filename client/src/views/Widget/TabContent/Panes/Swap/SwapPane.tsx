@@ -141,9 +141,12 @@ const SwapPane: React.FC<SwapPaneProps> = (props) => {
                       <ActionButton
                         onClick={onSwapClick}
                         text="Swap"
-                        disabled={leftInputDenom === 'ln'}
+                        disabled={true}
                         className="exchange__button"
                       />
+                       <div className="note--bottom">
+                          Swaps are currently disabled while a security issue is investigated
+                        </div>
                       {leftInputDenom === 'ln' &&
                         <div className="note--bottom">
                           Note: 1 ETH will be locked during the swap process.
