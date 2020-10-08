@@ -10,6 +10,7 @@ export function ignoreUnrelatedEvents<T extends commonEvent>(
 ) {
   return (_: any, event: T) => {
     if (event?.returnValues?.providerAddress !== ethAddress) {
+      console.log("Ignored event:", event);
       return;
     }
     handler(event);

@@ -78,7 +78,7 @@ app.get("/ln2tbtc/lockTime/:invoice", async (req, res) => {
 contract.events.TBTC2LNSwapCreated(
   {},
   ignoreUnrelatedEvents(async (event) => {
-    console.log(event);
+    console.log("tBTC -> LN Swap created. Received event:", event);
     try {
       const invoice = parseInvoice(event.returnValues.invoice);
       const { amount, lockTime, userAddress } = event.returnValues;
@@ -93,6 +93,7 @@ contract.events.TBTC2LNSwapCreated(
       // Check that lockup time is corect
       const { timeoutDelta, route } = await getRoute(lnd, invoice);
       const paymentDelay = BigInt(calculateDelay(timeoutDelta));
+
       if (BigInt(lockTime) < paymentDelay) {
         throw new Error("lockTime is too low");
       }
@@ -192,6 +193,7 @@ function getInvoice(userAddress: string, paymentHash: string) {
 contract.events.LN2TBTCSwapCreated(
   {},
   ignoreUnrelatedEvents(async (event) => {
+    console.log("LN -> tBTC Swap created. Received event:", event);
     const { tBTCAmount } = event.returnValues;
     let { paymentHash, userAddress } = event.returnValues;
     userAddress = userAddress.toLowerCase();
